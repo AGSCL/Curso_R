@@ -1,4 +1,4 @@
-# Install-R
+# R y RStudio
 
 Esta página sirve para instalar R y Rstudio. Forma parte de un curso impartido el año 2020.
 
