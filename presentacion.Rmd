@@ -1,0 +1,33 @@
+---
+title: "Curso Introductorio al uso de R Studio"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Contenidos
+
+- Instalación de software
+- Ventajas/Desventajas de R y RStudio
+- Entorno de trabajo
+- Instalación de Paquetes estadísticos (CRAN, MRAN y Devtools)
+- Importar Datos (Formatos, Canales, Orígenes)
+- Tipos de Variables (continuas, categóricas, numéricas, lógicas, etc.)
+- Objetos de trabajo (Listas, Vectores, Data Frames, Data Tables, Tibbles, etc.)
+- Aprender a aprender en línea (StackExchange, StackOverflow, YouTube, Github, Coursera, DataCamp)
+- Estadística Descriptiva Básica (Medidas de Tendencia Central)
+- Configuración de datos (Largo y Ancho)
+
+
+### Slide with Plot
+- Elosua, P. (2009). ¿Existe vida más allá del SPSS? Descubre R. Psicothema, 21(4),652-655. ISSN: 0214-9915. Disponible en: https://www.redalyc.org/articulo.oa?id=727/72711895025
+- R Development Core Team (2000). Introducción a R. Notas sobre R: Un entorno de programación para Análisis de Datos y Gráficos. Versión 1.0.1 https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+- Cano, E. & Moguerza, J. (2015). “R desde el principio. Curso ceRo de R”. Ediciones del Orto, Madrid. ISBN 84-7923-526-8. http://emilio.lcano.com/pub/cero/R-desde-el-principio-curso-cero-V1.02.pdf
+
+
+```{r pressure}
+plot(pressure)
+```
+
