@@ -1,0 +1,14 @@
+git credential reject
+protocol=https
+host=github.com
+
+git config user.name "AGSCL"
+git config user.email "gonzalez.santacruz.andres@email.com"
+
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/alice.private
+ssh -T git@github.com
+
+
+git remote set-url origin git@github.com:AGSCL/Install-R.git
+git remote set-url origin git@github.com:AGSCL/Install-R.git
