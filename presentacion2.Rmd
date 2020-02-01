@@ -1,0 +1,86 @@
+---
+title: "Curso Introductorio al uso de R Studio- Clase 2"
+output:
+  ioslides_presentation:
+    transition: slower
+    logo: logo.png
+---
+
+<style>
+#future-steps {
+  color: MidnightBlue;
+}
+#otro {
+  color: Teal;
+}
+#Advertencia {
+  color: Crimson;
+}
+.gdbar img {
+    width: 500px !important;
+    height: 150px !important;
+    margin: 10px 10px;
+}
+.gdbar {
+    width: 550px !important;
+    height: 175px !important;
+}
+slides > slide:not(.nobackground):before {
+    width: 200px;
+    height: 70px;
+    background-size: 200px 70px;
+}
+</style>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Contenidos{#future-steps}
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"), 
+               alt = 'logo', 
+               style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
+```
+
+- Instalación de software
+- Ventajas/Desventajas de R y RStudio
+- Entorno de trabajo
+- **Instalación de Paquetes estadísticos**
+- Importar Datos
+- Tipos de Variables 
+- Objetos de trabajo 
+- Aprender a aprender en línea 
+- Estadística Descriptiva Básica 
+- Configuración de datos
+
+
+## Instalación de Paquetes Estadísticos{#future-steps}
+
+- <div class="red">Advertencia:</div> Siga las instrucciones al pie de la letra. De lo contrario no podrá avanzar.
+- 
+
+## Instalación{#future-steps}
+
+- En la página pudieron ver cómo se instalaba R, ¿Alguna Duda?
+
+## Ventaja/Desventajas de R y RStudio{#future-steps}
+
+- 
+
+### Fuente{#future-steps}
+
+- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803.
+
+## Entorno de Trabajo{#future-steps}
+
+- Apriete `Cntrl + Alt + Shift 0`
+- En Amarillo, arriba a la izquierda, 
+- <div class="red">This text is red</div>
+
+```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
+```
+
