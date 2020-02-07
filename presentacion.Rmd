@@ -4,6 +4,7 @@ output:
   ioslides_presentation:
     transition: slower
     logo: logo.png
+    #smaller: true
 ---
 
 <style>
@@ -26,11 +27,22 @@ output:
     height: 175px !important;
 }
 slides > slide:not(.nobackground):before {
+    right: 0px;    
     width: 200px;
     height: 70px;
-    background-size: 200px 70px;
+    background-size: 1px 1px;
+    padding: 0px 0;
 }
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
 </style>
+<script>
+slides > slide:not(.nobackground):before {
+    width: 200px;
+    height: 70px;
+    background-size: 1px 1px;
+    padding: 0px 0;
+}
+</script>
 
 
 ```{r setup, include=FALSE}
@@ -64,23 +76,163 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 
 ## Instalación{#future-steps}
 
-- En la página pudieron ver cómo se instalaba R, ¿Alguna Duda?
+- En la página pudieron ver cómo se instalaba R, 
+<div class="centered">
+**¿Alguna Duda?**
+</div>
+  - Problemas frecuentes: 
+  - Microsoft R vs. R, Arquitectura SO (64bits vs. 32bits), 
+  - Conectar al servidor de repositorios (firewall, puertas de enlace bloqueadas, permisos de administrador, etc.), 
+  - **y un montón de cosas que se resuelven leyendo en internet.**
 
-## Ventaja/Desventajas de R y RStudio{#future-steps}
+## Ventajas/Desventajas de R y RStudio {#future-steps}
 
-- 
+<div class="centered">
+**A la hora de elegir qué utilizará, debe considerar estos atributos**
+</div>
 
-### Fuente{#future-steps}
+<div class="columns-2">
+### Ventajas
+  - Flexible
+  - Actualizaciones constantes
+  - Fácil automatización e integración 
+  - Muchos recursos en-línea y comunidades
+  - Útil para ser enseñado a estudiantes
+  - Investigación Reproducible
+  - **Gratis** - Fuente Abierta
+  <p class="forceBreak"></p>
 
-- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803.
+### Desventajas
+  - No tan intuitivo
+  - No tan confiable 
+  - A ratos muy flexible
+  - No cuenta con soporte oficial
+  - Requiere tiempo  
+</div>
 
-## Entorno de Trabajo{#future-steps}
+::: notes
+Comentarios:
+
+- Flexibilidad (muchos diseños de datos y muchas funciones), Actualizaciones constantes (nuevos paquetes), de fácil automatización e integración con otras plataformas, software y lenguajes (Google, Excel, SQL, Stata, Python, etc.), muchos recursos en-línea (memes) y comunidades virtuales y presenciales (Rladies, useRchile, etc.), útil para ser enseñado a estudiantes y personas no tan familiarizadas con programación, **gratis**.
+- No tan intuitivo (Difícil aprender sintaxis de R, incorporar lenguaje y lógica detrás), No tan confiable (Paquetes Obsoletos, Erróneos, No Compatibles), a ratos muy flexible (requiere especificar muchos parámetros, argumentos, opciones, etc.), requiere tiempo.
+:::
+
+## Ventajas/Desventajas de R y RStudio|Algunos Memes{#future-steps .columns-2}
+
+```{r Fig Meme1, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_curso.png")
+```
+  <p class="forceBreak"></p>
+
+```{r Fig Meme2, fig.align="right", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
+```
+
+## Ventajas/Desventajas de RStudio{#future-steps}
+
+<div class="columns-2">
+### Ventajas
+  - **Entorno de Desarrollo Integrado para R**
+  - Control de versiones
+  - Paneles múltiples
+  - Permite automatizar algunas funciones de R (Knitr)
+  - Fácil Depurador (errores)
+  - Eficienta Recursos Computacionales
+  - Cuenta con soporte, versiones en servidor y grandes desarrolladores
+  <p class="forceBreak"></p>
+
+### Desventajas
+  - Algo inestable (Ej. "Figure margins too large")
+  - Tareas exigentes computacionalmente son más lentas
+</div>
+
+
+## Entorno de Trabajo{#future-steps .smaller}
 
 - Apriete `Cntrl + Alt + Shift 0`
-- En Amarillo, arriba a la izquierda, 
-- <div class="red">This text is red</div>
+<div class="yellow">- Editor de texto o códigos </div>
+<div class="green">- Lugar de trabajo (objetos creados, funciones, historial, control de versiones) </div>
+<div class="red">- Consola para desplegar los comandos y obtener resultados</div>
+<div class="blue">- Multitabla(gráficos, carpetas, paquetes, visor páginas web)</div>
 
-```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "700px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
 ```
 
+## Ejercicio{#future-steps .smaller}
+
+<div class="columns-2"> 
+1. Abra RStudio
+2. Cree una sesión nueva 
+
+```{r Fig Ej11, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio11.png")
+```
+<br>
+```{r Fig Ej12, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio12.png")
+```
+<br>
+```{r Fig Ej13, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio13.png")
+```
+ <p class="forceBreak"></p>
+```{r Fig Ej14, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio14.png")
+```
+<br>
+```{r Fig Ej15, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio15.png")
+```
+<br>
+```{r Fig Ej16, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
+```
+
+## Ejercicio (continuación){#future-steps .smaller}
+
+- Cargamos la base de datos
+```{r data, echo=TRUE}
+data("mtcars")
+```
+- Obtenemos las primeras 3 observaciones
+```{r head, echo=TRUE}
+head(mtcars,2)
+```
+- Vemos (carb) y Sumamos los números
+```{r sum, echo=TRUE}
+4+4
+```
+- Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
+```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
+```
+
+## Ejercicio: Hágalo usted{#future-steps .smaller}
+
+- Cree un nuevo proyecto de R
+- Cargue una base de datos de R llamada "Chickweight"
+- Obtenga la suma del peso de los primeros 5 pollos
+- Guarde los resultados del proyecto en el archivo .Rdata
+- OPC1. Obtenga la media de todos los pollos (use recursos en-línea para aprender)
+- ¿Llegó a obtener un peso de `121.8183` kgs.)
+- OPC2. obtenga el resultado usando comas enseparador de decimales (outdec en internet)
+- OPC3. ¿Y qué tal todo esto con la desviación estandar el mismo separador de decimales?
+
+
+## Fuente{#future-steps .smaller}
+
+- R vs Stata: Which one is best for Data Science: https://youtu.be/KqWAmpb4iyc
+- Ozgur, C., Colliau, T.,  Rogers, G., Hughes, Z. & Bennie, E. (2017). MatLab vs. Python vs. R. Journal of data science: JDS. 15. 355-372. 
+- Ozgur, C., Kleckner, M., & Li, Y. (2015). Selection of Statistical Software for Solving Big Data Problems. SAGE Open, 5(2), 215824401558437. doi:10.1177/2158244015584379
+- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803.
+- Elosua, P. (2009). ¿Existe vida más allá del SPSS? Descubre R. Psicothema, 21(4),652-655. ISSN: 0214-9915. Disponible en: https://www.redalyc.org/articulo.oa?id=727/72711895025
+- Cano, E. & Moguerza, J. (2015). “R desde el principio. Curso ceRo de R”. Ediciones del Orto, Madrid. ISBN 84-7923-526-8. http://emilio.lcano.com/pub/cero/R-desde-el-principio-curso-cero-V1.02.pdf
+- R Development Core Team (2000). Introducción a R. Notas sobre R: Un entorno de programación para Análisis de Datos y Gráficos. Versión 1.0.1
+https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+- Lortie CJ. 2017. A review of R for Data Science: key elements and a critical analysis. PeerJ Preprints 5:e2873v1 
+
+
+## Prueba {#future-steps}
+
+Favor dirigirse al siguiente [enlace](https://docs.google.com/forms/d/e/1FAIpQLScs8bssbcpdAZjjvqrX6NCJ5ThQxSP745tk6YTDjtLgQkmjDw/viewform?usp=sf_link) y contestar
