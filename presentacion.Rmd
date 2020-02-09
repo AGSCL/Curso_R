@@ -235,4 +235,4 @@ https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
 
 ## Prueba {#future-steps}
 
-Favor dirigirse al siguiente [enlace](https://docs.google.com/forms/d/e/1FAIpQLScs8bssbcpdAZjjvqrX6NCJ5ThQxSP745tk6YTDjtLgQkmjDw/viewform?usp=sf_link) y contestar
+Favor dirigirse al siguiente [enlace](https://forms.gle/gi7Zrw6ZB4d5q7Ta7) y contestar
