@@ -60,10 +60,10 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Instalación de software
 - Ventajas/Desventajas de R y RStudio
 - Entorno de trabajo
+- Objetos de trabajo 
 - Instalación de Paquetes estadísticos
 - Importar Datos
 - Tipos de Variables 
-- Objetos de trabajo 
 - Aprender a aprender en línea 
 - Estadística Descriptiva Básica 
 - Configuración de datos
@@ -158,6 +158,14 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
 ```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "700px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
 ```
+
+::: notes
+Comentarios:
+- Editor de sintaxis: Formato block de notas, no ejecuta la sintaxis, comentarios se agregan anteponiendo el signo gato, puede predecir comandos, se ejecuta con cntrl+enterp "run"
+- Consola y visor resultados: Con un enter se ejcutarán, cambiarán de color una vez ejecutados, los errores arrojarán mensajes, ejecutar operaciones no es lo mismo que guardarlas, se ejecuta cuando hay un signo ">", no hay un mensaje de stop en la esquina superior derecha.
+- Entorno de trabajo: Memoria interna programa y uso de memoria RAM, entorno de trabajo temporal, objetos almacenados.
+- Visualizador: permite acceder a CRAN, manuales, etc.
+:::
 
 ## Ejercicio{#future-steps .smaller}
 
