@@ -34,13 +34,14 @@ slides > slide:not(.nobackground):before {
     padding: 0px 0;
 }
 .forceBreak { -webkit-column-break-after: always; break-after: column; }
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
 </style>
 <script>
 slides > slide:not(.nobackground):before {
-    width: 200px;
-    height: 70px;
-    background-size: 1px 1px;
-    padding: 0px 0;
+  background: none;
 }
 </script>
 
