@@ -110,7 +110,6 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
-
 ## Conceptos Previos- Funciones {.future-steps .smaller}
 
 <div class="brown">"To understand computations in R, two slogans are helpful: Everything that exists is an object. Everything that happens is a function call."- John Chambers </div>
@@ -154,6 +153,43 @@ Comentarios:
 
 ```{r Fig Repositorio, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Repositorios.png")
+```
+
+## Instalación de Paquetes Estadísticos{.future-steps .smaller .codefont}
+
+- Abra Rstudio, cree un proyecto de nombre "Curso 2", 
+- Abra un Script, escriba en él y ejecútelo (Run) 
+\tiny
+```{r crear mean_curso, echo=T, size = 'tiny'}
+set.seed(4321) #Creamos una semilla para la generación de datos, 
+#de manera que los podamos reproducir
+datos<- rnorm(200) #Generamos 200 números aleatorizados 
+#siguiendo distribución normal.
+promedio_curso <- function(x) {sum(x)/length(x)} #creamos una función que suma 
+#datos y los divide por su largo
+print(promedio_curso(datos))
+print(sum(datos)) #la suma de los datos
+print(length(datos)) #el largo de los datos
+.libPaths() # get library location
+```
+\tiny
+
+\normalsize
+
+## Instalación de Paquetes Estadísticos{.future-steps .smaller}
+
+- Ingrese en la consola o en un Script, la instalación del paquete "dplyr",  `install.packages("dplyr")`
+- Habiendo hecho esto, usted está instalando el paquete, pero no lo ha activado ni lo ha abierto
+- Para activarlo momentáneamente (`library(dplyr)`).
+  - Muchos autores no recomiendan "require", sino "library" (https://stackoverflow.com/q/5595512/9975513)
+  - Una ventaja de require entrega un valor binario si el paquete se cargó o no (VERDADERO/FALSO)
+  - La amenaza es que si uno corre líneas de código, se obvia el error
+  - Esto puede llevar a resultados erróneos (ej: aplicando funciones de otros paquetes con mismo nombre)
+- Existen otros argumentos de la función install.packages:
+  - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
+  
+```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
 ```
 
 ## Objetos de Trabajo {.future-steps .smaller}
@@ -231,46 +267,6 @@ dimnames(x)<-list(c("H","M"),c("desempleado","empleado","inactivo"),c("santiago"
 print(x)
 ```
 
-## Instalación de Paquetes Estadísticos{.future-steps .smaller .codefont}
-
-- Abra Rstudio, cree un proyecto de nombre "Curso 2", 
-- Abra un Script, escriba en él y ejecútelo (Run) 
-\tiny
-```{r crear mean_curso, echo=T, size = 'tiny'}
-set.seed(4321) #Creamos una semilla para la generación de datos, 
-#de manera que los podamos reproducir
-datos<- rnorm(200) #Generamos 200 números aleatorizados 
-#siguiendo distribución normal.
-promedio_curso <- function(x) {sum(x)/length(x)} #creamos una función que suma 
-#datos y los divide por su largo
-print(promedio_curso(datos))
-print(sum(datos)) #la suma de los datos
-print(length(datos)) #el largo de los datos
-.libPaths() # get library location
-```
-\tiny
-
-\normalsize
-
-## Instalación de Paquetes Estadísticos{.future-steps .smaller}
-
-- 
-
-## Instalación de Paquetes Estadísticos(2){.future-steps .smaller}
-
-- Ingrese en la consola o en un Script, la instalación del paquete "dplyr",  `install.packages("dplyr")`
-- Habiendo hecho esto, usted está instalando el paquete, pero no lo ha activado ni lo ha abierto
-- Para activarlo momentáneamente (`library(dplyr)`).
-  - Muchos autores no recomiendan "require", sino "library" (https://stackoverflow.com/q/5595512/9975513)
-  - Una ventaja de require entrega un valor binario si el paquete se cargó o no (VERDADERO/FALSO)
-  - La amenaza es que si uno corre líneas de código, se obvia el error
-  - Esto puede llevar a resultados erróneos (ej: aplicando funciones de otros paquetes con mismo nombre)
-- Existen otros argumentos de la función install.packages:
-  - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
-  
-```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
-```
 
 ## Niveles de Medición {.future-steps .smaller}
 
