@@ -58,14 +58,15 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
                style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
 ```
 
-- Instalación de software
+- **Instalación de software**
 - Ventajas/Desventajas de R y RStudio
 - Entorno de trabajo
-- Objetos de trabajo 
+- Objetos de trabajo
 - Instalación de Paquetes estadísticos
 - Importar Datos
 - Tipos de Variables 
-- Aprender a aprender en línea 
+- Valores Especiales
+- Recursos en línea
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
@@ -202,15 +203,16 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
 
 - Cargamos la base de datos
 ```{r data, echo=TRUE}
-data("mtcars")
+set.seed(4567)
+df<- data.frame(numeros=round(rnorm(1:200)*100,0))
 ```
 - Obtenemos las primeras 3 observaciones
 ```{r head, echo=TRUE}
-head(mtcars,2)
+head(df,2)
 ```
-- Vemos (carb) y Sumamos los números
+- Vemos los primeros 2 números y los sumamos
 ```{r sum, echo=TRUE}
-4+4
+-88+65
 ```
 - Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
 ```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
@@ -219,15 +221,16 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
 
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
 
-- Cree un nuevo proyecto de R
-- Cargue una base de datos de R llamada "Chickweight"
-- Obtenga la suma del peso de los primeros 5 pollos
-- Guarde los resultados del proyecto en el archivo .Rdata
-- OPC1. Obtenga la media de todos los pollos (use recursos en-línea para aprender)
-- ¿Llegó a obtener un peso de `121.8183` kgs.)
-- OPC2. obtenga el resultado usando comas enseparador de decimales (outdec en internet)
-- OPC3. ¿Y qué tal todo esto con la desviación estandar el mismo separador de decimales?
-
+- Cree un nuevo proyecto en R
+- Genere la siguiente base de datos recurriendo a este código: `set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0))`
+- Utilizando `tail(df2)` obtenga las últimas 6 observaciones
+- Súmelas
+- ¿Llegó al siguiente número: `r sum(tail(df2))`?
+- OPC1 = obtenga la media de todos los números (use recursos en línea)
+- OPC2 (+ avanzada)= btenga el resultado usando comas como separador de decimales ("outdec" en internet)
+- OPC3 = Obtenga la desviación estandar, separando los decimales con comas
+- Guarde los datos (.Rdata) y el proyecto (.RProj)
+- Reinicie el computador. Vuelva a abrirlo
 
 ## Fuente{#future-steps .smaller}
 

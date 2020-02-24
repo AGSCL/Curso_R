@@ -106,7 +106,7 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Importar Datos
 - Tipos de Variables 
 - Valores Especiales
-- Aprender a aprender en línea 
+- Recursos en línea 
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
@@ -375,13 +375,34 @@ paste0("Simón dice", ", \'", objeto,"\'")
 - Genere un objeto con las palabras utilizadas por sus compañeros de juego
 - Agregue la frase "por celular"
 
+## Ejercicio 2{.future-steps .smaller}
+
+- Cargue una base de datos de R llamada "Chickweight"
+- Obtenga la suma del peso de los primeros 5 pollos
+- OPC1. Obtenga la media de todos los pollos (use recursos en-línea para aprender)
+- ¿Llegó a obtener un peso de `121.8183` kgs.)
+- OPC2. obtenga el resultado usando comas enseparador de decimales (outdec en internet)
+- OPC3. ¿Y qué tal todo esto con la desviación estandar el mismo separador de decimales?
+
+## Ejercicio 3{.future-steps .smaller}
+
+- Usted ya instaló el paquete "dplyr"
+- El paquete dplyr contiene múltiples funciones y bases de datos (https://cran.r-project.org/web/packages/dplyr/dplyr.pdf)
+- Llame a la librería
+- Cargue la base de datos "starwars"
+- (Podría faltar el paquete magrittr)
+- Ejecute este código: `starwars %>% dplyr::group_by(eye_color) %>% summarise(promedio_altura_por_color_de_ojos=mean(height, na.rm=T))`
 
 ## Fuentes {.future-steps .smaller}
 
-- Hansen, M., Nolan, D. & Temple, D. (2008). Introduction to the R Language: Functions. Workshop: Integrating Computing into the Statistics Curricula. U.C. Berkeley. [Enlace](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)  
+- Hansen, M., Nolan, D. & Temple, D. (2008). Introduction to the R Language: Functions. Workshop: Integrating Computing into the Statistics Curricula. U.C. Berkeley. [Enlace](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)
 - Wickham, H. & Grolemund, G. Proyecto de traducción colaborativa de "R para Ciencia de Datos".https://es.r4ds.hadley.nz/
 - Ritchey F. (2002). “Estadística para las Ciencias Sociales”. Editorial Mc Graw Hill
 Interamericana editores S.A. de CV. México. www.shorturl.at/pvK37
 - El ícono del engranaje fue elaborado por <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 - Data Flair. R Tutorials. https://data-flair.training/blogs/r-data-types/
 - Leisch F. (2008). Creating R packages: a tutorial. http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf.
+
+## Prueba {#future-steps}
+
+Favor dirigirse al siguiente [enlace](https://forms.gle/UJG9md15m4NHNkv98) y contestar

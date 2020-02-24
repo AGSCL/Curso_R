@@ -1,0 +1,393 @@
+---
+title: "Curso Introductorio al uso de R Studio- Clase 2"
+output:
+  ioslides_presentation:
+    autosize: true
+    transition: slower
+    logo: logo.png
+    code_folding: hide
+    toc_float: TRUE 
+---
+
+<style>
+.superbigimage{
+    overflow-y:scroll;
+    white-space: nowrap;
+}
+.superbigimage img{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.p {
+  text-align: right;
+}
+.reveal section p {
+    font-size: 0.5em;
+}
+.reveal .slides section .slideContent ui li{
+    font-size: 0.6em;
+    color: red;
+}
+.reveal section pre code {
+    font-size: 0.6em;
+}
+.future-steps {
+  color: MidnightBlue;
+}
+.otro {
+  color: Teal;
+}
+.Advertencia {
+  color: Crimson;
+}
+code.r{
+  font-size: 3px;
+}
+pre {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  max-height: 10vh !important;
+  font-size: 1px;
+}
+.small-code pre code {
+  font-size: 0.8em;
+}
+.codefont pre {
+    font-size: 2px;
+    line-height: 1px;
+}
+.gdbar img {
+    width: 500px !important;
+    height: 150px !important;
+    margin: 10px 10px;
+}
+.gdbar {
+    width: 550px !important;
+    height: 175px !important;
+}
+slides > slide:not(.nobackground):before {
+    right: 0px;    
+    width: 200px;
+    height: 70px;
+    background-size: 1px 1px;
+    padding: 0px 0;
+}
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+</style>
+<script>
+slides > slide:not(.nobackground):before {
+  background: none;
+}
+</script>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+if(!require(dplyr)){install.packages("dplyr")}
+```
+
+## Contenidos{.future-steps}
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"), 
+               alt = 'logo', 
+               style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
+```
+
+- Instalación de software
+- Ventajas/Desventajas de R y RStudio
+- Entorno de trabajo
+- Objetos de trabajo
+- Instalación de Paquetes estadísticos
+- Importar Datos
+- Tipos de Variables 
+- Valores Especiales
+- **Recursos en línea** 
+- Estadística Descriptiva Básica 
+- Configuración de datos
+
+## Conceptos Previos- Funciones {.future-steps .smaller}
+
+<div class="brown">"To understand computations in R, two slogans are helpful: Everything that exists is an object. Everything that happens is a function call."- John Chambers </div>
+
+<br>
+
+- Una función define relaciones entre distintos objetos
+- Permite automatizar tareas
+```{r Fig Ej20, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
+```
+- Las funciones pueden contener otras funciones ("anidadas"/"nested")
+- Hay funciones tan complejas que requieren muchos argumentos, referencias, condiciones, etc.
+- Toda función tiene un nombre, un argumento (puede estar definido por defecto) y un cuerpo
+- Los resultados de las operaciones pueden arrojar advertencias (para considerar) o errores (la ejecución para). Gran parte de los errores y advertencias están programadas, pueden ser buscadas en la red.
+
+## Conceptos Previos- Paquetes Estadísticos {.future-steps .smaller}
+
+- Una de las características que hace la diferencia entre otros programas. 
+- Un paquete estadístico contiene distintas funciones (comandos). 
+- Son extensiones de R: Contienen código, datos y documentación **estandarizada**.
+- Los paquetes en general se alojan en repositorios.
+- Las librerías son un directorio local que contiene los paquetes instalados
+- En general las librerías tienen archivos de documentación similares a formato Latex, con información de sus versiones, la fuente, etc.
+
+<div class="superbigimage">
+```{r Fig Latex, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "400px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/ejemplo_latex.png")
+```
+</div>
+
+
+::: notes
+Comentarios:
+- No cualquiera hace un paquete estadístico. Se requiere mucho conocimiento matemático, proveer mantenimiento constante, uno puede estar sujeto a revisiones de pares (Journal of Statistical Software), miembros de R (de repositorios) u otros investigadores que utilizan el paquete entre otros aspectos.
+:::
+
+## Conceptos Previos- Repositorio CRAN {.future-steps .smaller}
+
+- Abra Rstudio y presione `Alt + T + G`
+
+```{r Fig Repositorio, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Repositorios.png")
+```
+
+## Instalación de Paquetes Estadísticos{.future-steps .smaller .codefont}
+
+- Abra Rstudio, cree un proyecto de nombre "Curso 2", 
+- Abra un Script, escriba en él y ejecútelo (Run) 
+\tiny
+```{r crear mean_curso, echo=T, size = 'tiny'}
+set.seed(4321) #Creamos una semilla para la generación de datos, 
+#de manera que los podamos reproducir
+datos<- rnorm(200) #Generamos 200 números aleatorizados 
+#siguiendo distribución normal.
+promedio_curso <- function(x) {sum(x)/length(x)} #creamos una función que suma 
+#datos y los divide por su largo
+print(promedio_curso(datos))
+print(sum(datos)) #la suma de los datos
+print(length(datos)) #el largo de los datos
+.libPaths() # get library location
+```
+\tiny
+
+\normalsize
+
+## Instalación de Paquetes Estadísticos{.future-steps .smaller}
+
+- Ingrese en la consola o en un Script, la instalación del paquete "dplyr",  `install.packages("dplyr")`
+- Habiendo hecho esto, usted está instalando el paquete, pero no lo ha activado ni lo ha abierto
+- Para activarlo momentáneamente (`library(dplyr)`).
+  - Muchos autores no recomiendan "require", sino "library" (https://stackoverflow.com/q/5595512/9975513)
+  - Una ventaja de require entrega un valor binario si el paquete se cargó o no (VERDADERO/FALSO)
+  - La amenaza es que si uno corre líneas de código, se obvia el error
+  - Esto puede llevar a resultados erróneos (ej: aplicando funciones de otros paquetes con mismo nombre)
+- Existen otros argumentos de la función install.packages:
+  - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
+  
+```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
+```
+
+## Objetos de Trabajo {.future-steps .smaller}
+
+Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continuación presentaremos las más básicas, junto con sus propiedades:
+
+### Vectores
+- Aloja elementos/valores del mismo tipo (Posteriormente podrá ver los [Tipos de Variables](#12))
+- De ahí que elementos de distintos tipos serán coercionados a adoptar el tipo de caracter
+- Permite tomar un rango de ellos, excluir otros elementos, especificar los que se obtendrán mediante un criterio booleano.
+- Son el fundamento de muchas otras estructuras.
+- Permite ser ordenado
+- Si se utilizan vectores de distinto largo, las funciones pueden reciclarse
+
+### Factores
+- Son vectores que alojan variables de tipo categórico u ordinal
+- La ventaja es que las etiquetas se graban sólo una vez
+- Otra es que permite informar a otros algoritmos respecto al tipo de datos que alojan (ej. regresión logística)
+
+### Listas
+- Contienen elementos de distintos tipos, hasta objetos, de manera ordenada
+- De ahí que pueden estar anidados entre ellos
+- Los elementos pueden no estar relacionados entre sí
+- La función `list()` permite generarla. Es opcional agregarle nombres a cada elemento, pero permite llamarlos con mayor facilidad.
+
+### Matrices
+- Forma tabular, bidemnsional y de naturaleza homogénea
+- Coarta su formato si se incorporan elementos de distinto tipo
+- Admite nombres a sus dimensiones (`dimnames`)
+- Generalmente numéricos
+- [x,y]
+
+### Array
+- Tabla multidimensional
+- Tiene filas, columnas y otras capas
+
+### Data frame
+- Bidimensional
+- Similar a una base de datos .csv o una planilla excel (aunque más restringida)
+- Se entiende como una lista de vectores o factores con la misma extensión (largo de columna 1 será el mismo que el del resto de las columnas)
+
+### Tibbles
+
+
+## Ejemplos, Objetos de Trabajo {.future-steps .smaller}
+
+
+- ¿Lista o vector?
+
+```{r vectores1, echo=T, size = 'tiny'}
+c(4,6,8,10)
+```
+
+-¿Lista o vector?
+
+```{r lista1, echo=T, size = 'tiny'}
+c("d",6,"v",10)
+```
+
+- 
+
+```{r matrices1, echo=T, size = 'tiny'}
+matrix(1:4, nrow = 2, ncol = 2)
+```
+
+```{r matrices2, echo=T, size = 'tiny'}
+matrix(1:4, nrow = 2, ncol = 2)*matrix(c(46,57,32,88),nrow=2)
+```
+
+- Matriz o Array
+
+```{r array, echo=T, size = 'tiny'}
+x<-array(c(52,41,25,85,136,128,28,59,65,16,1,133),c(2,3,2))
+dimnames(x)<-list(c("H","M"),c("desempleado","empleado","inactivo"),c("santiago","valparaiso"))
+print(x)
+```
+
+
+## Niveles de Medición {.future-steps .smaller}
+
+| Niv. Medición | Clasificación | Orden | Un. Medida Constante | Cero Absoluto |
+|:------:|:-----:|:---------:|:------:|:------:|
+| Nominal | X |  |  |  |
+| Ordinal | X | X |  |  |
+| Intervalo | X | X | X |  | 
+| Razón | X | X | X | X | 
+<br>
+
+- Variables categóricas, cualitativas, no métricas
+  - Nominales
+  - Ordinales
+- Variables cuantitativas, métricas
+  - De Intervalo
+  - Razón o Proporción
+  - Continuas
+  - Discretas
+
+::: notes
+Comentarios:
+
+1. Nominales
+• Permiten clasificar las diferentes características de los casos en categorías excluyentes.
+• Ninguna tiene mayor jerarquía que la otra. Por lo tanto, difieren en cualidad, no en magnitud numérica.
+• Se les denominan variables dicotómicas cuando tienen sólo dos categorías de respuesta.
+
+2. Ordinales
+• Sus valores se pueden clasificar pero también ordenar.
+• Hay categorías, pero además éstas mantienen un orden de mayor a menor  indican jerarquía
+• Se puede afirmar si son iguales o diferentes, y si uno es mayor o menor que el otro
+
+1) De Intervalo
+• Se parecen a las ordinales pero con una propiedad adicional:la diferencia entre dos valores de datos cualesquiera tieneun significado.
+• Es decir, se conoce la distancia exacta entre dos categorías.
+• No existe el cero (0) absoluto (ausencia de cantidad).
+
+2) De Razón o Proporción
+• Tiene las mismas características del intervalo, pero tiene una propiedad adicional: consideran el cero absoluto, que indica “nada” de cantidad.
+• Para valores de este nivel tanto las diferencias como las proporciones tienen significado
+:::
+
+## Niveles de Medición (continuación) {.future-steps .smaller}
+
+
+```{r Fig Var_ritchey, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "600x", cap="Ritchey, 2002, p. 47"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/var_ritchey.png")
+```
+$^{Fuente: Ritchey, 2002, p. 47}$
+
+::: notes
+Comentarios:
+Desde luego hay variables que pueden medirse en más de un nivel, según el propósito de medición.
+Por ejemplo: la variable “Uso de internet para estudio/trabajo”
+• De razón  medida en “Horas al día” ( 0 a k horas)
+• Ordinal  medida mediante las categorías “Muy frecuentemente”; “Frecuentemente”; “Casi nunca”; “Nunca”.
+:::
+
+## Tipos de Variables {.future-steps .smaller}
+
+Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo del tipo de valores que se le asigna a cada objeto). Estos determinan cómo los datos serán formateados, mostrados y tratados.
+
+- Numérico (numeric): valores numéricos, incluye decimales. `{2,1.5,3}`
+
+- Entero (integer): números enteros, no incluye decimales. `{4,8,34}`
+
+- Caracter (character): Variables Cadena (alfanuméricas). `"andres", "pedro"`
+
+- Lógico (logical): valores lógicos, verdadero o falso. `{TRUE/FALSE, 0/1}`
+
+Además, es posible tratar las variables ("casting") como factores. En este caso, las variables corresponden a valores enteros que tienen etiquetas para los distintos valores. Por otra parte, existen estructuras más complejas, como las fechas `(dttm, POSixct)`, que provienen de estas formas básicas y que van más allá del alcance de este curso
+
+## Otros Valores Especiales {.future-steps .smaller}
+
+- `NA` (no disponibles), puede entenderse como valores perdidos
+- La `r 1/0` infinidad se entiende como `Inf`
+- `r 0/0` es un valor indefinido `NaN` (not a number)
+- Sólo hay una propiedad `NULL`, similar a largo 0
+
+```{r crear special_char, echo=T, warning=F, size = 'tiny'}
+is.finite(c(2,3,4,5)/c(0,1)) # se recicla
+is.infinite(matrix(c(1,2,5),nrow=2,ncol=2)/matrix(c(0,4),nrow=2,ncol=2))  #va a reciclar la primera observación
+is.nan(c(2/5,6/6,0/0))
+is.na(c(1,2,NA,4,5))
+complete.cases(c(1,2,NA,4,5))
+anyNA(c(1,2,NA,4,5))
+anyNA(c(1,2,3,4,5))
+is.null(c(1,2,3,4,5))
+is.null(c(1,2,NA,4,5))
+is.null(c())
+```
+
+## Ejercicio 1{.future-steps .smaller}
+
+Juego de Cultura
+- La regla que aplicará es la siguiente: "a todas las palabras que digan deberán agregarle la frase 'por celular'"
+- Sus compañeros dicen lo siguiente: `c("Debo comprar tickets para mañana", "Qué bueno sería juntarnos", "Voy a preparar un jugo")`
+- La función `paste0` permite pegar elementos sin separación
+```{r crear juego1, echo=T}
+objeto <- "silencio"
+paste0("Simón dice", objeto)
+#considere que no agrega espacios, por lo que debe agregarlos usted
+paste0("Simón dice", ", \'", objeto,"\'")
+```
+- Genere un objeto con las palabras utilizadas por sus compañeros de juego
+- Agregue la frase "por celular"
+
+
+## Fuentes {.future-steps .smaller}
+
+- Hansen, M., Nolan, D. & Temple, D. (2008). Introduction to the R Language: Functions. Workshop: Integrating Computing into the Statistics Curricula. U.C. Berkeley. [Enlace](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)  
+- Wickham, H. & Grolemund, G. Proyecto de traducción colaborativa de "R para Ciencia de Datos".https://es.r4ds.hadley.nz/
+- Ritchey F. (2002). “Estadística para las Ciencias Sociales”. Editorial Mc Graw Hill
+Interamericana editores S.A. de CV. México. www.shorturl.at/pvK37
+- El ícono del engranaje fue elaborado por <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+- Data Flair. R Tutorials. https://data-flair.training/blogs/r-data-types/
+- Leisch F. (2008). Creating R packages: a tutorial. http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf.
+
+## Prueba {#future-steps}
+
+Favor dirigirse al siguiente [enlace](https://forms.gle/UJG9md15m4NHNkv98) y contestar
+
+Una vez contestada, responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará )
