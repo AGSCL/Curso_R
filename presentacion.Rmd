@@ -203,16 +203,15 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
 
 - Cargamos la base de datos
 ```{r data, echo=TRUE}
-set.seed(4567)
-df<- data.frame(numeros=round(rnorm(1:200)*100,0))
+set.seed(4567);df_ej<- data.frame(numeros=round(rnorm(1:200)*100,0))
 ```
 - Obtenemos las primeras 3 observaciones
 ```{r head, echo=TRUE}
-head(df,2)
+set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
 ```
 - Vemos los primeros 2 números y los sumamos
 ```{r sum, echo=TRUE}
--88+65
+-74-90
 ```
 - Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
 ```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
