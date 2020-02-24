@@ -225,7 +225,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
 - Genere la siguiente base de datos recurriendo a este código: `set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0))`
 - Utilizando `tail(df2)` obtenga las últimas 6 observaciones
 - Súmelas
-- ¿Llegó al siguiente número: `r sum(tail(df2))`?
+- ¿Llegó al siguiente número: `r set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0));sum(tail(df2))`?
 - OPC1 = obtenga la media de todos los números (use recursos en línea)
 - OPC2 (+ avanzada)= btenga el resultado usando comas como separador de decimales ("outdec" en internet)
 - OPC3 = Obtenga la desviación estandar, separando los decimales con comas
