@@ -103,10 +103,10 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Entorno de trabajo
 - **Objetos de trabajo **
 - Instalación de Paquetes estadísticos
-- Importar Datos
 - Tipos de Variables 
 - Valores Especiales
 - Recursos en línea 
+- Importar Datos de Fuentes Externas
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
@@ -186,7 +186,8 @@ print(length(datos)) #el largo de los datos
   - La amenaza es que si uno corre líneas de código, se obvia el error
   - Esto puede llevar a resultados erróneos (ej: aplicando funciones de otros paquetes con mismo nombre)
 - Existen otros argumentos de la función install.packages:
-  - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
+- Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
+- Si no conoce el origen de una función, puede consultarlo anteponiendo "?" o utilizando la función  `help()`
   
 ```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
@@ -203,10 +204,12 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - Son el fundamento de muchas otras estructuras.
 - Permite ser ordenado
 - Si se utilizan vectores de distinto largo, las funciones pueden reciclarse
+- Constructor de vectores, **combine**: `c()`
 
 ### Factores
 - Son vectores que alojan variables de tipo categórico u ordinal
 - La ventaja es que las etiquetas se graban sólo una vez
+- Por tanto, aloja un vector con valores enteros, dependiendo de la cantidad de valores únicos
 - Otra es que permite informar a otros algoritmos respecto al tipo de datos que alojan (ej. regresión logística)
 
 ### Listas
@@ -221,18 +224,40 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - Admite nombres a sus dimensiones (`dimnames`)
 - Generalmente numéricos
 - [x,y]
+- Por defecto, de arriba a abajo (bycol=T)
 
 ### Array
 - Tabla multidimensional
 - Tiene filas, columnas y otras capas
 
 ### Data frame
+- Marco/Trama/Conjunto de Datos
 - Bidimensional
+- Heterogéneas
 - Similar a una base de datos .csv o una planilla excel (aunque más restringida)
+- Los nombres de las columnas no pueden estar vacíos (el programa los llenará)
+- Es un dataset que está organizado en columnas (cada columna con su nombre)
+- Similar a las bases de datos de SAS o SPSS
 - Se entiende como una lista de vectores o factores con la misma extensión (largo de columna 1 será el mismo que el del resto de las columnas)
+- `names()`, `colnames()`, `rownames()`, `is.data.frame()`, `str()`
+
+:::notes
+Usar cbind() para agregar una nueva columna a un data frame
+Usar rbind() para agregar una nueva fila a un data frame
+Quitar filas de un data frame
+Usar na.omit() para remover filas de un data frame con valores NA
+Usar levels() y as.character() para explorar y manipular columnas de clase factor
+Usar str(), nrow(), ncol(), dim(), colnames(), rownames(), head() y typeof() para entender la estructura de un data frame
+Leer un archivo csv usando read.csv()
+Entender el uso de length() en un data frame
+:::
 
 ### Tibbles
-
+- Una nueva configuración de un data frame
+- No fuerza a las columnas de caracteres a comportarse como factores
+- No entrega nombres de columnas automáticamente
+- Más sensible: da más advertencias
+- Es más cauto al reciclar vectores
 
 ## Ejemplos, Objetos de Trabajo {.future-steps .smaller}
 
@@ -252,7 +277,7 @@ c("d",6,"v",10)
 - 
 
 ```{r matrices1, echo=T, size = 'tiny'}
-matrix(1:4, nrow = 2, ncol = 2)
+matrix(1:4, nrow = 2, ncol = 2) #ATRIBUTOS DE UNA MATRIZ,tener en cuenta para después
 ```
 
 ```{r matrices2, echo=T, size = 'tiny'}
@@ -265,8 +290,29 @@ matrix(1:4, nrow = 2, ncol = 2)*matrix(c(46,57,32,88),nrow=2)
 x<-array(c(52,41,25,85,136,128,28,59,65,16,1,133),c(2,3,2))
 dimnames(x)<-list(c("H","M"),c("desempleado","empleado","inactivo"),c("santiago","valparaiso"))
 print(x)
+#DIMNAMES, tener en cuenta para la próxima lámina
 ```
 
+## Indexación, Subconjuntos y Atributos, Objetos de Trabajo {.future-steps .smaller}
+
+- 
+```{r subset, echo=T, size = 'tiny'}
+print(c(1,2,3,4,5))[3]
+#¿Y ahora?, ¿qué llama la atención?
+print(c(1,2,3,4,5)[3:6])
+#¿por qué aparece un error?
+print(c(1,2,3,4,5)[3:6,6])
+```
+- 
+
+```{r df, echo=T, size = 'tiny'}
+data("women")
+dimnames()
+str(women)
+names(women)
+women$height
+women[3,1]
+```
 
 ## Niveles de Medición {.future-steps .smaller}
 
@@ -338,7 +384,7 @@ Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo de
 
 - Lógico (logical): valores lógicos, verdadero o falso. `{TRUE/FALSE, 0/1}`
 
-Además, es posible tratar las variables ("casting") como factores. En este caso, las variables corresponden a valores enteros que tienen etiquetas para los distintos valores. Por otra parte, existen estructuras más complejas, como las fechas `(dttm, POSixct)`, que provienen de estas formas básicas y que van más allá del alcance de este curso
+Además, es posible tratar las variables ("casting") como factores. En este caso, las variables corresponden a valores enteros que tienen etiquetas para los distintos valores. Por otra parte, existen estructuras más complejas (tipo abstracto), como las fechas `(dttm, POSixct)`, que provienen de estas formas básicas y que van más allá del alcance de este curso
 
 ## Otros Valores Especiales {.future-steps .smaller}
 
@@ -391,7 +437,7 @@ paste0("Simón dice", ", \'", objeto,"\'")
 - Llame a la librería
 - Cargue la base de datos "starwars"
 - (Podría faltar el paquete magrittr)
-- Ejecute este código: `starwars %>% dplyr::group_by(eye_color) %>% summarise(promedio_altura_por_color_de_ojos=mean(height, na.rm=T))`
+- Ejecute este código: `starwars %>% dplyr::group_by(eye_color) %>% dplyr::summarise(promedio_altura_por_color_de_ojos=mean(height, na.rm=T))`
 
 ## Fuentes {.future-steps .smaller}
 

@@ -63,10 +63,10 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Entorno de trabajo
 - Objetos de trabajo
 - Instalación de Paquetes estadísticos
-- Importar Datos
 - Tipos de Variables 
 - Valores Especiales
 - Recursos en línea
+- Importar Datos de Fuentes Externas
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
@@ -213,11 +213,19 @@ set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
 ```{r sum, echo=TRUE}
 -74-90
 ```
+- Ejecuto en la consola lo siguiente: `sessionInfo` (detalles de la sesión y configuración programa) y `dput` (para que otros puedan trabajar fácilmente sobre los datos que trabajas). Permite control y que los datos sean reproducibles (ej. Github).
+```{r dput y session, echo=TRUE}
+
+dput(head(data.frame(numeros=round(rnorm(1:200)*100,0)),2))
+
+sessionInfo()
+###
+```
 - Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
 ```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
 ```
-
+-
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
 
 - Cree un nuevo proyecto en R
