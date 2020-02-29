@@ -95,21 +95,24 @@ Una vez ya bajado de internet, favor abrir y apretar el botón siguiente en todo
 
  **Reinicie el computador una vez finalizada la instalación**
  
- Posteriormente, ingrese a Rstudio e instale 3 paquetes mediante el siguiente comando `install.packages(c("dplyr","ggplot2", "data.table"))`
+## Paso 4: Prueba (Opcional)
 
+Abra una nueva sesión en Rstudio (abra el programa).
 
 ```{r  Fig Instalacion_RStudio2, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
 ```
 
-
-## Paso 4: Prueba
-
-Habiendo cumplido con el paso previo, abra R Studio y corra el siguiente comando en la Consola: `install.packages(c("dplyr", "ggplot2","data.table"))`. Si los paquetes se instalan y usted puede correr el siguiente comando `require(dplyr);data(mtcars);mtcars%>% filter(vs==0, gear==5, carb==4) %>% select(mpg)`, asegúrese que su resultado debiese coincidir con el siguiente número: `r require(dplyr);data(mtcars);mtcars%>% filter(vs==0, gear==5, carb==4) %>% select(mpg)`.
-
+Habiendo cumplido con el paso previo, abra R Studio y corra el siguiente comando en la Consola (siga los pasos de la imagen): `install.packages("janitor")`.
 
 ```{r  Fig Instalacion_RStudio3, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio3.gif")
+```
+
+¿Obtuvo el siguiente mensaje?, si lo obtuvo es porque la instalación fue exitosa.
+
+```{r  Fig Instalacion_RStudio_comprobacion, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion_final.png")
 ```
 
 ## Comentarios y Dificultades del Proceso de Instalación
