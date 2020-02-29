@@ -93,15 +93,15 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio1.gif")
 
 Una vez ya bajado de internet, favor abrir y apretar el botón siguiente en todos sus campos. **Observación**: Existen opciones para personalizar las acciones que hicimos aquí. De todas formas este es un curso introductorio, por lo que no se ahondarán en estas alternativas.
 
+```{r  Fig Instalacion_RStudio2, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
+```
+
  **Reinicie el computador una vez finalizada la instalación**
  
 ## Paso 4: Prueba (Opcional)
 
 Abra una nueva sesión en Rstudio (abra el programa).
-
-```{r  Fig Instalacion_RStudio2, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
-```
 
 Habiendo cumplido con el paso previo, abra R Studio y corra el siguiente comando en la Consola (siga los pasos de la imagen): `install.packages("janitor")`.
 
