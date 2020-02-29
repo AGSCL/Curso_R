@@ -1,0 +1,257 @@
+---
+title: "Curso Introductorio al uso de R Studio- Clase 1"
+output:
+  ioslides_presentation:
+    transition: slower
+    logo: logo.png
+    #smaller: true
+---
+
+<style>
+#future-steps {
+  color: MidnightBlue;
+}
+#otro {
+  color: Teal;
+}
+#Advertencia {
+  color: Crimson;
+}
+.gdbar img {
+    width: 500px !important;
+    height: 150px !important;
+    margin: 10px 10px;
+}
+.gdbar {
+    width: 550px !important;
+    height: 175px !important;
+}
+slides > slide:not(.nobackground):before {
+    right: 0px;    
+    width: 200px;
+    height: 70px;
+    background-size: 1px 1px;
+    padding: 0px 0;
+}
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+</style>
+<script>
+slides > slide:not(.nobackground):before {
+  background: none;
+}
+</script>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Contenidos{#future-steps}
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"), 
+               alt = 'logo', 
+               style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
+```
+
+- **Instalación de software**
+- Ventajas/Desventajas de R y RStudio
+- Entorno de trabajo
+- Objetos de trabajo
+- Instalación de Paquetes estadísticos
+- Tipos de Variables 
+- Valores Especiales
+- Recursos en línea
+- Importar Datos de Fuentes Externas
+- Estadística Descriptiva Básica 
+- Configuración de datos
+
+
+## Presentación{#future-steps}
+
+- Andrés González Santa Cruz
+- Ustedes: Nombre, nivel de manejo en R, experiencias previas con este software o similares, manejo informático, ¿tuvieron problemas en instalar R?
+
+## Instalación{#future-steps}
+
+- En la página pudieron ver cómo se instalaba R, 
+<div class="centered">
+**¿Alguna Duda?**
+</div>
+  - Problemas frecuentes: 
+  - Microsoft R vs. R, Arquitectura SO (64bits vs. 32bits), 
+  - Conectar al servidor de repositorios (firewall, puertas de enlace bloqueadas, permisos de administrador, etc.), 
+  - **y un montón de cosas que se resuelven leyendo en internet.**
+
+## Ventajas/Desventajas de R y RStudio {#future-steps}
+
+<div class="centered">
+**A la hora de elegir qué utilizará, debe considerar estos atributos**
+</div>
+
+<div class="columns-2">
+### Ventajas
+  - Flexible
+  - Actualizaciones constantes
+  - Fácil automatización e integración 
+  - Muchos recursos en-línea y comunidades
+  - Útil para ser enseñado a estudiantes
+  - Investigación Reproducible
+  - **Gratis** - Fuente Abierta
+  <p class="forceBreak"></p>
+
+### Desventajas
+  - No tan intuitivo
+  - No tan confiable 
+  - A ratos muy flexible
+  - No cuenta con soporte oficial
+  - Requiere tiempo  
+</div>
+
+::: notes
+Comentarios:
+
+- Flexibilidad (muchos diseños de datos y muchas funciones), Actualizaciones constantes (nuevos paquetes), de fácil automatización e integración con otras plataformas, software y lenguajes (Google, Excel, SQL, Stata, Python, etc.), muchos recursos en-línea (memes) y comunidades virtuales y presenciales (Rladies, useRchile, etc.), útil para ser enseñado a estudiantes y personas no tan familiarizadas con programación, **gratis**.
+- No tan intuitivo (Difícil aprender sintaxis de R, incorporar lenguaje y lógica detrás), No tan confiable (Paquetes Obsoletos, Erróneos, No Compatibles), a ratos muy flexible (requiere especificar muchos parámetros, argumentos, opciones, etc.), requiere tiempo.
+:::
+
+## Ventajas/Desventajas de R y RStudio|Algunos Memes{#future-steps .columns-2}
+
+```{r Fig Meme1, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_curso.png")
+```
+  <p class="forceBreak"></p>
+
+```{r Fig Meme2, fig.align="right", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
+```
+
+## Ventajas/Desventajas de RStudio{#future-steps}
+
+<div class="columns-2">
+### Ventajas
+  - **Entorno de Desarrollo Integrado para R**
+  - Control de versiones
+  - Paneles múltiples
+  - Permite automatizar algunas funciones de R (Knitr)
+  - Fácil Depurador (errores)
+  - Eficienta Recursos Computacionales
+  - Cuenta con soporte, versiones en servidor y grandes desarrolladores
+  <p class="forceBreak"></p>
+
+### Desventajas
+  - Algo inestable (Ej. "Figure margins too large")
+  - Tareas exigentes computacionalmente son más lentas
+</div>
+
+
+## Entorno de Trabajo{#future-steps .smaller}
+
+- Apriete `Cntrl + Alt + Shift 0`
+<div class="yellow">- Editor de texto o códigos </div>
+<div class="green">- Lugar de trabajo (objetos creados, funciones, historial, control de versiones) </div>
+<div class="red">- Consola para desplegar los comandos y obtener resultados</div>
+<div class="blue">- Multitabla(gráficos, carpetas, paquetes, visor páginas web)</div>
+
+```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "700px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
+```
+
+::: notes
+Comentarios:
+- Editor de sintaxis: Formato block de notas, no ejecuta la sintaxis, comentarios se agregan anteponiendo el signo gato, puede predecir comandos, se ejecuta con cntrl+enterp "run"
+- Consola y visor resultados: Con un enter se ejcutarán, cambiarán de color una vez ejecutados, los errores arrojarán mensajes, ejecutar operaciones no es lo mismo que guardarlas, se ejecuta cuando hay un signo ">", no hay un mensaje de stop en la esquina superior derecha.
+- Entorno de trabajo: Memoria interna programa y uso de memoria RAM, entorno de trabajo temporal, objetos almacenados.
+- Visualizador: permite acceder a CRAN, manuales, etc.
+:::
+
+## Ejercicio{#future-steps .smaller}
+
+<div class="columns-2"> 
+1. Abra RStudio
+2. Cree una sesión nueva 
+
+```{r Fig Ej11, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio11.png")
+```
+<br>
+```{r Fig Ej12, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio12.png")
+```
+<br>
+```{r Fig Ej13, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio13.png")
+```
+ <p class="forceBreak"></p>
+```{r Fig Ej14, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio14.png")
+```
+<br>
+```{r Fig Ej15, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio15.png")
+```
+<br>
+```{r Fig Ej16, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
+```
+
+## Ejercicio (continuación){#future-steps .smaller}
+
+- Cargamos la base de datos
+```{r data, echo=TRUE}
+set.seed(4567);df_ej<- data.frame(numeros=round(rnorm(1:200)*100,0))
+```
+- Obtenemos las primeras 3 observaciones
+```{r head, echo=TRUE}
+set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
+```
+- Vemos los primeros 2 números y los sumamos
+```{r sum, echo=TRUE}
+-74-90
+```
+- Ejecuto en la consola lo siguiente: `sessionInfo` (detalles de la sesión y configuración programa) y `dput` (para que otros puedan trabajar fácilmente sobre los datos que trabajas). Permite control y que los datos sean reproducibles (ej. Github).
+```{r dput y session, echo=TRUE}
+
+dput(head(data.frame(numeros=round(rnorm(1:200)*100,0)),2))
+
+sessionInfo()
+###
+```
+- Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
+```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
+```
+-
+## Ejercicio: Hágalo usted{#future-steps .smaller}
+
+- Cree un nuevo proyecto en R
+- Genere la siguiente base de datos recurriendo a este código: `set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0))`
+- Utilizando `tail(df2)` obtenga las últimas 6 observaciones
+- Súmelas
+- ¿Llegó al siguiente número: `r set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0));sum(tail(df2))`?
+- OPC1 = obtenga la media de todos los números (use recursos en línea)
+- OPC2 (+ avanzada)= btenga el resultado usando comas como separador de decimales ("outdec" en internet)
+- OPC3 = Obtenga la desviación estandar, separando los decimales con comas
+- Guarde los datos (.Rdata) y el proyecto (.RProj)
+- Reinicie el computador. Vuelva a abrirlo
+
+## Fuente{#future-steps .smaller}
+
+- R vs Stata: Which one is best for Data Science: https://youtu.be/KqWAmpb4iyc
+- Ozgur, C., Colliau, T.,  Rogers, G., Hughes, Z. & Bennie, E. (2017). MatLab vs. Python vs. R. Journal of data science: JDS. 15. 355-372. 
+- Ozgur, C., Kleckner, M., & Li, Y. (2015). Selection of Statistical Software for Solving Big Data Problems. SAGE Open, 5(2), 215824401558437. doi:10.1177/2158244015584379
+- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803.
+- Elosua, P. (2009). ¿Existe vida más allá del SPSS? Descubre R. Psicothema, 21(4),652-655. ISSN: 0214-9915. Disponible en: https://www.redalyc.org/articulo.oa?id=727/72711895025
+- Cano, E. & Moguerza, J. (2015). “R desde el principio. Curso ceRo de R”. Ediciones del Orto, Madrid. ISBN 84-7923-526-8. http://emilio.lcano.com/pub/cero/R-desde-el-principio-curso-cero-V1.02.pdf
+- R Development Core Team (2000). Introducción a R. Notas sobre R: Un entorno de programación para Análisis de Datos y Gráficos. Versión 1.0.1
+https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+- Lortie CJ. 2017. A review of R for Data Science: key elements and a critical analysis. PeerJ Preprints 5:e2873v1 
+
+
+## Prueba {#future-steps}
+
+Favor dirigirse al siguiente [enlace](https://forms.gle/gi7Zrw6ZB4d5q7Ta7) y contestar
