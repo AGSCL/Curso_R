@@ -246,6 +246,11 @@ sessionInfo()
 ```
 - Guardo los objetos creados (.Rdata y .R) y guardo la sesión (.Rproj) que los contiene 
 
+## Ejercicio 2{#future-steps .smaller}
+- Su jefe le pide que vea los datos guardados en el proyecto de R adjunto en el enlace.
+- Abra el siguiente [enlace ](https://github.com/AGSCL/Curso_R/raw/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/ejercicio2.zip) y baje los datos.
+- Abra el proyecto, el script y el .Rdata
+
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
 
 - Cree un nuevo proyecto en R
@@ -259,7 +264,7 @@ sessionInfo()
 - Guarde los datos y el proyecto
 - Reinicie el computador. Vuelva a abrirlos
 
-## Fuente{#future-steps .smaller}
+## Fuentes{#future-steps .smaller}
 
 - R vs Stata: Which one is best for Data Science: https://youtu.be/KqWAmpb4iyc
 - Ozgur, C., Colliau, T.,  Rogers, G., Hughes, Z. & Bennie, E. (2017). MatLab vs. Python vs. R. Journal of data science: JDS. 15. 355-372. 
