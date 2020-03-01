@@ -127,6 +127,7 @@ Comentarios:
 
 - Flexibilidad (muchos diseños de datos y muchas funciones), Actualizaciones constantes (nuevos paquetes), de fácil automatización e integración con otras plataformas, software y lenguajes (Google, Excel, SQL, Stata, Python, etc.), muchos recursos en-línea (memes) y comunidades virtuales y presenciales (Rladies, useRchile, etc.), útil para ser enseñado a estudiantes y personas no tan familiarizadas con programación, **gratis**.
 - No tan intuitivo (Difícil aprender sintaxis de R, incorporar lenguaje y lógica detrás), No tan confiable (Paquetes Obsoletos, Erróneos, No Compatibles), a ratos muy flexible (requiere especificar muchos parámetros, argumentos, opciones, etc.), requiere tiempo.
+- Por ejemplo renv, o checkpoint o packrat, permiten tener un control total de los paquetes utilizados y su versión.
 :::
 
 ## Ventajas/Desventajas de R y RStudio|Algunos Memes{#future-steps .columns-2}
@@ -158,7 +159,10 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
   - Tareas exigentes computacionalmente son más lentas
 </div>
 
-
+::: notes
+Comentarios:
+Por ejemplo, control de versones con github y svn.
+:::
 ## Entorno/Espacio de Trabajo{#future-steps .smaller}
 
 - Apriete `Cntrl + Alt + Shift 0`
@@ -173,6 +177,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
 
 ::: notes
 Comentarios:
+- Cntrl+ Shift +H : Paara definir el entorno de trabajo.//Cmd + D: Para cambiar el entorno de trabajo
 - Editor de sintaxis: Formato block de notas, no ejecuta la sintaxis, comentarios se agregan anteponiendo el signo gato, puede predecir comandos, se ejecuta con cntrl+enterp "run"
 - Consola y visor resultados: Con un enter se ejcutarán, cambiarán de color una vez ejecutados, los errores arrojarán mensajes, ejecutar operaciones no es lo mismo que guardarlas, se ejecuta cuando hay un signo ">", no hay un mensaje de stop en la esquina superior derecha.
 - Entorno de trabajo: Memoria interna programa y uso de memoria RAM, entorno de trabajo temporal, objetos almacenados.
@@ -181,7 +186,7 @@ Comentarios:
 
 ## Entorno de Trabajo, parte 2{#future-steps .smaller}
 
-- Rstudio permite crear un Proyecto (.Rpoj), que agrupa/incorpora los distintos elementos de más abajo. Se recomienda crear uno siempre que se trabaje en un proyecto de investigación nuevo. Además, se recomienda asignarle una carpeta de trabajo individual, que pueda estar respaldada constantemente (ojo: cuidado con Google Drive). Puede gestionar los proyectos aquí:
+- Rstudio permite crear un **Proyecto** (.Rpoj), agrupa a todos los elementos. Puede gestionar los proyectos aquí:
 ```{r Fig rproj, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/rproj.png")
 ```
@@ -195,6 +200,25 @@ _ **.R:** Una especie de archivos de texto en el que se pueden guardar comandos,
 ```{r Fig open_save_load_script, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "550px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_scripts.png")
 ```
+
+:::notes
+PROYECTOS: que agrupa/incorpora los distintos elementos de más abajo. Se recomienda crear uno siempre que se trabaje en un proyecto de investigación nuevo. Además, se recomienda asignarle una carpeta de trabajo individual, que pueda estar respaldada constantemente (ojo: cuidado con Google Drive). 
+:::
+
+### Rel. Con Objetos
+- `<-` **convierte en objetos**, discusión en el [enlace](https://scontent.fscl7-1.fna.fbcdn.net/v/t1.0-9/s960x960/43162578_2091945017524445_1939992699893448704_o.png?_nc_cat=105&_nc_sid=8024bb&_nc_ohc=Ko0unG3q_OkAX_jfn27&_nc_ht=scontent.fscl7-1.fna&oh=1005ae3a2e5a68d3f95374cd031140e3&oe=5EBA2678)
+- `ls` enlista todas los objetos que están en "Environment"
+- `rm` se utiliza para remover objetos
+
+### Operadores
+
+**Aritméticos Básicos**: Suma (`+`), resta (`-`), multiplicación (`*`), división (`/`), exponentes (`*`) y paréntesis (`()`).
+
+**De comparación**: `<`, `<=`, `>`, `>=`, `==`, `!=`
+
+:::notes
+EXPLICAR CADA UNO DE ELLOS
+:::
 
 ## Ejercicio{#future-steps .smaller}
 

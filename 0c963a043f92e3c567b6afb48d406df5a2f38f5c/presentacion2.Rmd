@@ -131,7 +131,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
 - Una de las características que hace la diferencia entre otros programas. 
 - Un paquete estadístico contiene distintas funciones (comandos). 
 - Son extensiones de R: Contienen código, datos y documentación **estandarizada**.
-- Los paquetes en general se alojan en repositorios (CRAN, GitHub, and BioConductor).
+- Los paquetes en general se alojan en repositorios (CRAN, MRAN, GitHub, and BioConductor).
 - Las librerías son un directorio local que contiene los paquetes instalados
 - En general las librerías tienen archivos de documentación similares a formato Latex, con información de sus versiones, la fuente, etc.
 
@@ -141,7 +141,6 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/ejemplo_latex.png")
 ```
 </div>
 
-
 ::: notes
 Comentarios:
 - No cualquiera hace un paquete estadístico. Se requiere mucho conocimiento matemático, proveer mantenimiento constante, uno puede estar sujeto a revisiones de pares (Journal of Statistical Software), miembros de R (de repositorios) u otros investigadores que utilizan el paquete entre otros aspectos.
@@ -149,7 +148,7 @@ Comentarios:
 
 ## Conceptos Previos- Repositorio CRAN {.future-steps .smaller}
 
-- Abra Rstudio y presione `Alt + T + G`
+- Abra Rstudio y presione `Alt + T + G` (WIN) o `	Cmd+, [comma] (Chrome, Desktop), Option+Cmd+, [comma] (Safari, FireFox)` (MAC)
 
 ```{r Fig Repositorio, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Repositorios.png")
@@ -172,6 +171,8 @@ print(sum(datos)) #la suma de los datos
 print(length(datos)) #el largo de los datos
 .libPaths() # get library location
 ```
+
+- Algo que hacíamos en 2 ejecuciones, lo hicimos en una
 \tiny
 
 \normalsize
@@ -211,6 +212,7 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - La ventaja es que las etiquetas se graban sólo una vez
 - Por tanto, aloja un vector con valores enteros, dependiendo de la cantidad de valores únicos
 - Otra es que permite informar a otros algoritmos respecto al tipo de datos que alojan (ej. regresión logística)
+- `levels()` y `as.character()`
 
 ### Listas
 - Contienen elementos de distintos tipos, hasta objetos, de manera ordenada
@@ -238,19 +240,8 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - Los nombres de las columnas no pueden estar vacíos (el programa los llenará)
 - Es un dataset que está organizado en columnas (cada columna con su nombre)
 - Similar a las bases de datos de SAS o SPSS
-- Se entiende como una lista de vectores o factores con la misma extensión (largo de columna 1 será el mismo que el del resto de las columnas)
-- `names()`, `colnames()`, `rownames()`, `is.data.frame()`, `str()`
-
-:::notes
-Usar cbind() para agregar una nueva columna a un data frame
-Usar rbind() para agregar una nueva fila a un data frame
-Quitar filas de un data frame
-Usar na.omit() para remover filas de un data frame con valores NA
-Usar levels() y as.character() para explorar y manipular columnas de clase factor
-Usar str(), nrow(), ncol(), dim(), colnames(), rownames(), head() y typeof() para entender la estructura de un data frame
-Leer un archivo csv usando read.csv()
-Entender el uso de length() en un data frame
-:::
+- Se entiende como una lista de vectores o factores con la misma extensión (largo `length()` de columna 1 será el mismo que el del resto de las columnas)
+- Propiedades `names()`, `colnames()`, `rownames()`, `is.data.frame()`, `str()`, `attr()`
 
 ### Tibbles
 - Una nueva configuración de un data frame
@@ -259,8 +250,13 @@ Entender el uso de length() en un data frame
 - Más sensible: da más advertencias
 - Es más cauto al reciclar vectores
 
-## Ejemplos, Objetos de Trabajo {.future-steps .smaller}
+:::notes
+Usar cbind() para agregar una nueva columna a un data frame
+Usar rbind() para agregar una nueva fila a un data frame
+Entender el uso de length() en un data frame
+:::
 
+## Ejemplos, Objetos de Trabajo {.future-steps .smaller}
 
 - ¿Lista o vector?
 
@@ -295,7 +291,7 @@ print(x)
 
 ## Indexación, Subconjuntos y Atributos, Objetos de Trabajo {.future-steps .smaller}
 
-- 
+- Subset
 ```{r subset, echo=T, size = 'tiny'}
 print(c(1,2,3,4,5))[3]
 #¿Y ahora?, ¿qué llama la atención?
@@ -303,7 +299,7 @@ print(c(1,2,3,4,5)[3:6])
 #¿por qué aparece un error?
 print(c(1,2,3,4,5)[3:6,6])
 ```
-- 
+- Propiedades de una base de datos data.frame 
 
 ```{r df, echo=T, size = 'tiny'}
 data("women")
@@ -313,6 +309,7 @@ names(women)
 women$height
 women[3,1]
 ```
+
 
 ## Niveles de Medición {.future-steps .smaller}
 
@@ -358,7 +355,6 @@ Comentarios:
 
 ## Niveles de Medición (continuación) {.future-steps .smaller}
 
-
 ```{r Fig Var_ritchey, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "600x", cap="Ritchey, 2002, p. 47"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/var_ritchey.png")
 ```
@@ -374,7 +370,7 @@ Por ejemplo: la variable “Uso de internet para estudio/trabajo”
 
 ## Tipos de Variables {.future-steps .smaller}
 
-Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo del tipo de valores que se le asigna a cada objeto). Estos determinan cómo los datos serán formateados, mostrados y tratados.
+Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo del tipo de valores que se le asigna a cada objeto). Estos determinan cómo los datos serán formateados, mostrados y tratados (`typeof([OBJETO])`).
 
 - Numérico (numeric): valores numéricos, incluye decimales. `{2,1.5,3}`
 

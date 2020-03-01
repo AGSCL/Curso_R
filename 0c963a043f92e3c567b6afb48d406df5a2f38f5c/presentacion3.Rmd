@@ -120,6 +120,7 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - *edX*. Por ejemplo, Dat Science: R Basics (https://www.edx.org/es/course/data-science-r-basics), o Introduction to R for Data Science (https://www.edx.org/es/course/introduction-to-r-for-data-science-2).
 - *YouTube*. Por ejemplo, Estadística Útil (https://www.youtube.com/watch?v=rzw1E6HxBFY&list=PLfX5C7cc6LRJ7V6WNgatRQJ6PNMrb4zfM)
 - *Estación Lastarria* (https://www.estacionlastarria.cl/actividades/rstudio/rstudio-ciencias-sociales.html)
+- *Centro de Microdatos UChile* (https://www.microdatos.cl/analisis-datos-r)
 
 ### Comunidades
 
@@ -129,6 +130,7 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 
 ### Otros
 
+- Statistics With Interactive R Learning (SWIRL)
 - CheatSheets. https://rstudio.com/resources/cheatsheets/
 - Memes
 
