@@ -70,6 +70,7 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
+# Ingrese a agscl.github.io/Curso_R/
 
 ## Presentación{#future-steps}
 
