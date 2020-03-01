@@ -160,3 +160,7 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 ## Instrucciones Prueba Final
 - Favor descargar esta base de datos: https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx
 - Una vez contestada, responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
+
+::: notes
+https://cursor2020.shinyapps.io/Curso/
+::: 

@@ -76,6 +76,15 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Andrés González Santa Cruz
 - Ustedes: Nombre, nivel de manejo en R, experiencias previas con este software o similares, manejo informático, ¿tuvieron problemas en instalar R?
 
+## Presentación del ~~curso~~ taller {#future-steps}
+
+- Es de carácter introductorio a R y Rstudio
+- No es un curso de estadística
+- No soy un experto en informática ni en estadística
+- Es un taller enfocado a la aplicación de herramientas básicas de gestión de datos en R y Rstudio
+- Brinda herramientas, guía y orientación para profundizar de manera individual
+- 1era versión. Agradeceré que las opiniones generales sobre el curso se hagan al final (habrá una plataforma para ello), o bien en privado si son muy urgentes.
+
 ## Instalación{#future-steps}
 
 - En la página pudieron ver cómo se instalaba R, 
@@ -149,7 +158,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
 </div>
 
 
-## Entorno de Trabajo{#future-steps .smaller}
+## Entorno/Espacio de Trabajo{#future-steps .smaller}
 
 - Apriete `Cntrl + Alt + Shift 0`
 <div class="yellow">- Editor de texto o códigos </div>
@@ -168,6 +177,23 @@ Comentarios:
 - Entorno de trabajo: Memoria interna programa y uso de memoria RAM, entorno de trabajo temporal, objetos almacenados.
 - Visualizador: permite acceder a CRAN, manuales, etc.
 :::
+
+## Entorno de Trabajo, parte 2{#future-steps .smaller}
+
+- Rstudio permite crear un Proyecto (.Rpoj), que agrupa/incorpora los distintos elementos de más abajo. Se recomienda crear uno siempre que se trabaje en un proyecto de investigación nuevo. Además, se recomienda asignarle una carpeta de trabajo individual, que pueda estar respaldada constantemente (ojo: cuidado con Google Drive). Puede gestionar los proyectos aquí:
+```{r Fig rproj, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/rproj.png")
+```
+-**Directorio:** Ubicación en la que alojaré archivos que formarán parte del entorno de trabajo. Se obtiene mediante `getwd()`. **Configurarlo es muy importante (`setwd([RUTA])`).**
+- **.rds:** Permite guardar bases de datos de manera individual (muy similar a una hoja excel, un archivo .csv, etc.)
+- **.Rdata:** Permite guardar múltiples datos, objetos, funciones, etc., lo que equivale a decir que permite guardar el espacio de trabajo en general (`save.image(file =[RUTA])` para guardar todo, `save` para guardar sólo ciertos objetos en un .Rdata, `load([RUTA])` para restaurar). De igual forma, puede hacerlo desde aquí:
+```{r Fig save_load_image, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_load_rdata.png")
+```
+_ **.R:** Una especie de archivos de texto en el que se pueden guardar comandos, anotaciones, etc. Similar a un archivo `.do` o sintaxis. Se recomienda que antes de cerrar una sesión, uno pueda guardar los scripts. **.Rdata no es lo mismo que .R, RECUÉRDELO**. A continuación se muestra cómo (Amarillo, crear nuevo; Rojo, abrir; Verde, guardar o guardar todos):
+```{r Fig open_save_load_script, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "550px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_scripts.png")
+```
 
 ## Ejercicio{#future-steps .smaller}
 
@@ -215,17 +241,11 @@ set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
 ```
 - Ejecuto en la consola lo siguiente: `sessionInfo` (detalles de la sesión y configuración programa) y `dput` (para que otros puedan trabajar fácilmente sobre los datos que trabajas). Permite control y que los datos sean reproducibles (ej. Github).
 ```{r dput y session, echo=TRUE}
-
 dput(head(data.frame(numeros=round(rnorm(1:200)*100,0)),2))
-
 sessionInfo()
-###
 ```
-- Guardo los objetos creados (.Rdata) y guardo la sesión (.Rproj) que los contiene 
-```{r Fig Ej19, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
-```
--
+- Guardo los objetos creados (.Rdata y .R) y guardo la sesión (.Rproj) que los contiene 
+
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
 
 - Cree un nuevo proyecto en R
@@ -236,8 +256,8 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio19.png")
 - OPC1 = obtenga la media de todos los números (use recursos en línea)
 - OPC2 (+ avanzada)= btenga el resultado usando comas como separador de decimales ("outdec" en internet)
 - OPC3 = Obtenga la desviación estandar, separando los decimales con comas
-- Guarde los datos (.Rdata) y el proyecto (.RProj)
-- Reinicie el computador. Vuelva a abrirlo
+- Guarde los datos y el proyecto
+- Reinicie el computador. Vuelva a abrirlos
 
 ## Fuente{#future-steps .smaller}
 

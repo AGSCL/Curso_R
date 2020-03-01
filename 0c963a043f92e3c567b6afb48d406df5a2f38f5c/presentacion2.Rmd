@@ -131,7 +131,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
 - Una de las características que hace la diferencia entre otros programas. 
 - Un paquete estadístico contiene distintas funciones (comandos). 
 - Son extensiones de R: Contienen código, datos y documentación **estandarizada**.
-- Los paquetes en general se alojan en repositorios.
+- Los paquetes en general se alojan en repositorios (CRAN, GitHub, and BioConductor).
 - Las librerías son un directorio local que contiene los paquetes instalados
 - En general las librerías tienen archivos de documentación similares a formato Latex, con información de sus versiones, la fuente, etc.
 
