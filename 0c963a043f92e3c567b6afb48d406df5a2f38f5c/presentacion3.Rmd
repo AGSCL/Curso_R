@@ -196,7 +196,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
 
 ```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
 library(readxl)
-depositos_a_plazo <- read_excel("G:/Mi unidad/Alvacast/Curso/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx", 
+coronavirus <- read_excel("G:/Mi unidad/Alvacast/Curso/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx", 
     sheet = "Hoja1")
 str(depositos_a_plazo)
 ```
@@ -204,7 +204,7 @@ str(depositos_a_plazo)
 - Datos de Ancho y largo (`reshape()`)
 
 ```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
-reshape(depositos_a_plazo, varying=c("monto_invertido", "monto_vencimiento"), idvar = "estado", timevar = "orden", direction = "wide")
+reshape(coronavirus, v.names = "monto_invertido_med", idvar = "estado", timevar = "mes", direction = "wide")
 ```
 
 
