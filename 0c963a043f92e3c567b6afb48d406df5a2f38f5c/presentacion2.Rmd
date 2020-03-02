@@ -177,7 +177,7 @@ print(length(datos)) #el largo de los datos
 
 \normalsize
 
-## Instalación de Paquetes Estadísticos{.future-steps .smaller}
+## Instalación de Paquetes Estadísticos(2){.future-steps .smaller}
 
 - Ingrese en la consola o en un Script, la instalación del paquete "dplyr",  `install.packages("dplyr")`
 - Habiendo hecho esto, usted está instalando el paquete, pero no lo ha activado ni lo ha abierto
@@ -189,6 +189,7 @@ print(length(datos)) #el largo de los datos
 - Existen otros argumentos de la función install.packages:
 - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
 - Si no conoce el origen de una función, puede consultarlo anteponiendo "?" o utilizando la función  `help()`
+- A veces, los paquetes estadísticos generan contradicciones entre sí (ej: plyr y dplyr). Para ello, se recomienda desactivar o "despegar" un paquete (`detach(package:[NOMBRE_PAQUETE])`)
   
 ```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
@@ -201,7 +202,7 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 ### Vectores
 - Aloja elementos/valores del mismo tipo (Posteriormente podrá ver los [Tipos de Variables](#12))
 - De ahí que elementos de distintos tipos serán coercionados a adoptar el tipo de caracter
-- Permite tomar un rango de ellos, excluir otros elementos, especificar los que se obtendrán mediante un criterio booleano.
+- Permite tomar un rango de ellos, excluir otros elementos, especificar los que se obtendrán mediante un criterio lógico (VERDADERO/FALSO).
 - Son el fundamento de muchas otras estructuras.
 - Permite ser ordenado
 - Si se utilizan vectores de distinto largo, las funciones pueden reciclarse
@@ -209,10 +210,10 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 
 ### Factores
 - Son vectores que alojan variables de tipo categórico u ordinal
-- La ventaja es que las etiquetas se graban sólo una vez
+- La ventaja es que las etiquetas se graban sólo una vez, en niveles (`levels()`)
 - Por tanto, aloja un vector con valores enteros, dependiendo de la cantidad de valores únicos
 - Otra es que permite informar a otros algoritmos respecto al tipo de datos que alojan (ej. regresión logística)
-- `levels()` y `as.character()`
+-`as.character()`
 
 ### Listas
 - Contienen elementos de distintos tipos, hasta objetos, de manera ordenada
@@ -239,9 +240,10 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - Similar a una base de datos .csv o una planilla excel (aunque más restringida)
 - Los nombres de las columnas no pueden estar vacíos (el programa los llenará)
 - Es un dataset que está organizado en columnas (cada columna con su nombre)
+- Cada columna debe contener valores del mismo tipo
 - Similar a las bases de datos de SAS o SPSS
 - Se entiende como una lista de vectores o factores con la misma extensión (largo `length()` de columna 1 será el mismo que el del resto de las columnas)
-- Propiedades `names()`, `colnames()`, `rownames()`, `is.data.frame()`, `str()`, `attr()`
+- Propiedades `names()`, `colnames()`, `rownames()`, `is.data.frame()`, `str()`, `attr()`, `dim()`
 
 ### Tibbles
 - Una nueva configuración de un data frame
@@ -270,7 +272,7 @@ c(4,6,8,10)
 c("d",6,"v",10)
 ```
 
-- 
+- Aquí vemos que una matriz  puede tener 2 atributos: número de filas y número de columnas. ¿Cómo ordena los datos por defecto una matriz?
 
 ```{r matrices1, echo=T, size = 'tiny'}
 matrix(1:4, nrow = 2, ncol = 2) #ATRIBUTOS DE UNA MATRIZ,tener en cuenta para después
@@ -280,13 +282,13 @@ matrix(1:4, nrow = 2, ncol = 2) #ATRIBUTOS DE UNA MATRIZ,tener en cuenta para de
 matrix(1:4, nrow = 2, ncol = 2)*matrix(c(46,57,32,88),nrow=2)
 ```
 
-- Matriz o Array
+- Matriz o Array ¿?
 
 ```{r array, echo=T, size = 'tiny'}
 x<-array(c(52,41,25,85,136,128,28,59,65,16,1,133),c(2,3,2))
 dimnames(x)<-list(c("H","M"),c("desempleado","empleado","inactivo"),c("santiago","valparaiso"))
 print(x)
-#DIMNAMES, tener en cuenta para la próxima lámina
+##... mmmm... dimnames...¿qué serán?
 ```
 
 ## Indexación, Subconjuntos y Atributos, Objetos de Trabajo {.future-steps .smaller}
@@ -297,19 +299,35 @@ print(c(1,2,3,4,5))[3]
 #¿Y ahora?, ¿qué llama la atención?
 print(c(1,2,3,4,5)[3:6])
 #¿por qué aparece un error?
-print(c(1,2,3,4,5)[3:6,6])
+tryCatch(print(c(1,2,3,4,5)[3:6,6]), error = function(e) "ERROR") ## una función para que en caso de que arroje error, no interrumpa la ejecución del los scripts.
 ```
+
+## Indexación, Subconjuntos y Atributos, Objetos de Trabajo 2{.future-steps .smaller}
+
 - Propiedades de una base de datos data.frame 
+  - `$` para seleccionar una columna de una base de datos
+  - `[,]` que nos permiten visualizar determinados elementos de una base de datos
 
 ```{r df, echo=T, size = 'tiny'}
 data("women")
-dimnames()
+dimnames(women)
 str(women)
 names(women)
 women$height
 women[3,1]
+women[3,"height"]
 ```
 
+- Ejemplo de un Tibble (requiere instalar un paquete). Véanlo como data.frame (`as.data.frame(cbind(sexo=rep("H","M",8),sexo=rep(c("H","M","M","H"),2),tarea=c("auto","casa", "barrio", "cohete","hipopotamo","nieve","hijo","sal")))`), vean sus propiedades, ¿qué cambió?
+
+```{r tibble, echo=T, size = 'tiny'}
+if(!require(tibble)){install.packages("tibble")};tibble::as_tibble(cbind(sexo=rep("H","M",8),sexo=rep(c("H","M","M","H"),2),objeto=c("auto","casa", "barrio", "cohete","hipopotamo","nieve","hijo","sal")))
+```
+
+:::notes
+El error se produce por llamar a una segunda dimensión que el vector no tiene
+Lo que cambia es lo propio de un tibble: la columna duplicada cambia a V2 para no generar confusión y no convierte a factores los strings
+:::
 
 ## Niveles de Medición {.future-steps .smaller}
 
@@ -370,7 +388,7 @@ Por ejemplo: la variable “Uso de internet para estudio/trabajo”
 
 ## Tipos de Variables {.future-steps .smaller}
 
-Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo del tipo de valores que se le asigna a cada objeto). Estos determinan cómo los datos serán formateados, mostrados y tratados (`typeof([OBJETO])`).
+Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo del tipo de valores que se le asigna a cada objeto). Estos determinan cómo los datos serán formateados, mostrados y tratados (`typeof([OBJETO])` y `class([OBJETO])`, por si quiere saber más [enlace](https://stats.stackexchange.com/questions/3212/mode-class-and-type-of-r-objects) y [enlace2](https://stackoverflow.com/questions/35445112/what-is-the-difference-between-mode-and-class-in-r)).
 
 - Numérico (numeric): valores numéricos, incluye decimales. `{2,1.5,3}`
 
@@ -419,7 +437,7 @@ paste0("Simón dice", ", \'", objeto,"\'")
 
 ## Ejercicio 2{.future-steps .smaller}
 
-- Cargue una base de datos de R llamada "Chickweight"
+- Cargue una base de datos de R llamada "ChickWeight"
 - Obtenga la suma del peso de los primeros 5 pollos
 - OPC1. Obtenga la media de todos los pollos (use recursos en-línea para aprender)
 - ¿Llegó a obtener un peso de `121.8183` kgs.)
@@ -432,7 +450,7 @@ paste0("Simón dice", ", \'", objeto,"\'")
 - El paquete dplyr contiene múltiples funciones y bases de datos (https://cran.r-project.org/web/packages/dplyr/dplyr.pdf)
 - Llame a la librería
 - Cargue la base de datos "starwars"
-- (Podría faltar el paquete magrittr)
+- (Podría faltar el paquete magrittr, si el programa se lo pide, ¿sabría cómo instalarlo?)
 - Ejecute este código: `starwars %>% dplyr::group_by(eye_color) %>% dplyr::summarise(promedio_altura_por_color_de_ojos=mean(height, na.rm=T))`
 
 ## Fuentes {.future-steps .smaller}
@@ -444,6 +462,8 @@ Interamericana editores S.A. de CV. México. www.shorturl.at/pvK37
 - El ícono del engranaje fue elaborado por <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 - Data Flair. R Tutorials. https://data-flair.training/blogs/r-data-types/
 - Leisch F. (2008). Creating R packages: a tutorial. http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf.
+- https://www.statmethods.net/r-tutorial/index.html
+- DataCamp. Introduction to R. https://www.datacamp.com/courses/free-introduction-to-r
 
 ## Prueba {#future-steps}
 

@@ -130,16 +130,61 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 
 ### Otros
 
+- learnr
 - Statistics With Interactive R Learning (SWIRL)
 - CheatSheets. https://rstudio.com/resources/cheatsheets/
 - Memes
 
 ## Importar Datos de Fuentes Externas {.future-steps .smaller}
 
+- Rstudio tiene una opción para incorporar bases de datos de manera más fácil
+
+```{r Fig Import_dataset, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "400px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Import_dataset.png")
+```
+
+- Existen muchos tipos de datos (.csv, .sav, .Rds, .xlsx, etc.)
+- En este caso, vamos a ver el CSV (archivo de texto separado por comas)
+- Pero puede estar separado por distintos caracteres (";", ",", "\\\ t o TAB" )
+- Los elementos que definen a una importación de un csv que hay que tener en consideración son los siguientes:
+  -Elemento separador de celdas
+  -Norma de codificación de texto (UTF-8, Latin1,etc.)
+  -Punto de partida de recogida de datos
+  -¿Primera fila como nombre de las columnas?
+  -Separador de Decimales
+
+```{r Fig Import_csv, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/gastos_casa_csv_foto.png")
+```
+
+- Cargue la base de datos
+
+```{r cargar_csv, echo=T, warning=F, size = 'tiny'}
+Gastos_casa_csv <- read.delim("G:/Mi unidad/Alvacast/Curso/Gastos_casa_csv.txt") ##CADA UNO DEBE CAMBIAR LA RUTA DE OBTENCIÓN DEL ARCHIVO, DEPENDIENDO DEL DIRECTORIO DONDE LO GUARDOÓ. SE ACONSEJA GUARDARLO EN LA MISMA CARPETA QUE EL PROYECTO.
+```
 
 ## Estadística Descriptiva Básica {.future-steps .smaller}
-- Medidas de Tendencia Central
-- 
+
+### Medidas de Tendencia Central
+```{r media, echo=T, warning=F, size = 'tiny'}
+mean(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento.
+```
+
+```{r mediana, echo=T, warning=F, size = 'tiny'}
+median(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento.
+```
+
+### Histogramas
+```{r histograma, echo=T, warning=F, size = 'tiny'}
+hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gasto", xlab="Monto", ylab="Frecuencia")
+```
+
+### Gráfico de Dispersión
+```{r scatter, echo=T, warning=F, size = 'tiny'}
+plot(Gastos_casa_csv$monto,Gastos_casa_csv$monto, xlab="Monto",ylab="Monto")
+```
+
+- Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
 
 ## Configuración de Datos {.future-steps .smaller}
 - Largo y Ancho
@@ -151,9 +196,9 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 
 
 ## Ejercicio {#future-steps .smaller}
-- Acceda a la base de datos de Total de Capacitaciones en Prevención de Riesgos Laborales, Instituto de Seguridad Laboral ISL, disponible en el siguiente enlace http://datos.gob.cl/dataset/12680
+- Acceda a la base de datos de Total de Capacitaciones en Prevención de Riesgos Laborales, Instituto de Seguridad Laboral ISL
 - Previsualicemos los datos: http://datos.gob.cl/dataset/9010/resource/5edb0069-43e7-451e-8717-5f8444056641
-- Genere una carpeta en escritorio, de nombre "Cap_RL"
+- Generemos una carpeta en escritorio, de nombre "Cap_RL"
 - http://datos.gob.cl/uploads/recursos/Capacitaciones_Prevencion.csv
 
 

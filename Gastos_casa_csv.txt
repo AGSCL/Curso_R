@@ -1,0 +1,1227 @@
+tipo_gasto	monto	ejecutor
+Enceres	4780	Persona1
+Comida	2800	Persona2
+Comida	11480	Persona1
+Comida	4250	Persona2
+Comida	38254	Persona1
+Comida	47206	Persona1
+Comida	5000	Persona2
+Enceres	22595	Persona1
+Comida	3300	Persona1
+Comida	36888	Persona1
+Enceres	1990	Persona1
+Comida	30338	Persona2
+Enceres	16880	Persona2
+Comida	9040	Persona1
+Comida	25484	Persona1
+Comida	15595	Persona2
+Comida	8220	Persona2
+Comida	3630	Persona2
+Comida	500	Persona2
+Comida	17290	Persona1
+Comida	14366	Persona1
+Enceres	22595	Persona1
+Comida	10662	Persona1
+Comida	1360	Persona1
+Comida	23886	Persona2
+Comida	3200	Persona2
+Comida	60883	Persona1
+Comida	9950	Persona2
+Enceres	10198	Persona1
+Comida	19750	Persona1
+Enceres	17990	Persona1
+Comida	6621	Persona2
+Comida	8820	Persona2
+Comida	20295	Persona1
+Enceres	17992	Persona1
+Comida	12230	Persona1
+Comida	23782	Persona1
+Comida	17500	Persona2
+Comida	17500	Persona2
+Comida	17500	Persona2
+Comida	17500	Persona2
+Comida	1500	Persona2
+Comida	1500	Persona2
+Comida	11860	Persona2
+Comida	14482	Persona1
+Comida	11860	Persona2
+Enceres	2000	Persona2
+Enceres	2000	Persona2
+Comida	10119	Persona2
+Comida	29230	Persona1
+Comida	16755	Persona2
+Enceres	26270	Persona1
+Comida	26574	Persona2
+Gas	53550	Persona1
+Comida	30742	Persona1
+Comida	18254	Persona2
+Enceres	7900	Persona1
+Comida	24000	Persona1
+Enceres	25008	Persona1
+Comida	10818	Persona1
+Comida	5640	Persona1
+Comida	17470	Persona1
+Comida	17341	Persona1
+Comida	8804	Persona2
+Enceres	33000	Persona1
+Enceres	8923	Persona1
+Comida	36580	Persona1
+Comida	20095	Persona1
+VTR	21990	Persona2
+Electricidad	9339	Persona2
+Comida	35334	Persona1
+Comida	9220	Persona2
+Enceres	20970	Persona2
+Enceres	39465	Persona1
+Comida	4440	Persona2
+Comida	8980	Persona1
+Enceres	28098	Persona1
+Comida	26602	Persona1
+Diosi	35900	Persona1
+Comida	6850	Persona2
+Diosi	19990	Persona2
+Comida	7900	Persona2
+Comida	4670	Persona1
+Enceres	5500	Persona2
+Enceres	17916	Persona2
+Enceres	17917	Persona2
+Comida	27990	Persona1
+Diosi	27300	Persona1
+Comida	7082	Persona2
+VTR	6000	Persona2
+Enceres	42882	Persona2
+Comida	12433	Persona2
+Comida	17993	Persona2
+Comida	7050	Persona1
+Comida	4400	Persona2
+Comida	30736	Persona1
+Comida	4400	Persona2
+Comida	9270	Persona2
+Electricidad	136361	Persona2
+Enceres	14618	Persona1
+Comida	27858	Persona1
+Enceres	9230	Persona1
+Enceres	7990	Persona1
+Agua	9352	Persona2
+Comida	33000	Persona1
+Enceres	29960	Persona1
+Enceres	16480	Persona2
+Agua	9352	Persona2
+Diosi	27300	Persona1
+Comida	14820	Persona1
+Comida	42000	Persona1
+Comida	7872	Persona1
+Comida	35413	Persona1
+VTR	5990	Persona2
+Electricidad	66986	Persona2
+Enceres	6030	Persona2
+Enceres	9998	Persona2
+Comida	40474	Persona1
+Enceres	19791	Persona1
+Comida	500	Persona2
+Comida	22180	Persona1
+Comida	3800	Persona2
+Comida	6000	Persona2
+Comida	6000	Persona2
+Diosi	25000	Persona1
+Comida	19591	Persona1
+Diosi	35900	Persona1
+Gas	53500	Persona2
+Comida	5670	Persona2
+Comida	24442	Persona1
+Agua	9352	Persona2
+Comida	4000	Persona1
+Enceres	16942	Persona1
+VTR	25990	Persona2
+VTR	6075	Persona2
+Agua	10220	Persona2
+VTR	25990	Persona2
+Comida	30754	Persona2
+Electricidad	20390	Persona2
+Comida	23700	Persona1
+Comida	30754	Persona2
+VTR	6950	Persona2
+Comida	20200	Persona2
+Comida	6590	Persona2
+Comida	34380	Persona1
+Comida	5660	Persona1
+Comida	11224	Persona1
+Comida	4000	Persona2
+Comida	25628	Persona1
+Comida	4000	Persona2
+Comida	18776	Persona2
+Comida	42430	Persona1
+Comida	8260	Persona1
+Agua	9352	Persona2
+Comida	33795	Persona1
+VTR	9541	Persona2
+Comida	3431	Persona1
+Enceres	18000	Persona1
+Comida	32404	Persona1
+Comida	5580	Persona1
+Electricidad	13931	Persona2
+Comida	29243	Persona1
+Enceres	11000	Persona2
+Diosi	33000	Persona1
+Diosi	72000	Persona1
+Diosi	24600	Persona1
+Comida	6950	Persona1
+Comida	14450	Persona2
+Comida	14450	Persona2
+Comida	6420	Persona2
+Comida	5980	Persona2
+Comida	5828	Persona2
+Comida	29606	Persona1
+Comida	29604	Persona1
+Enceres	11000	Persona2
+Comida	5360	Persona2
+Comida	13500	Persona1
+Comida	5360	Persona2
+Comida	23933	Persona2
+Comida	14450	Persona1
+Comida	14450	Persona1
+Comida	11820	Persona2
+Comida	26366	Persona1
+Comida	39074	Persona1
+VTR	16990	Persona2
+Electricidad	37612	Persona2
+Netflix	6979	Persona2
+Comida	14450	Persona2
+Diosi	35900	Persona1
+Comida	11820	Persona2
+Comida	7855	Persona2
+Comida	5980	Persona1
+Comida	16750	Persona2
+Comida	25400	Persona1
+Comida	37913	Persona1
+Comida	17399	Persona1
+Gas	59200	Persona1
+Agua	11089	Persona2
+Comida	23500	Persona2
+Comida	17990	Persona2
+Enceres	20000	Persona1
+Comida	31540	Persona1
+Comida	13388	Persona1
+Enceres	24990	Persona2
+Comida	12378	Persona1
+VTR	17327	Persona2
+Electricidad	39562	Persona2
+Netflix	7000	Persona2
+Enceres	31334	Persona2
+Comida	5970	Persona1
+Comida	10174	Persona1
+Comida	29610	Persona2
+Comida	13000	Persona2
+Diosi	13970	Persona1
+Enceres	18000	Persona1
+Comida	31284	Persona1
+Comida	13919	Persona2
+VTR	17327	Persona2
+Comida	40000	Persona1
+Comida	42354	Persona1
+Comida	15429	Persona2
+Comida	31255	Persona1
+VTR	17327	Persona2
+Comida	24380	Persona1
+Diosi	11716	Persona1
+Comida	22000	Persona1
+Enceres	4500	Persona2
+Comida	3702	Persona1
+Comida	9000	Persona2
+Comida	24588	Persona2
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
