@@ -88,6 +88,7 @@ slides > slide:not(.nobackground):before {
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 if(!require(dplyr)){install.packages("dplyr")}
+if(!require(readxl)){install.packages("readxl")}
 ```
 
 ## Contenidos{.future-steps}
@@ -187,7 +188,26 @@ plot(Gastos_casa_csv$monto,Gastos_casa_csv$monto, xlab="Monto",ylab="Monto")
 - Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
 
 ## Configuración de Datos {.future-steps .smaller}
-- Largo y Ancho
+- Bajar [BASE DE DATOS](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/depositos_a_plazo.xlsx)
+
+```{r Fig Import_csv, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
+```
+
+```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
+library(readxl)
+depositos_a_plazo <- read_excel("G:/Mi unidad/Alvacast/Curso/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx", 
+    sheet = "Hoja1")
+str(depositos_a_plazo)
+```
+
+- Datos de Ancho y largo (`reshape()`)
+
+```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
+reshape(depositos_a_plazo, varying=c("monto_invertido", "monto_vencimiento"), idvar = "estado", timevar = "orden", direction = "wide")
+```
+
+
 
 ## Fuentes {.future-steps .smaller}
 
