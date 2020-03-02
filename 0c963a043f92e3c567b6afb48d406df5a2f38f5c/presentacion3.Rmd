@@ -183,11 +183,13 @@ hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gast
 - Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
 
 ## Configuración de Datos {.future-steps .smaller}
-- Bajar [BASE DE DATOS](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/depositos_a_plazo.xlsx)
+- Bajar [BASE DE DATOS](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx)
 
 ```{r Fig Import_xlsx, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
 ```
+
+## Configuración de Datos, p2 {.future-steps .smaller}
 
 ```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
 library(readxl)
@@ -197,18 +199,21 @@ str(coronavirus)
 ```
 
 - Gráfico de Dispersión
-```{r scatter, echo=T, warning=F, size = 'tiny'}
-plot(coronavirus$mes,coronavirus$monto_invertido_med, xlab="Mes",ylab="Monto Invertido Med.")
+```{r scatter, echo=T, warning=F, size = 'tiny', fig.align="center"}
+plot(coronavirus$infectados,coronavirus$monto_invertido_med, xlab="Infectados",ylab="Monto Invertido Med.")
 ```
 
 
 - Datos de Ancho y largo (`reshape()`)
 
 ```{r reshape, echo=T, warning=F, size = 'tiny'}
-reshape(coronavirus, v.names = "infectados", idvar = "estado", timevar = "mes", direction = "wide")
+coronavirus$mes<-as.numeric(coronavirus$mes) 
+coronavirus$estado<-as.factor(coronavirus$estado) 
+
+library(reshape2)
+dcast(coronavirus, estado ~ mes, value.var="infectados")
+dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
 ```
-
-
 
 ## Fuentes {.future-steps .smaller}
 
