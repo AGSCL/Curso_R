@@ -163,6 +163,7 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
 Comentarios:
 Por ejemplo, control de versones con github y svn.
 :::
+
 ## Entorno/Espacio de Trabajo{#future-steps .smaller}
 
 - Apriete `Cntrl + Alt + Shift 0`
@@ -212,7 +213,7 @@ PROYECTOS: que agrupa/incorpora los distintos elementos de más abajo. Se recomi
 
 ### Operadores
 
-**Aritméticos Básicos**: Suma (`+`), resta (`-`), multiplicación (`*`), división (`/`), exponentes (`*`) y paréntesis (`()`).
+**Aritméticos Básicos**: Suma (`+`), resta (`-`), multiplicación (`*`), división (`/`), exponentes (`^`) y paréntesis (`()`).
 
 **De comparación**: `<`, `<=`, `>`, `>=`, `==`, `!=`
 
@@ -284,7 +285,7 @@ sessionInfo()
 - Súmelas
 - ¿Llegó al siguiente número: `r set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0));sum(tail(df2))`?
 - OPC1 = obtenga la media de todos los números (use recursos en línea)
-- OPC2 (+ avanzada)= btenga el resultado usando comas como separador de decimales ("outdec" en internet)
+- OPC2 (+ avanzada)= obtenga el resultado usando comas como separador de decimales ("outdec" en internet)
 - OPC3 = Obtenga la desviación estandar, separando los decimales con comas
 - Guarde los datos y el proyecto
 - Reinicie el computador. Vuelva a abrirlos
@@ -300,6 +301,7 @@ sessionInfo()
 - R Development Core Team (2000). Introducción a R. Notas sobre R: Un entorno de programación para Análisis de Datos y Gráficos. Versión 1.0.1
 https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
 - Lortie CJ. 2017. A review of R for Data Science: key elements and a critical analysis. PeerJ Preprints 5:e2873v1 
+- Types of Operators. https://www.tutorialspoint.com/r/r_operators.htm
 
 
 ## Prueba {#future-steps}
