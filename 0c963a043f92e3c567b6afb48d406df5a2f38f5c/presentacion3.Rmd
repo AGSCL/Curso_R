@@ -277,7 +277,8 @@ dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
 
 ## Instrucciones Prueba Final
 - Favor descargar esta base de datos: https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx
-- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. Siguiendo la misma estructura, reemplace el vector decimal1 por el vector sexo, pero en formato factor) y adjúntelo al correo.
+- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. 
+- Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo (busque cómo hacerlo en internet)
 
 - Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 
