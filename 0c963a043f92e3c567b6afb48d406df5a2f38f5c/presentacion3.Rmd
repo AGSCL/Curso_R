@@ -161,19 +161,43 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/gastos_casa_csv_foto.png")
 - Cargue la base de datos
 
 ```{r cargar_csv, echo=T, warning=F, size = 'tiny'}
-Gastos_casa_csv <- read.delim("G:/Mi unidad/Alvacast/Curso/Gastos_casa_csv.txt") ##CADA UNO DEBE CAMBIAR LA RUTA DE OBTENCIÓN DEL ARCHIVO, DEPENDIENDO DEL DIRECTORIO DONDE LO GUARDOÓ. SE ACONSEJA GUARDARLO EN LA MISMA CARPETA QUE EL PROYECTO.
+Gastos_casa_csv <- read.delim("G:/Mi unidad/Alvacast/Curso/Gastos_casa_csv.txt") 
+#
+##CADA UNO DEBE CAMBIAR LA RUTA DE OBTENCIÓN DEL ARCHIVO, DEPENDIENDO DEL DIRECTORIO DONDE LO GUARDOÓ. SE ACONSEJA GUARDARLO EN LA MISMA CARPETA QUE EL PROYECTO.
 ```
 
 ## Estadística Descriptiva Básica {.future-steps .smaller}
 
 ### Medidas de Tendencia Central
 ```{r media, echo=T, warning=F, size = 'tiny'}
-mean(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento.
+mean(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento para omitir los casos perdidos.
 ```
 
 ```{r mediana, echo=T, warning=F, size = 'tiny'}
-median(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento.
+median(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento para omitir los casos perdidos.
 ```
+
+- En el caso de la moda necesitaremos aplicar una función, que tomará todos los valores únicos de un determinado vector, y que obtendrá el que posee la mayor cantidad de observaciones del vector que calzan con el valor único.
+
+```{r moda, echo=T, warning=F, size = 'tiny'}
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+gastos_casa_csv_2<-cbind(Gastos_casa_csv, monto_en_miles=round(Gastos_casa_csv$monto/1000,0))
+Mode(gastos_casa_csv_2$monto_en_miles)
+```
+
+- ¿Qué ocurrió con los resultados? Esta función no tiene la opción de remover valores perdidos, por lo que una opción plausible será ingresar una base de datos sin valores perdidos ("listwise deletion of missing values").
+
+```{r moda_corr, echo=T, warning=F, size = 'tiny'}
+gastos_casa_csv_2_naomit<-na.omit(gastos_casa_csv_2) #
+Mode(gastos_casa_csv_2_naomit$monto_en_miles)
+#nrow(Gastos_casa_csv)
+#nrow(Gastos_casa_csv)
+```
+
+- ¿Qué hizo la función na.omit?. lo mismo que `Mode(gastos_casa_csv_2[-c(231:1226),4])`. **Analicen qué se hizo aquí**
 
 ### Histogramas
 ```{r histograma, echo=T, warning=F, size = 'tiny'}
@@ -188,6 +212,21 @@ hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gast
 ```{r Fig Import_xlsx, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
 knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
 ```
+
+- Los elementos que definen a una importación de un excel (*.xlsx) que hay que tener en consideración son los siguientes:
+
+  -Nombre que se le asignará a base de datos
+  
+  -Nombre de la hoja de excel que se quiere importar a R
+  
+  -Rango de datos (para evitar lo que ocurrió con los gastos de la casa)
+  
+  -saltar algunas filas hasta llegar al nombre de las columnas (generalmente útil si las primeras filas no son de utilidad para diferenciar los datos, como el nombre del autor, la fecha,o nombres de un conjunto de filas, etc.)
+  
+  -NA (cómo se tratan los valores perdidos)
+  
+  -Checklist si se considera la primera columna como nombres de columna (si utilizó el argumento skip, este último antecede esta opción)
+  -Si quiere abrir un **visor de datos (View())**
 
 ## Configuración de Datos, p2 {.future-steps .smaller}
 
@@ -219,20 +258,28 @@ dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
 
 - Codementor Community (2018, Nov 26). Learn R Online. Obtenido desde: https://www.codementor.io/collections/learn-r-online-bwbcv0nx4
 - Illinois Library (2020, Feb 12). Introduction to R: Getting Data from a CSV file. Obtenido desde: http://guides.library.illinois.edu/c.php?g=347944&p=2345554
-
+- https://www.tutorialspoint.com/r/r_mean_median_mode.htm
+- Tutorialspoint. Mean, Median and Mode. http://datos.gob.cl/uploads/recursos/Capacitaciones_Prevencion.csv
 
 ## Ejercicio {#future-steps .smaller}
+
 - Acceda a la base de datos de Total de Capacitaciones en Prevención de Riesgos Laborales, Instituto de Seguridad Laboral ISL
 - Previsualicemos los datos: http://datos.gob.cl/dataset/9010/resource/5edb0069-43e7-451e-8717-5f8444056641
 - Generemos una carpeta en escritorio, de nombre "Cap_RL"
-- http://datos.gob.cl/uploads/recursos/Capacitaciones_Prevencion.csv
-
+- Genere un proyecto con el mismo nombre
+- Cargarla en R y conviertala en un data frame, asignándole el siguiente nombre "cap_prev".
+- obtener la media y la mediana por sexo (2da y 3ra columnas)
+- Obtenga la media y la mediana sin el total (fila 15)
+- ¿Qué sexo en promedio obtuvo más capacitaciones en el primer mes?
+- ¿Esta diferencia se repite al obtener la mediana? 
 
 # Prueba Final {#future-steps .smaller}
 
 ## Instrucciones Prueba Final
 - Favor descargar esta base de datos: https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx
-- Una vez contestada, responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
+- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. Siguiendo la misma estructura, reemplace el vector decimal1 por el vector sexo, pero en formato factor) y adjúntelo al correo.
+
+- Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 
 ::: notes
 https://cursor2020.shinyapps.io/Curso/
