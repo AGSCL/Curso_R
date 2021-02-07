@@ -33,7 +33,7 @@ body{ /* Normal  */
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 rm(list=ls());gc()
-unlink('SUD_CL/Duplicates_cache', recursive = TRUE)
+ unlink('0c963a043f92e3c567b6afb48d406df5a2f38f5c/Instalación R_cache', recursive = TRUE)
 ```
 &nbsp;
 <br>
@@ -42,59 +42,85 @@ Este tutorial sólo es uno de muchos que usted podrá encontrar para instalar es
 
 ## Paso 1: Bajar R
 
-Haga click en el siguiente enlace si usted tiene de sistema operativo Windows <https://cran.r-project.org/bin/windows/base/R-3.6.2-win.exe>. Si usted tiene un MAC, favor dirigirse a este enlace: <https://cran.r-project.org/bin/macosx/R-3.6.2.pkg>.
+Haga click en el siguiente enlace si usted tiene de sistema operativo Windows <https://cran.r-project.org/bin/windows/base/>. Posiblemente y si se lo solicita el programa, una vez que instale R y Rstudio deberá instalar Rtools (<https://cran.r-project.org/bin/windows/Rtools/>).
+
+```{r Fig Instalacion_win_prin, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (0).png"))
+```
+
+Si usted tiene un MAC, favor dirigirse a este enlace: <https://cran.r-project.org/bin/macosx/>.
+
+```{r Fig Instalacion_mac_prin, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- MAC (0).png"))
+```
 
 **Advertencia:** Favor siga las instrucciones al momento de bajar los archivos. Es necesario que instale en primer lugar R commander, y posteriormente RStudio. Si usted ya bajó una versión de R o RStudio que no ha funcionado bien, que cree muy desactualizada o que nunca supo ocupar, **favor desinstalarlo(s) y reiniciar su computador**.
 
+## Paso 2: Instalar R (ejemplo en Windows)
+
+
 A continuación, pueden ver las capturas de pantalla de una instalación en windows. Favor seguir todos los pasos.
 
-
 ```{r Fig Instalacion2, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (2).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (2).png"))
 ```
 
 ```{r  Fig Instalacion3, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (3).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (3).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (3).png"))
 ```
 
 
 ```{r  Fig Instalacion4, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (4).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (4).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (4).png"))
 ```
 
 ```{r  Fig Instalacion5, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (5).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (5).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (5).png"))
 ```
 
 ```{r  Fig Instalacion6, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (6).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (6).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (6).png"))
 ```
 
 ```{r  Fig Instalacion7, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (7).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (7).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (7).png"))
 ```
 
 **Observación:** Favor no abrir R directamente, sino sólo a través de R Studio. Dejar vacío los cuadros contorneados por la línea roja.
 
 ```{r  Fig Instalacion8, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (8).png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion R- Win (8).png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (8).png"))
 ```
 
 
 ## Paso 3: Bajar e instalar RStudio
 
-Una vez **reiniciado el computador** y habiendo cumplido con el paso previo, dirígase al siguiente enlace si su computador es Windows (<https://download1.rstudio.org/desktop/windows/RStudio-1.2.5033.exe>). Si su computador es Mac, dirígase al siguiente enlace: <https://download1.rstudio.org/desktop/macos/RStudio-1.2.5033.dmg>.
+Una vez **reiniciado el computador** y habiendo cumplido con el paso previo, dirígase al siguiente enlace (<https://rstudio.com/products/rstudio/download/#download>). Seleccione el instalador que se adapte a la capacidad de su computador. Debe tener en cuenta que si su computador no se encuentra actualizado a sistemas operativos más recientes, no podrá contar con la última versión de los productos presetados aquí.
+
+```{r  Fig pag_install_rstudio, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio1.gif")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion R- Win (9).png"))
+```
+
 
 A continuación se muestra cómo bajarlo para Windows:
 
 ```{r  Fig Instalacion_RStudio, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio1.gif")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio1.gif")
+knitr::include_graphics(paste0(getwd(),"/","instalacion_Rstudio1.gif"))
 ```
 
 Una vez ya bajado de internet, favor abrir y apretar el botón siguiente en todos sus campos. **Observación**: Existen opciones para personalizar las acciones que hicimos aquí. De todas formas este es un curso introductorio, por lo que no se ahondarán en estas alternativas.
 
 ```{r  Fig Instalacion_RStudio2, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
+knitr::include_graphics(paste0(getwd(),"/","instalacion_Rstudio2.gif"))
 ```
 
  **Reinicie el computador una vez finalizada la instalación**
@@ -106,13 +132,15 @@ Abra una nueva sesión en Rstudio (abra el programa).
 Habiendo cumplido con el paso previo, abra R Studio y corra el siguiente comando en la Consola (siga los pasos de la imagen): `install.packages("janitor")`.
 
 ```{r  Fig Instalacion_RStudio3, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio3.gif")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio3.gif")
+knitr::include_graphics(paste0(getwd(),"/","instalacion_Rstudio3.gif"))
 ```
 
 ¿Obtuvo el siguiente mensaje?, si lo obtuvo es porque la instalación fue exitosa.
 
 ```{r  Fig Instalacion_RStudio_comprobacion, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion_final.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Instalacion_final.png")
+knitr::include_graphics(paste0(getwd(),"/","Instalacion_final.png"))
 ```
 
 ## Comentarios y Dificultades del Proceso de Instalación
