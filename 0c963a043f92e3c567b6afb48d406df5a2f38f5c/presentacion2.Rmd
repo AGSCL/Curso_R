@@ -93,7 +93,8 @@ if(!require(dplyr)){install.packages("dplyr")}
 ## Contenidos{.future-steps}
 
 ```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"), 
+unlink('0c963a043f92e3c567b6afb48d406df5a2f38f5c/presentacion2_cache', recursive = TRUE)
+htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","logo.png"))), 
                alt = 'logo', 
                style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
 ```
@@ -119,7 +120,10 @@ htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"),
 - Una función define relaciones entre distintos objetos
 - Permite automatizar tareas
 ```{r Fig Ej20, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio20.png"))
+  )
 ```
 - Las funciones pueden contener otras funciones ("anidadas"/"nested")
 - Hay funciones tan complejas que requieren muchos argumentos, referencias, condiciones, etc.
@@ -137,7 +141,10 @@ knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio20.png")
 
 <div class="superbigimage">
 ```{r Fig Latex, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "400px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/ejemplo_latex.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/ejemplo_latex.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","ejemplo_latex.png"))
+  )
 ```
 </div>
 
@@ -151,7 +158,10 @@ Comentarios:
 - Abra Rstudio y presione `Alt + T + G` (WIN) o `	Cmd+, [comma] (Chrome, Desktop), Option+Cmd+, [comma] (Safari, FireFox)` (MAC)
 
 ```{r Fig Repositorio, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Repositorios.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Repositorios.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Repositorios.png"))
+  )
 ```
 
 ## Instalación de Paquetes Estadísticos{.future-steps .smaller .codefont}
@@ -192,7 +202,10 @@ print(length(datos)) #el largo de los datos
 - A veces, los paquetes estadísticos generan contradicciones entre sí (ej: plyr y dplyr). Para ello, se recomienda desactivar o "despegar" un paquete (`detach(package:[NOMBRE_PAQUETE])`)
   
 ```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","install_package.png"))
+  )
 ```
 
 ## Objetos de Trabajo {.future-steps .smaller}
@@ -343,10 +356,11 @@ Lo que cambia es lo propio de un tibble: la columna duplicada cambia a V2 para n
   - Nominales
   - Ordinales
 - Variables cuantitativas, métricas
-  - De Intervalo
-  - Razón o Proporción
   - Continuas
   - Discretas
+- Escalas  
+  - De Intervalo
+  - Razón o Proporción
 
 ::: notes
 Comentarios:
@@ -362,19 +376,22 @@ Comentarios:
 • Se puede afirmar si son iguales o diferentes, y si uno es mayor o menor que el otro
 
 1) De Intervalo
-• Se parecen a las ordinales pero con una propiedad adicional:la diferencia entre dos valores de datos cualesquiera tieneun significado.
+• Se parecen a las ordinales pero con una propiedad adicional:la diferencia entre dos valores de datos cualesquiera tiene un significado.
 • Es decir, se conoce la distancia exacta entre dos categorías.
-• No existe el cero (0) absoluto (ausencia de cantidad).
+• Sólo tiene un cero (0) arbitrario (ausencia de cantidad) (ej. temperatura)
 
 2) De Razón o Proporción
 • Tiene las mismas características del intervalo, pero tiene una propiedad adicional: consideran el cero absoluto, que indica “nada” de cantidad.
-• Para valores de este nivel tanto las diferencias como las proporciones tienen significado
+• Para valores de este nivel tanto las diferencias como las proporciones tienen significado (ej. altura)
 :::
 
 ## Niveles de Medición (continuación) {.future-steps .smaller}
 
 ```{r Fig Var_ritchey, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "600x", cap="Ritchey, 2002, p. 47"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/var_ritchey.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/var_ritchey.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","var_ritchey.png"))
+  )
 ```
 $^{Fuente: Ritchey, 2002, p. 47}$
 

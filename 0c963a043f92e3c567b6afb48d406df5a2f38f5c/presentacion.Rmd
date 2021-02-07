@@ -48,12 +48,15 @@ slides > slide:not(.nobackground):before {
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+unlink('0c963a043f92e3c567b6afb48d406df5a2f38f5c/presentacion_cache', recursive = TRUE)
 ```
 
 ## Contenidos{#future-steps}
 
 ```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("G:/Mi unidad/Alvacast/Curso/logo.png"), 
+#paste0(getwd(),"/","instalacion_Rstudio1.gif")
+
+htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","logo.png"))), 
                alt = 'logo', 
                style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
 ```
@@ -133,12 +136,17 @@ Comentarios:
 ## Ventajas/Desventajas de R y RStudio|Algunos Memes{#future-steps .columns-2}
 
 ```{r Fig Meme1, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_curso.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","meme_curso.png"))
+  )
 ```
   <p class="forceBreak"></p>
 
 ```{r Fig Meme2, fig.align="right", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","meme_sintaxis.jpg"))
+  )
 ```
 
 ## Ventajas/Desventajas de RStudio{#future-steps}
@@ -170,10 +178,13 @@ Por ejemplo, control de versones con github y svn.
 <div class="yellow">- Editor de texto o códigos </div>
 <div class="green">- Lugar de trabajo (objetos creados, funciones, historial, control de versiones) </div>
 <div class="red">- Consola para desplegar los comandos y obtener resultados</div>
-<div class="blue">- Multitabla(gráficos, carpetas, paquetes, visor páginas web)</div>
+<div class="blue">- Multitabla (gráficos, carpetas, paquetes, visor páginas web)</div>
 
 ```{r Fig Entorno, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "700px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Entorno de Trabajo.PNG")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Entorno de Trabajo.PNG"))
+  )
 ```
 
 ::: notes
@@ -189,17 +200,26 @@ Comentarios:
 
 - Rstudio permite crear un **Proyecto** (.Rpoj), agrupa a todos los elementos. Puede gestionar los proyectos aquí:
 ```{r Fig rproj, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/rproj.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/rproj.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","rproj.png"))
+  )
 ```
 -**Directorio:** Ubicación en la que alojaré archivos que formarán parte del entorno de trabajo. Se obtiene mediante `getwd()`. **Configurarlo es muy importante (`setwd([RUTA])`).**
 - **.rds:** Permite guardar bases de datos de manera individual (muy similar a una hoja excel, un archivo .csv, etc.)
 - **.Rdata:** Permite guardar múltiples datos, objetos, funciones, etc., lo que equivale a decir que permite guardar el espacio de trabajo en general (`save.image(file =[RUTA])` para guardar todo, `save` para guardar sólo ciertos objetos en un .Rdata, `load([RUTA])` para restaurar). De igual forma, puede hacerlo desde aquí:
 ```{r Fig save_load_image, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_load_rdata.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_load_rdata.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","guardar_load_rdata.png"))
+  )
 ```
 _ **.R:** Una especie de archivos de texto en el que se pueden guardar comandos, anotaciones, etc. Similar a un archivo `.do` o sintaxis. Se recomienda que antes de cerrar una sesión, uno pueda guardar los scripts. **.Rdata no es lo mismo que .R, RECUÉRDELO**. A continuación se muestra cómo (Amarillo, crear nuevo; Rojo, abrir; Verde, guardar o guardar todos):
 ```{r Fig open_save_load_script, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "550px"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_scripts.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/guardar_scripts.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","guardar_scripts.png"))
+  )
 ```
 
 :::notes
@@ -228,27 +248,45 @@ EXPLICAR CADA UNO DE ELLOS
 2. Cree una sesión nueva 
 
 ```{r Fig Ej11, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio11.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio11.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio11.png"))
+  )
 ```
 <br>
 ```{r Fig Ej12, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio12.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio12.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio12.png"))
+  )
 ```
 <br>
 ```{r Fig Ej13, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "200x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio13.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio13.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio13.png"))
+  )
 ```
  <p class="forceBreak"></p>
 ```{r Fig Ej14, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "270x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio14.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio14.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio14.png"))
+  )
 ```
 <br>
 ```{r Fig Ej15, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio15.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio15.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio15.png"))
+  )
 ```
 <br>
 ```{r Fig Ej16, fig.align="left", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x"}
-knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Ejercicio16.png"))
+  )
 ```
 
 ## Ejercicio (continuación){#future-steps .smaller}
