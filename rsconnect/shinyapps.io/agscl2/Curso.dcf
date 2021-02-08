@@ -1,0 +1,12 @@
+name: Curso
+title: Curso
+username:
+account: agscl2
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3598323
+bundleId: 4193933
+url: https://agscl2.shinyapps.io/Curso/
+when: 1612751063.17857
+asMultiple: FALSE
+asStatic: FALSE

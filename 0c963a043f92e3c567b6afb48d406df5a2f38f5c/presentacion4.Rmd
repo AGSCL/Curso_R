@@ -1,0 +1,303 @@
+---
+title: "Curso Introductorio al uso de R Studio- Clase 4"
+output:
+  ioslides_presentation:
+    autosize: true
+    transition: slower
+    logo: logo.png
+    code_folding: hide
+    toc_float: TRUE 
+---
+
+<style>
+.superbigimage{
+    overflow-y:scroll;
+    white-space: nowrap;
+}
+.superbigimage img{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.p {
+  text-align: right;
+}
+.reveal section p {
+    font-size: 0.5em;
+}
+.reveal .slides section .slideContent ui li{
+    font-size: 0.6em;
+    color: red;
+}
+.reveal section pre code {
+    font-size: 0.6em;
+}
+.future-steps {
+  color: MidnightBlue;
+}
+.otro {
+  color: Teal;
+}
+.Advertencia {
+  color: Crimson;
+}
+code.r{
+  font-size: 3px;
+}
+pre {
+  white-space: pre !important;
+  overflow-y: scroll !important;
+  max-height: 10vh !important;
+  font-size: 1px;
+}
+.small-code pre code {
+  font-size: 0.8em;
+}
+.codefont pre {
+    font-size: 2px;
+    line-height: 1px;
+}
+.gdbar img {
+    width: 500px !important;
+    height: 150px !important;
+    margin: 10px 10px;
+}
+.gdbar {
+    width: 550px !important;
+    height: 175px !important;
+}
+slides > slide:not(.nobackground):before {
+    right: 0px;    
+    width: 200px;
+    height: 70px;
+    background-size: 1px 1px;
+    padding: 0px 0;
+}
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+</style>
+<script>
+slides > slide:not(.nobackground):before {
+  background: none;
+}
+</script>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+if(!require(dplyr)){install.packages("dplyr")}
+if(!require(readxl)){install.packages("readxl")}
+```
+
+## Contenidos{.future-steps}
+
+```{r, echo=FALSE}
+unlink('0c963a043f92e3c567b6afb48d406df5a2f38f5c/presentacion3_cache', recursive = TRUE)
+htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","logo.png"))), 
+               alt = 'logo', 
+               style = 'opacity: 0.8;position:fixed; top:100%;right:100%')
+```
+
+- Instalación de software
+- Ventajas/Desventajas de R y RStudio
+- Entorno de trabajo
+- Objetos de trabajo
+- Instalación de Paquetes estadísticos
+- Tipos de Variables 
+- Valores Especiales
+- **Recursos en línea** 
+- Importar Datos de Fuentes Externas
+- Estadística Descriptiva Básica 
+- Configuración de datos
+
+## Recursos en-línea {.future-steps .smaller}
+
+### Cursos
+
+- *DataCamp*. Por ejemplo, Introduction to R (https://www.datacamp.com/courses/free-introduction-to-r)
+- Si usted quiere tener una prueba gratis de DataCamp, más allá de completar el primer capítulo de un curso (https://www.c-sharpcorner.com/blogs/steps-to-activate-free-access-to-datacamp-pulralsight-linkedin-learning-etc-through-visual-studio-dev-essentials-program)
+- *Statistics With Interactive R Learning(SWIRL)*: The easiest and the most interactive way to start learning R (https://swirlstats.com/students.html).
+- *edX*. Por ejemplo, Dat Science: R Basics (https://www.edx.org/es/course/data-science-r-basics), o Introduction to R for Data Science (https://www.edx.org/es/course/introduction-to-r-for-data-science-2).
+- *YouTube*. Por ejemplo, Estadística Útil (https://www.youtube.com/watch?v=rzw1E6HxBFY&list=PLfX5C7cc6LRJ7V6WNgatRQJ6PNMrb4zfM)
+- *Estación Lastarria* (https://www.estacionlastarria.cl/actividades/rstudio/rstudio-ciencias-sociales.html)
+- *Centro de Microdatos UChile* (https://www.microdatos.cl/analisis-datos-r)
+
+### Comunidades
+
+- *R-Ladies*
+- *StackOverflow* (https://es.stackoverflow.com/). Por ejemplo, Testeo de modelo lineal en R (https://es.stackoverflow.com/questions/331075/testeo-de-modelo-lineal-en-r) 
+- *UseRChile* Usuarios de R en Chile (https://userchile.cl/)
+
+### Otros
+
+- learnr (Etiqueta "Tutorial")
+- Statistics With Interactive R Learning (SWIRL)
+- CheatSheets. https://rstudio.com/resources/cheatsheets/
+- Memes
+
+## Importar Datos de Fuentes Externas {.future-steps .smaller}
+
+- Rstudio tiene una opción para incorporar bases de datos de manera más fácil
+
+```{r Fig Import_dataset, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "400px"}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Import_dataset.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Import_dataset.png"))
+  )
+```
+
+- Existen muchos tipos de datos (.csv, .sav, .Rds, .xlsx, etc.)
+- En este caso, vamos a ver el CSV (archivo de texto separado por comas)
+- Pero puede estar separado por distintos caracteres (";", ",", "\\\ t o TAB" )
+- Los elementos que definen a una importación de un csv que hay que tener en consideración son los siguientes:
+  -Elemento separador de celdas
+  -Norma de codificación de texto (UTF-8, Latin1,etc.)
+  -Punto de partida de recogida de datos
+  -¿Primera fila como nombre de las columnas?
+  -Separador de Decimales
+
+```{r Fig Import_csv, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/gastos_casa_csv_foto.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","gastos_casa_csv_foto.png"))
+  )
+```
+
+- Cargue la base de datos
+
+```{r cargar_csv, echo=T, warning=F, size = 'tiny'}
+#Gastos_casa_csv <- read.delim("G:/Mi unidad/Alvacast/Curso/Gastos_casa_csv.txt") 
+#
+##CADA UNO DEBE CAMBIAR LA RUTA DE OBTENCIÓN DEL ARCHIVO, DEPENDIENDO DEL DIRECTORIO DONDE LO GUARDOÓ. SE ACONSEJA GUARDARLO EN LA MISMA CARPETA QUE EL PROYECTO.
+  
+Gastos_casa_csv <- read.delim(gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Gastos_casa_csv.txt"))) 
+
+```
+
+## Estadística Descriptiva Básica {.future-steps .smaller}
+
+### Medidas de Tendencia Central
+```{r media, echo=T, warning=F, size = 'tiny'}
+mean(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento para omitir los casos perdidos.
+```
+
+```{r mediana, echo=T, warning=F, size = 'tiny'}
+median(Gastos_casa_csv$monto, na.rm=T) #Utilizar este argumento para omitir los casos perdidos.
+```
+
+- En el caso de la moda necesitaremos aplicar una función, que tomará todos los valores únicos de un determinado vector, y que obtendrá el que posee la mayor cantidad de observaciones del vector que calzan con el valor único.
+
+```{r moda, echo=T, warning=F, size = 'tiny'}
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+gastos_casa_csv_2<-cbind(Gastos_casa_csv, monto_en_miles=round(Gastos_casa_csv$monto/1000,0))
+Mode(gastos_casa_csv_2$monto_en_miles)
+```
+
+- ¿Qué ocurrió con los resultados? Esta función no tiene la opción de remover valores perdidos, por lo que una opción plausible será ingresar una base de datos sin valores perdidos ("listwise deletion of missing values").
+
+```{r moda_corr, echo=T, warning=F, size = 'tiny'}
+gastos_casa_csv_2_naomit<-na.omit(gastos_casa_csv_2) #
+Mode(gastos_casa_csv_2_naomit$monto_en_miles)
+#nrow(Gastos_casa_csv)
+#nrow(Gastos_casa_csv)
+```
+
+- ¿Qué hizo la función na.omit?. lo mismo que `Mode(gastos_casa_csv_2[-c(231:1226),4])`. **Analicen qué se hizo aquí**
+
+### Histogramas
+```{r histograma, echo=T, warning=F, size = 'tiny'}
+hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gasto", xlab="Monto", ylab="Frecuencia")
+```
+
+- Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
+
+## Configuración de Datos {.future-steps .smaller}
+- Bajar [BASE DE DATOS](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx)
+
+```{r Fig Import_xlsx, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","Importar_xlsx.png"))
+  )
+```
+
+- Los elementos que definen a una importación de un excel (*.xlsx) que hay que tener en consideración son los siguientes:
+
+  -Nombre que se le asignará a base de datos
+  
+  -Nombre de la hoja de excel que se quiere importar a R
+  
+  -Rango de datos (para evitar lo que ocurrió con los gastos de la casa)
+  
+  -saltar algunas filas hasta llegar al nombre de las columnas (generalmente útil si las primeras filas no son de utilidad para diferenciar los datos, como el nombre del autor, la fecha,o nombres de un conjunto de filas, etc.)
+  
+  -NA (cómo se tratan los valores perdidos)
+  
+  -Checklist si se considera la primera columna como nombres de columna (si utilizó el argumento skip, este último antecede esta opción)
+  -Si quiere abrir un **visor de datos (View())**
+
+## Configuración de Datos, p2 {.future-steps .smaller}
+
+```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
+library(readxl)
+coronavirus <- read_excel(
+  paste0(getwd(),"/","coronavirus.xlsx"),
+  #"G:/Mi unidad/Alvacast/Curso/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx", 
+    sheet = "Hoja1")
+
+str(coronavirus)
+```
+
+- Gráfico de Dispersión
+```{r scatter, echo=T, warning=F, size = 'tiny', fig.align="center"}
+plot(coronavirus$infectados,coronavirus$monto_invertido_med, xlab="Infectados",ylab="Monto Invertido Med.")
+```
+
+
+- Datos de Ancho y largo (`reshape()`)
+
+```{r reshape, echo=T, warning=F, size = 'tiny'}
+coronavirus$mes<-as.numeric(coronavirus$mes) 
+coronavirus$estado<-as.factor(coronavirus$estado) 
+
+library(reshape2)
+dcast(coronavirus, estado ~ mes, value.var="infectados")
+dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
+```
+
+## Fuentes {.future-steps .smaller}
+
+- Codementor Community (2018, Nov 26). Learn R Online. Obtenido desde: https://www.codementor.io/collections/learn-r-online-bwbcv0nx4
+- Illinois Library (2020, Feb 12). Introduction to R: Getting Data from a CSV file. Obtenido desde: http://guides.library.illinois.edu/c.php?g=347944&p=2345554
+- https://www.tutorialspoint.com/r/r_mean_median_mode.htm
+- Tutorialspoint. Mean, Median and Mode. http://datos.gob.cl/uploads/recursos/Capacitaciones_Prevencion.csv
+
+## Ejercicio {#future-steps .smaller}
+
+- Acceda a la base de datos de Total de Capacitaciones en Prevención de Riesgos Laborales, Instituto de Seguridad Laboral ISL
+- Previsualicemos los datos: http://datos.gob.cl/dataset/9010/resource/5edb0069-43e7-451e-8717-5f8444056641
+- Generemos una carpeta en escritorio, de nombre "Cap_RL"
+- Genere un proyecto con el mismo nombre
+- Cargarla en R y conviertala en un data frame, asignándole el siguiente nombre "cap_prev".
+- obtener la media y la mediana por sexo (2da y 3ra columnas)
+- Obtenga la media y la mediana sin el total (fila 15)
+- ¿Qué sexo en promedio obtuvo más capacitaciones en el primer mes?
+- ¿Esta diferencia se repite al obtener la mediana? 
+
+# Prueba Final {#future-steps .smaller}
+
+## Instrucciones Prueba Final
+- Favor descargar esta base de datos: https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx
+- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. 
+- Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo (busque cómo hacerlo en internet)
+
+- Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
+
+::: notes
+https://cursor2020.shinyapps.io/Curso/
+::: 
