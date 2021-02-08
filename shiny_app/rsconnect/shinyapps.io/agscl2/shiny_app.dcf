@@ -1,0 +1,12 @@
+name: shiny_app
+title: shiny_app
+username:
+account: agscl2
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3598333
+bundleId: 4194002
+url: https://agscl2.shinyapps.io/shiny_app/
+when: 1612752580.94573
+asMultiple: FALSE
+asStatic: FALSE

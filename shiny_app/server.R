@@ -14,19 +14,22 @@ dataset <-  read_excel(destfile)
 })
 output$plot  <- renderPlot({
   
-  p <- ggplot(dataset(), aes_string(x=input$x, y=input$y)) + geom_point()
+  p <- ggplot(dataset(), aes_string(x=input$x, y=input$y)) 
   
-  if (input$color != 'None')
-    p <- p + aes_string(color=input$color)
+  if (input$point)
+    p <- p + geom_point()
+
+  if (input$boxplot)
+    p <- p + geom_boxplot()
+
+  if (input$x == "sexo" & input$y=="entero1" & input$boxplot)
+    p <- p + ggtitle("Segundo gráfico, correcto")
   
-  facets <- paste(input$facet_row, '~', input$facet_col)
-  if (facets != '. ~ .')
-    p <- p + facet_grid(facets)
+  if (input$x == "decimal1" & input$y=="decimal2" & input$point)
+    p <- p + ggtitle("Primer gráfico (de dispersión), correcto")
   
-  if (input$jitter)
-    p <- p + geom_jitter()
-  if (input$smooth)
-    p <- p + geom_smooth()
+  if (input$x == "decimal2" & input$y=="decimal1" & input$point)
+    p <- p + ggtitle("Primer gráfico (de dispersión), correcto")
   
   print(p)
   

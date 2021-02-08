@@ -299,5 +299,5 @@ dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
 - Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 
 ::: notes
-https://cursor2020.shinyapps.io/Curso/
+https://agscl2.shinyapps.io/shiny_app/
 ::: 

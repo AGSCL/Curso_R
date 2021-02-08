@@ -16,18 +16,18 @@ fluidPage(
   
   sidebarPanel(
     
-    sliderInput('sampleSize', 'Tamaño de la muestra', min=1, max=nrow(dataset),
-                value=min(1, nrow(dataset)), step=100, round=0),
+    #sliderInput('sampleSize', 'Tamaño de la muestra', min=1, max=nrow(dataset),
+     #           value=min(1, nrow(dataset)), step=100, round=0),
     
-    selectInput('x', 'X', names(dataset)),
-    selectInput('y', 'Y', names(dataset), names(dataset)[[2]]),
-    selectInput('color', 'Color', c('None', names(dataset))),
+    selectInput('x', 'Elija la variable para el eje X', names(dataset)),
+    selectInput('y', 'Elija la variable para el eje Y', names(dataset), names(dataset)[[2]]),
+    #selectInput('color', 'Color', c('None', names(dataset))),
     
-    checkboxInput('jitter', 'Jitter'),
-    checkboxInput('smooth', 'Smooth'),
+    checkboxInput('point', 'Gráfico de Dispersión'),
+    checkboxInput('boxplot', 'Diagrama de Cajas'),
     
-    selectInput('facet_row', 'Segmentar por Filas', c(None='.', names(dataset))),
-    selectInput('facet_col', 'Segmentar por Columnas', c(None='.', names(dataset)))
+    #selectInput('facet_row', 'Segmentar por Filas', c(None='.', names(dataset))),
+    #selectInput('facet_col', 'Segmentar por Columnas', c(None='.', names(dataset)))
   ),
   
   mainPanel(
