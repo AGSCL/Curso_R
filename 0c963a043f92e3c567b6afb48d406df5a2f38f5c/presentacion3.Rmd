@@ -152,11 +152,11 @@ knitr::include_graphics(
 - En este caso, vamos a ver el CSV (archivo de texto separado por comas)
 - Pero puede estar separado por distintos caracteres (";", ",", "\\\ t o TAB" )
 - Los elementos que definen a una importación de un csv que hay que tener en consideración son los siguientes:
-  -Elemento separador de celdas
-  -Norma de codificación de texto (UTF-8, Latin1,etc.)
-  -Punto de partida de recogida de datos
-  -¿Primera fila como nombre de las columnas?
-  -Separador de Decimales
+  - Elemento separador de celdas
+  - Norma de codificación de texto (UTF-8, Latin1,etc.)
+  - Punto de partida de recogida de datos
+  - ¿Primera fila como nombre de las columnas?
+  - Separador de Decimales
 
 ```{r Fig Import_csv, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "800px"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/gastos_casa_csv_foto.png")
@@ -239,7 +239,7 @@ knitr::include_graphics(
   -NA (cómo se tratan los valores perdidos)
   
   -Checklist si se considera la primera columna como nombres de columna (si utilizó el argumento skip, este último antecede esta opción)
-  -Si quiere abrir un **visor de datos (View())**
+  -Si quiere abrir un **visor de datos (View()) - ojo con las mayúsculas**
 
 ## Configuración de Datos, p2 {.future-steps .smaller}
 
@@ -275,24 +275,31 @@ dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
 - Codementor Community (2018, Nov 26). Learn R Online. Obtenido desde: https://www.codementor.io/collections/learn-r-online-bwbcv0nx4
 - Illinois Library (2020, Feb 12). Introduction to R: Getting Data from a CSV file. Obtenido desde: http://guides.library.illinois.edu/c.php?g=347944&p=2345554
 - https://www.tutorialspoint.com/r/r_mean_median_mode.htm
-- Tutorialspoint. Mean, Median and Mode. http://datos.gob.cl/uploads/recursos/Capacitaciones_Prevencion.csv
+- Tutorialspoint. Mean, Median and Mode. 
 
 ## Ejercicio {#future-steps .smaller}
 
-- Acceda a la base de datos de Total de Capacitaciones en Prevención de Riesgos Laborales, Instituto de Seguridad Laboral ISL
-- Previsualicemos los datos: http://datos.gob.cl/dataset/9010/resource/5edb0069-43e7-451e-8717-5f8444056641
-- Generemos una carpeta en escritorio, de nombre "Cap_RL"
+- Acceda a la base de datos de Nivel Regional MINSAL(Créditos a Iván González, github.com/ivanMSC/COVID19_Chile)
+- Previsualicemos los datos: <https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv>
+- Generemos una carpeta en escritorio, de nombre "COVID19_CL_REG"
 - Genere un proyecto con el mismo nombre
-- Cargarla en R y conviertala en un data frame, asignándole el siguiente nombre "cap_prev".
-- obtener la media y la mediana por sexo (2da y 3ra columnas)
+- Cargarla en R y conviertala en un data frame, asignándole el siguiente nombre "COVID19_CL_REG".
+- obtener la media y la mediana de `Nuevo Confirmado` por `Region` (2da y 3ra columnas)
 - Obtenga la media y la mediana sin el total (fila 15)
-- ¿Qué sexo en promedio obtuvo más capacitaciones en el primer mes?
+- ¿Qué región en promedio obtuvo en segundo lugar más nuevos casos confirmados?
 - ¿Esta diferencia se repite al obtener la mediana? 
+
+::: notes
+covid19_chile <- readr::read_csv("https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv")
+covid19_chile %>% 
+    dplyr::group_by(Region) %>% 
+    dplyr::summarise(mean=mean(`Nuevo Confirmado`,na.rm=T),mdn=median(`Nuevo Confirmado`,na.rm=T))
+:::
 
 # Prueba Final {#future-steps .smaller}
 
 ## Instrucciones Prueba Final
-- Favor descargar esta base de datos: https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx
+- Favor descargar esta base de datos: <https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx>
 - Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. 
 - Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo (busque cómo hacerlo en internet)
 

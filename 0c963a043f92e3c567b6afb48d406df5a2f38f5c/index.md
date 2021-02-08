@@ -6,3 +6,4 @@ Esta página sirve para instalar R y Rstudio. Forma parte de un curso impartido 
 * Para acceder a la presentación, [clase 1](presentacion.html)
 * Para acceder a la presentación, [clase 2](presentacion2.html)
 * Para acceder a la presentación, [clase 3](presentacion3.html)
+* Para acceder a la presentación, [clase 4](presentacion4.html)
