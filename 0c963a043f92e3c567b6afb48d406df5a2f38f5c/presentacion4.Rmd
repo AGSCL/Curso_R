@@ -92,8 +92,7 @@ if(!require(readxl)){install.packages("readxl")}
 if(!require(ggplot2)){install.packages("ggplot2")}
 if(!require(tidyr)){install.packages("tidyr")}
 if(!require(plotly)){install.packages("plotly")}
-if(!require(plotly)){install.packages("sjPlot")}
-
+if(!require(sjPlot)){install.packages("sjPlot")}
 ```
 
 ## Contenidos{.future-steps}
@@ -110,7 +109,7 @@ htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f3
 
 ## dplyr y ggplot {.future-steps .smaller}
 
-- DPLYR:
+- TIDYVERSE(DPLYR):
   - Manipulación de datos. Similitud a PANDAS (Python)
   - Flujo de trabajo
   - Permite mayor simplicidad en la codificación
@@ -122,6 +121,11 @@ htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f3
   - Gramática de los gráficos por capas (<http://vita.had.co.nz/papers/layered-grammar.pdf>)
   - Permite seguir los pasos y los distintos componentes del gráfico
   - Permite una fácil forma de iteración para distintos gráficos
+
+```{r Fig_badges, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
+knitr::include_graphics(paste0(getwd(),"/rstudioconf_ohi_hex.jpg"))
+```
 
 ::: notes
 https://cursor2020.shinyapps.io/Curso/
@@ -215,3 +219,43 @@ ggplot()+
 - Ocupe la misma base de datos.
 - Seleccione las muertes diarias notificadas (`Nuevo Muerte`)
 - Haga un gráfico con la Región Metropolitana, en comparación a la mediana y el rango intercuartil de los conteos diarios del resto de las regiones en conjunto.
+
+
+## Vacunaciones COVID-19(1) {.future-steps .smaller}
+
+- Existen antecedentes de que gran parte de las parejas en la RM aumentaron su exposición. El resto, recurrió a otros medios de contacto
+- Esto no ocurrió en regiones, quienes se encontraban en cuarentena estricta
+- Dado que algunos expertos señalan que la transmisibilidad se reduce con la primera dosis, mayores vacunaciones debiesen confundir las asociaciones 
+- **¿El 14 de febrero en la RM tuvo un efecto en el aumento de casos (controlando por vacunaciones)?**
+- Debemos incorporar las vacunaciones a la base de datos de nuevos casos
+- Otro paquete de la familia Tidyverse es "tidyr"
+- Similar a las funciones utilizadas por `reshape` (cambiar el formato largo y ancho de los datos)
+- También mostraremos como ejemplo los `join`.
+- Permiten combinar bases de datos
+  - Left
+  - Inner
+  - Right
+  - Otros (ej., probabilístico)
+
+## Vacunaciones COVID-19(2) {.future-steps .smaller}
+- ¿Fue la forma correcta de incorporar las bases de datos? ¿Se perdió información?
+- 
+
+```{r ejemplo_d, echo=T, warning=F, size = 'tiny'}
+library(tidyr)
+covid19_chile_vacuna_vs_confirmados <-
+    readr::read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto76/vacunacion.csv") %>%
+    tidyr::pivot_longer(cols=starts_with("20"), names_to="fecha", values_to="recuento") %>% 
+    tidyr::pivot_wider(names_from=starts_with("Dosis"), values_from="recuento") %>% 
+    dplyr::mutate(fecha=as.Date.character(fecha,tryFormats = "%Y-%m-%d")) %>% 
+    dplyr::left_join(covid19_chile, by=c("fecha"="Fecha", "Region"="Region")) %>% 
+    dplyr::filter(Region!="Total") %>% 
+    dplyr::select(-Segunda) %>% 
+    dplyr::filter(!is.na(Primera)) %>% 
+    dplyr::mutate(met=factor(ifelse(Region=="Metropolitana",1,0))) %>% 
+    dplyr::mutate(txtime=factor(ifelse(fecha>="2021-02-01",1,0))) #2021-02-14
+    
+
+didreg1 = lm(`Nuevo Confirmado` ~ txtime*met + Primera, data = covid19_chile_vacuna_vs_confirmados)
+summary(didreg1)
+```
