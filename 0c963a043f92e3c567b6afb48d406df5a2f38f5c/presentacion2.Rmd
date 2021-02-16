@@ -485,3 +485,9 @@ Interamericana editores S.A. de CV. México. www.shorturl.at/pvK37
 ## Prueba {#future-steps}
 
 Favor dirigirse al siguiente [enlace](https://forms.gle/UJG9md15m4NHNkv98) y contestar
+
+
+```{r cache_delete, include=F}
+unlink('*_files', recursive = T, force=T)
+unlink("*_cache", recursive = T, force= T)
+```

@@ -206,6 +206,13 @@ ggplot()+
       geom_line(data=covid19_chile %>% 
                   dplyr::filter(Region %in% c("Tarapacá","Antofagasta","Atacama")),
                 aes(x=as.Date(Fecha), y=`Nuevo Confirmado`, color=Region))+
+        geom_ribbon(data= covid19_chile %>% 
+                  dplyr::filter(!Region %in% c("Tarapacá","Antofagasta","Atacama","Metropolitana")) %>% 
+                  dplyr::group_by(Fecha)%>% 
+                  dplyr::summarise(mdn=median(`Nuevo Confirmado`,na.rm=T),
+                     q1=quantile(`Nuevo Confirmado`,.25,na.rm=T),
+                     q3=quantile(`Nuevo Confirmado`,.75,na.rm=T)), 
+                aes(y= mdn, x= Fecha, ymin = q1, ymax = q3), fill = "grey70", color="grey70", alpha=.4)+
       scale_x_date()+
       xlab("Fecha")+
       sjPlot::theme_blank()+
@@ -258,4 +265,10 @@ covid19_chile_vacuna_vs_confirmados <-
 
 didreg1 = lm(`Nuevo Confirmado` ~ txtime*met + Primera, data = covid19_chile_vacuna_vs_confirmados)
 summary(didreg1)
+```
+
+
+```{r cache_delete, include=F}
+unlink('*_files', recursive = T, force=T)
+unlink("*_cache", recursive = T, force= T)
 ```

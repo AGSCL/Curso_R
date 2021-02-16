@@ -308,3 +308,9 @@ covid19_chile %>%
 ::: notes
 https://agscl2.shinyapps.io/shiny_app/
 ::: 
+
+
+```{r cache_delete, include=F}
+unlink('*_files', recursive = T, force=T)
+unlink("*_cache", recursive = T, force= T)
+```
