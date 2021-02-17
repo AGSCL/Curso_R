@@ -140,7 +140,7 @@ knitr::include_graphics(
   gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","meme_curso.png"))
   )
 ```
-  <p class="forceBreak"></p>
+<p class="forceBreak"></p>
 
 ```{r Fig Meme2, fig.align="right", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300px"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/meme_sintaxis.jpg")
@@ -227,8 +227,8 @@ PROYECTOS: que agrupa/incorpora los distintos elementos de más abajo. Se recomi
 :::
 
 ### Rel. Con Objetos
-- `<-` **convierte en objetos**, discusión en el [enlace](https://scontent.fscl7-1.fna.fbcdn.net/v/t1.0-9/s960x960/43162578_2091945017524445_1939992699893448704_o.png?_nc_cat=105&_nc_sid=8024bb&_nc_ohc=Ko0unG3q_OkAX_jfn27&_nc_ht=scontent.fscl7-1.fna&oh=1005ae3a2e5a68d3f95374cd031140e3&oe=5EBA2678)
-- `ls` enlista todas los objetos que están en "Environment"
+- `<-` **convierte en objetos** (También hay "=") ([SCRIPT](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/equal_vs_arrow.png))
+- `ls` enlista todos los objetos y funciones definidas que están en "Environment"
 - `rm` se utiliza para remover objetos
 
 ### Operadores
@@ -239,6 +239,8 @@ PROYECTOS: que agrupa/incorpora los distintos elementos de más abajo. Se recomi
 
 :::notes
 EXPLICAR CADA UNO DE ELLOS
+¿ Por qué = = y no sólo =?, lo veremos más adelante, 
+pero es por que se aplica a un vector (a un grupo de números de manera sucesiva, y no a objetos únicos)
 :::
 
 ## Ejercicio{#future-steps .smaller}
@@ -293,6 +295,10 @@ knitr::include_graphics(
 
 - Cargamos la base de datos
 ```{r data, echo=TRUE}
+#head= primeras 6 observaciones; 
+#data.frame= formato de datos data.frame; 
+#round= aproximar ; 
+#rnorm= números aleatorios conforme a distribución normal
 set.seed(4567);df_ej<- data.frame(numeros=round(rnorm(1:200)*100,0))
 ```
 - Obtenemos las primeras 3 observaciones
@@ -306,14 +312,36 @@ set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
 - Ejecuto en la consola lo siguiente: `sessionInfo` (detalles de la sesión y configuración programa) y `dput` (para que otros puedan trabajar fácilmente sobre los datos que trabajas). Permite control y que los datos sean reproducibles (ej. Github).
 ```{r dput y session, echo=TRUE}
 dput(head(data.frame(numeros=round(rnorm(1:200)*100,0)),2))
+
 sessionInfo()
 ```
 - Guardo los objetos creados (.Rdata y .R) y guardo la sesión (.Rproj) que los contiene 
 
 ## Ejercicio 2{#future-steps .smaller}
 - Su jefe le pide que vea los datos guardados en el proyecto de R adjunto en el enlace.
-- Abra el siguiente [enlace ](https://github.com/AGSCL/Curso_R/raw/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/ejercicio2.zip) y baje los datos.
-- Abra el proyecto, el script y el .Rdata
+- Abra el siguiente [enlace](https://github.com/AGSCL/Curso_R/raw/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/ejercicio2.zip) y baje los datos.
+- Abra el proyecto, el .Rdata pero no el script 
+- Vea las primeras 6 filas del objeto `base_datos`
+- OPC. Vea las primeras 3 filas
+- ¿A qué llegó?
+
+```{r ej2, include=F}
+##script, comentario
+set.seed(112);base_datos<-data.frame(esto=rnorm(1:100))
+
+head(base_datos) 
+#1 -0.3142317
+#2  2.4033751
+#3 -0.7182640
+#4 -1.7606110
+#5 -1.1252812
+#6 -0.7195406
+
+head(base_datos,3)
+# -0.3142317
+#  2.4033751
+# -0.7182640
+```
 
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
 
@@ -328,6 +356,26 @@ sessionInfo()
 - Guarde los datos y el proyecto
 - Reinicie el computador. Vuelva a abrirlos
 
+```{r hagalo_usted, include=F}
+set.seed(6789); df2<- data.frame(numeros=round(rnorm(1:300)*100,0))
+
+#Utilizando tail(df2) obtenga las últimas 6 observaciones. Súmelas
+sum(tail(df2))
+
+#OPC1 = obtenga la media de todos los números (use recursos en línea)
+tail_df2<-tail(df2)
+
+mean(tail_df2$numeros)
+
+#OPC2 (+ avanzada)= obtenga el resultado usando comas como separador de decimales (“outdec” en internet)
+options(OutDec= ",")
+mean(tail_df2$numeros)
+
+#OPC3 = Obtenga la desviación estandar, separando los decimales con comas
+options(OutDec= ",")
+sd(tail_df2$numeros)
+```
+
 ## Fuentes{#future-steps .smaller}
 
 - R vs Stata: Which one is best for Data Science: https://youtu.be/KqWAmpb4iyc
@@ -341,12 +389,11 @@ https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
 - Lortie CJ. 2017. A review of R for Data Science: key elements and a critical analysis. PeerJ Preprints 5:e2873v1 
 - Types of Operators. https://www.tutorialspoint.com/r/r_operators.htm
 
-
 ## Prueba {#future-steps}
 
 Favor dirigirse al siguiente [enlace](https://forms.gle/gi7Zrw6ZB4d5q7Ta7) y contestar
 
 ```{r cache_delete, include=F}
-unlink('*_files', recursive = T, force=T)
+#unlink('*_files', recursive = T, force=T)
 unlink("*_cache", recursive = T, force= T)
 ```

@@ -122,7 +122,7 @@ htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f3
   - Permite seguir los pasos y los distintos componentes del gráfico
   - Permite una fácil forma de iteración para distintos gráficos
 
-```{r Fig_badges, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
+```{r Fig badges, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "500x"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Importar_xlsx.png")
 knitr::include_graphics(paste0(getwd(),"/rstudioconf_ohi_hex.jpg"))
 ```
@@ -136,7 +136,6 @@ https://cursor2020.shinyapps.io/Curso/
 Procesos: bajar base de datos (1), seleccionar columnas (`dplyr::select`) (2), formatear fecha (desde formato de texto día-mes-año a "Ymd") (3), filtrar regiones (sólo Tarapacá, Antofagasta y Atacama) (4), generar figura de serie de datos (Fecha como eje X y Nuevo Caso Confirmado como eje Y), discriminando por Región por colores (5), generamos un área gris del rango intercuartil del resto de regiones, excluyendo a la región metropolitana (al 80% o `fill=grey70`) con transparencia para que no se superponga (`alpha=.4`) (6), definimos los colores de las líneas: rojo para Antofagasta, verde para Atacama, azul para Tarapacá y negro para la mediana del resto de regiones (`scale_color_manual`) (7).
 
 ```{r ejemplo_a, echo=T, warning=F, size = 'tiny'}
-
 covid19_chile_ant_ata_tar <- 
     readr::read_csv("https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv") %>% 
     dplyr::select(Fecha, Region, `Nuevo Confirmado`) %>%
@@ -166,6 +165,17 @@ covid19_chile_ant_ata_tar+
     scale_color_manual(name= "Región", values = c("red","green","blue","black"), 
                        label=c("Antofagasta","Atacama","Tarapacá","Mediana (resto regiones\nexcluyendo Metropolitana)"))
 ```
+
+- ¿No se ve más ordenado?, lo valorarán cuando trabajen con condiciones anidadas (IFs concatenados)
+
+```{r Fig pipe_vs_rest, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "500x"}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio15.png")
+knitr::include_graphics(
+  #gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",
+       paste0(getwd(),"/","pipe_vs_rest.png")
+  )
+```
+
 
 ## Otra forma de escribirlo {.future-steps .smaller}
 
@@ -199,7 +209,7 @@ ggplot()+
 
 ## Facet Wrap por Región {.future-steps .smaller}
 
-Si queremos separar los datos por región
+Muy complejo y todo, pero no entendí nada los gráficos anteriores. Si queremos separar los datos por región:
 
 ```{r ejemplo_c, echo=T, warning=F, size = 'tiny'}
 ggplot()+
@@ -269,6 +279,6 @@ summary(didreg1)
 
 
 ```{r cache_delete, include=F}
-unlink('*_files', recursive = T, force=T)
+#unlink('*_files', recursive = T, force=T)
 unlink("*_cache", recursive = T, force= T)
 ```

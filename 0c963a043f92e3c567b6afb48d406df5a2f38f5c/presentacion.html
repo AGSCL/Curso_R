@@ -256,7 +256,7 @@ slides > slide:not(.nobackground):before {
 <li>No soy un experto en informática ni en estadística</li>
 <li>Es un taller enfocado a la aplicación de herramientas básicas de gestión de datos en R y Rstudio</li>
 <li>Brinda herramientas, guía y orientación para profundizar de manera individual</li>
-<li>1era versión. Agradeceré que las opiniones generales sobre el curso se hagan al final (habrá una plataforma para ello), o bien en privado si son muy urgentes.</li>
+<li>2da versión. Agradeceré que las opiniones generales sobre el curso se hagan al final (habrá una plataforma para ello), o bien en privado si son muy urgentes.</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Instalación</h2></hgroup><article  id="future-steps">
@@ -361,14 +361,14 @@ slides > slide:not(.nobackground):before {
 <div class="yellow">
 
 <ul>
-<li>Editor de texto o códigos
+<li>Editor de texto o códigos (ACTUALIZACION: Editor Visual Markdown)
 
 </div>
 
 <div class="green">
 
 <ul>
-<li>Lugar de trabajo (objetos creados, funciones, historial, control de versiones)
+<li>Lugar de trabajo (objetos creados, funciones, historial, control de versiones) (ACTUALIZACION: Se agregó Tutorial)
 
 </div>
 
@@ -408,8 +408,8 @@ slides > slide:not(.nobackground):before {
 <h3>Rel. Con Objetos</h3>
 
 <ul>
-<li><code>&lt;-</code> <strong>convierte en objetos</strong>, discusión en el <a href='https://scontent.fscl7-1.fna.fbcdn.net/v/t1.0-9/s960x960/43162578_2091945017524445_1939992699893448704_o.png?_nc_cat=105&amp;_nc_sid=8024bb&amp;_nc_ohc=Ko0unG3q_OkAX_jfn27&amp;_nc_ht=scontent.fscl7-1.fna&amp;oh=1005ae3a2e5a68d3f95374cd031140e3&amp;oe=5EBA2678' title=''>enlace</a></li>
-<li><code>ls</code> enlista todas los objetos que están en &ldquo;Environment&rdquo;</li>
+<li><code>&lt;-</code> <strong>convierte en objetos</strong> (También hay &ldquo;=&rdquo;) (<a href='https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/equal_vs_arrow.png' title=''>SCRIPT</a>)</li>
+<li><code>ls</code> enlista todos los objetos y funciones definidas que están en &ldquo;Environment&rdquo;</li>
 <li><code>rm</code> se utiliza para remover objetos</li>
 </ul>
 
@@ -419,7 +419,7 @@ slides > slide:not(.nobackground):before {
 
 <p><strong>De comparación</strong>: <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></p>
 
-<aside class='note'><section><p>EXPLICAR CADA UNO DE ELLOS</p></section></aside>
+<aside class='note'><section><p>EXPLICAR CADA UNO DE ELLOS ¿ Por qué = = y no sólo =?, lo veremos más adelante, pero es por que se aplica a un vector (a un grupo de números de manera sucesiva, y no a objetos únicos)</p></section></aside>
 
 </article></slide><slide class=""><hgroup><h2>Ejercicio</h2></hgroup><article  class="smaller" id="future-steps">
 
@@ -444,7 +444,11 @@ slides > slide:not(.nobackground):before {
 <li>Cargamos la base de datos</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>set.seed(4567);df_ej&lt;- data.frame(numeros=round(rnorm(1:200)*100,0))</pre>
+<pre class = 'prettyprint lang-r'>#head= primeras 6 observaciones; 
+#data.frame= formato de datos data.frame; 
+#round= aproximar ; 
+#rnorm= números aleatorios conforme a distribución normal
+set.seed(4567);df_ej&lt;- data.frame(numeros=round(rnorm(1:200)*100,0))</pre>
 
 <ul>
 <li>Obtenemos las primeras 3 observaciones</li>
@@ -503,7 +507,10 @@ slides > slide:not(.nobackground):before {
 <ul>
 <li>Su jefe le pide que vea los datos guardados en el proyecto de R adjunto en el enlace.</li>
 <li>Abra el siguiente <a href='https://github.com/AGSCL/Curso_R/raw/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/ejercicio2.zip' title=''>enlace</a> y baje los datos.</li>
-<li>Abra el proyecto, el script y el .Rdata</li>
+<li>Abra el proyecto, el .Rdata pero no el script</li>
+<li>Vea las primeras 6 filas del objeto <code>base_datos</code></li>
+<li>OPC. Vea las primeras 3 filas</li>
+<li>¿A qué llegó?</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Ejercicio: Hágalo usted</h2></hgroup><article  class="smaller" id="future-steps">

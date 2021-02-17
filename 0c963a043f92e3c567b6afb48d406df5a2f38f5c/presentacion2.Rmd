@@ -130,6 +130,15 @@ knitr::include_graphics(
 - Toda función tiene un nombre, un argumento (puede estar definido por defecto) y un cuerpo
 - Los resultados de las operaciones pueden arrojar advertencias (para considerar) o errores (la ejecución para). Gran parte de los errores y advertencias están programadas, pueden ser buscadas en la red.
 
+## Conceptos Previos- Funciones () {.future-steps .smaller}
+
+Ejemplo: "head"
+
+- ¿Cuántas filas entrega por defecto?
+- Esa especificación es un argumento por defecto
+- El cuerpo, no lo vemos
+
+
 ## Conceptos Previos- Paquetes Estadísticos {.future-steps .smaller}
 
 - Una de las características que hace la diferencia entre otros programas. 
@@ -172,7 +181,7 @@ knitr::include_graphics(
 ```{r crear mean_curso, echo=T, size = 'tiny'}
 set.seed(4321) #Creamos una semilla para la generación de datos, 
 #de manera que los podamos reproducir
-datos<- rnorm(200) #Generamos 200 números aleatorizados 
+datos<- rnorm(200, 4, .5) #Generamos 200 números aleatorizados , con un promedio 4 y una desviación estándar de 0,5
 #siguiendo distribución normal.
 promedio_curso <- function(x) {sum(x)/length(x)} #creamos una función que suma 
 #datos y los divide por su largo
@@ -235,7 +244,7 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - La función `list()` permite generarla. Es opcional agregarle nombres a cada elemento, pero permite llamarlos con mayor facilidad.
 
 ### Matrices
-- Forma tabular, bidemnsional y de naturaleza homogénea
+- Forma tabular, bidimensional y de naturaleza homogénea
 - Coarta su formato si se incorporan elementos de distinto tipo
 - Admite nombres a sus dimensiones (`dimnames`)
 - Generalmente numéricos
@@ -264,6 +273,8 @@ Almacenan datos, tienen distintas **estructuras** que le dan soporte. A continua
 - No entrega nombres de columnas automáticamente
 - Más sensible: da más advertencias
 - Es más cauto al reciclar vectores
+- No recomendable para bases de datos medianos/grandes (>50,000x10) (preferible data.table's)
+- Pueden ser incompatibles con algunos paquetes
 
 :::notes
 Usar cbind() para agregar una nueva columna a un data frame
@@ -301,7 +312,24 @@ matrix(1:4, nrow = 2, ncol = 2)*matrix(c(46,57,32,88),nrow=2)
 x<-array(c(52,41,25,85,136,128,28,59,65,16,1,133),c(2,3,2))
 dimnames(x)<-list(c("H","M"),c("desempleado","empleado","inactivo"),c("santiago","valparaiso"))
 print(x)
-##... mmmm... dimnames...¿qué serán?
+##... mmmm... dimnames...¿qué serán? (se verá después)
+```
+
+## Ejemplo aplicado (no replicar){.future-steps .smaller}
+
+- Seleccionar velocidades altas en base a un vector de valores
+- Generar una matriz de distancia recorrida y velocidad (en mph)
+
+```{r ej_mat_vec, echo=T, size = 'tiny'}
+if(!require(dplyr)){install.packages("dplyr")} #si no existe, se instala
+library(dplyr) #cargo dplyr
+data(cars) #cargo la base de datos cars de dplyr
+glimpse(cars) # exploro los datos
+
+vec_vels<-c(23,24,25) # vector de velocidades altas seleccionadas
+cars %>% 
+  dplyr::filter(speed %in% vec_vels) %>%  #filtro en base a un vector
+  janitor::tabyl(speed, dist) #matriz de velocidad por distancia
 ```
 
 ## Indexación, Subconjuntos y Atributos, Objetos de Trabajo {.future-steps .smaller}
