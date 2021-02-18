@@ -241,7 +241,7 @@ ggplot()+
 
 - Ocupe la misma base de datos.
 - Seleccione las muertes diarias notificadas (`Nuevo Muerte`)
-- Haga un gráfico con la Región Metropolitana, en comparación a la mediana y el rango intercuartil de los conteos diarios del resto de las regiones en conjunto.
+- Haga un gráfico con Valparaíso en comparación a la mediana y el rango intercuartil de los conteos diarios del resto de las regiones en conjunto.
 
 ```{r ej1, echo=T, warning=F, size = 'tiny', include=F}
 
@@ -252,10 +252,10 @@ covid19_chile_muertes <-
 
 ggplot()+
       geom_line(data=covid19_chile_muertes %>% 
-                  dplyr::filter(Region %in% c("Metropolitana")),
+                  dplyr::filter(Region %in% c("Valparaíso")),
                 aes(x=as.Date(Fecha), y=`Nuevo Muerte`, color=Region))+
         geom_ribbon(data= covid19_chile_muertes %>% 
-                  dplyr::filter(!Region %in% c("Metropolitana")) %>% 
+                  dplyr::filter(!Region %in% c("Valparaíso")) %>% 
                   dplyr::group_by(Fecha)%>% 
                   dplyr::summarise(mdn=median(`Nuevo Muerte`,na.rm=T),
                      q1=quantile(`Nuevo Muerte`,.25,na.rm=T),
@@ -265,8 +265,11 @@ ggplot()+
       xlab("Fecha")+
       sjPlot::theme_blank()+
       theme(legend.position="bottom")+
-      facet_wrap(~Region, ncol = 1)
+      facet_wrap(~Region, ncol = 1)+
+  labs(caption= "Nota. Área gris, Rango intercuartil del Resto de las regiones")
 ```
+
+- Nótese la calidad de los datos provistos (ej., 2020-06-08, ¿el 50% obtuvo menos 1,5 muertes?)
 
 ## Vacunaciones COVID-19(1) {.future-steps .smaller}
 
@@ -285,6 +288,8 @@ ggplot()+
   - Otros (ej., probabilístico)
 
 ## Vacunaciones COVID-19(2) {.future-steps .smaller}
+- Se estandarizaron las variables de acuerdo a la población de la región, por cada 100,000 hab.
+- Se generó un modelo de efectos fijos para capturar eventuales cambios en coquimbo en comparación a otras regiones a partir del 14 de febrero
 - ¿Fue la forma correcta de incorporar las bases de datos? ¿Se perdió información?
 
 ```{r ejemplo_d, echo=T, warning=F, size = 'tiny'}
@@ -295,9 +300,12 @@ library(broom)
 library(kableExtra)
 covid19_chile_vacuna_vs_confirmados <-
     readr::read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto76/vacunacion.csv") %>%
+  #Formato largo de fechas
     tidyr::pivot_longer(cols=starts_with("20"), names_to="fecha", values_to="recuento") %>% 
+  #Formato ancho por tipo de dosis (diferenciando primera y segunda en columnas distintas)
     tidyr::pivot_wider(names_from=starts_with("Dosis"), values_from="recuento") %>% 
     dplyr::mutate(fecha=as.Date.character(fecha,tryFormats = "%Y-%m-%d")) %>% 
+  # Unir con la base de datos de casos por Región
     dplyr::left_join(covid19_chile, by=c("fecha"="Fecha", "Region"="Region")) %>% 
     dplyr::filter(Region!="Total") %>% 
     dplyr::select(-Segunda) %>% 
@@ -305,31 +313,63 @@ covid19_chile_vacuna_vs_confirmados <-
     dplyr::mutate(met=factor(ifelse(Region=="Coquimbo",1,0))) %>% 
     dplyr::mutate(txtime=factor(ifelse(fecha>="2021-02-14",1,0))) %>% 
     dplyr::rename("conf"="Nuevo Confirmado")
-    
+
+#Base de datos de PCR's y UCI's
+covid19_chile_vacuna_vs_confirmados %>%     
+  dplyr::left_join(readr::read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto7/PCR_std.csv"), 
+                   #Los criterios para parear es la Región(i) y la fecha(t) 
+                   by=c("Region", "fecha")) %>% 
+  dplyr::left_join(readr::read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto8/UCI_std.csv") %>% 
+                     #sacar variables redundantes: código de región, población y número
+                     dplyr::select(-`Codigo region`,-Poblacion), 
+                   by=c("Region", "fecha")) %>% 
+  dplyr::mutate(conf_100mil=(conf/Poblacion)*100000) %>% 
+  dplyr::mutate(Primera_100mil= (Primera/Poblacion)*100000) %>% 
+  dplyr::mutate(PCR_100mil= (numero.x/Poblacion)*100000) %>% 
+  dplyr::mutate(Hosp_UCI_100mil= (numero.y/Poblacion)*100000) %>% 
+  as.data.frame() %>% 
+  #Para definir la base de datos
+  assign("covid19_chile_vacuna_vs_confirmados_std_pcr_uci",., envir=.GlobalEnv)
+
+paste0("La fecha mínima pareada fue ",min(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha),";\n", "La máxima fecha disponible fue ",max(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha))    
 
 # Modelo de efectos fijos
-did.reg <- plm(conf ~ txtime + met + txtime:met + Primera, 
-               data = covid19_chile_vacuna_vs_confirmados,  index=c("Region", "fecha"), model = "within")
-
+did.reg <- plm(conf_100mil ~ txtime + met + txtime:met + Primera_100mil + PCR_100mil + Hosp_UCI_100mil, 
+               data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci,  index=c("Region", "fecha"), model = "within")
+#Obtuvimos los errores de estándar robustos a variaciones por Región
 coeftest(did.reg, vcov = function(x) 
   vcovHC(x, cluster = "group", type = "HC1")) %>% 
    broom::tidy() %>% 
-  dplyr::mutate_if(is.numeric, funs(round(.,2))) %>% 
+  #Cambiamos los nombres de las variables
+  dplyr::mutate(term= dplyr::case_when(term=="txtime1"~"14 de Febrero hasta el día de obtención",
+                                       term=="Primera_100mil"~"Primera dosis por cada 100 mil hab.",
+                                       term=="PCR_100mil"~"PCR's por cada 100 mil hab.",
+                                       term=="Hosp_UCI_100mil"~"Hospitalizaciones por cada 100 mil hab.",
+                                       term=="txtime1:met1"~"Coquimbo x 14 de Febrero"
+                                       )) %>% 
+  dplyr::mutate_at(vars("estimate","std.error","statistic"), funs(round(.,2))) %>% 
+  #Aproximamos a 3, de manera que los interesados puedan ver el valor p con 3 decimales
+  dplyr::mutate_at(vars("p.value"), funs(round(.,3))) %>% 
+  dplyr::mutate(p.value=ifelse(p.value<0.001,"<0.001",as.character(p.value))) %>% 
+  #generar tabla en formato html, definiendo título y nombre de columnas
   knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
                caption = paste0("Tabla 1. Coeficientes Diferencia en Diferencias"),
                col.names = c("Variables Independientes","Estimador","Error Estándar","Estadístico t", "Sig"),
 align =c('l',rep('c', 101)))%>%
-    kableExtra::add_footnote(c("Nota. txtime= 14 de Febrero; Primera=Número de primeras vacunas aplicadas; met= Coquimbo"), notation = "none")%>%
-  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 11)
+  #destaca la quinta fila correspondiente a la intervención para el tratado
+  kableExtra::row_spec(5,bold=T,hline_after = T) %>% 
+    #kableExtra::add_footnote(c("Nota. txtime= 14 de Febrero; Primera=Número de primeras vacunas aplicadas; met= Coquimbo"), notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
+<br>
 
 ```{r pred_se, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
 se <- function(x) sqrt(var(x)/length(x))
 
-Produc_means <- covid19_chile_vacuna_vs_confirmados %>% 
+Produc_means <- covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>% 
   dplyr::group_by(Region) %>% 
-  transmute(y_median = median(conf),
-            y = conf, 
+  transmute(y_median = median(conf_100mil),
+            y = conf_100mil, 
             fecha = fecha) %>% 
   dplyr::ungroup() %>% 
   dplyr::mutate(y_pred = predict(did.reg) + y_median) %>% 
@@ -355,31 +395,29 @@ Produc_means %>%
 
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
+- A partir del gráfico no es tan claro si las diferencias se deben al 14 de febrero
+- Adicionalmente, la capacidad de predicción del modelo se ve baja
+- La diferencia en cada punto de tiempo no es constante en el periodo pre-intervención
+- Sólo un tratado
 - Igual no son del todo comparables las series (ausencia soporte común)
 - Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones)
 - Las primeras vacunas siguen un patrón muy distinto
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
+mean_cl_quantile <- function(x, q = c(0.025, 0.975), na.rm = TRUE){
+  dat <- data.frame(y = mean(x, na.rm = na.rm),
+                    ymin = quantile(x, probs = q[1], na.rm = na.rm),
+                    ymax = quantile(x, probs = q[2], na.rm = na.rm))
+  return(dat)
+}
 
-reg_num <-
-cbind.data.frame(region=unique(covid19_chile_vacuna_vs_confirmados$Region),
-                 numreg=1:length(unique(covid19_chile_vacuna_vs_confirmados$Region)))
-
-covid19_chile_vacuna_vs_confirmados_num <-
-  covid19_chile_vacuna_vs_confirmados %>% 
-      dplyr::mutate(numfech=as.numeric(fecha)-min(as.numeric(fecha))) %>% 
-      dplyr::mutate(numfech=numfech+1) %>% 
-      dplyr::left_join(reg_num, by=c("Region"="region")) %>% 
-      dplyr::mutate(numreg=as.numeric(numreg)) %>% 
-      dplyr::mutate(punto=factor(ifelse(txtime==1 & met==1,1,0))) %>% 
-  as.data.frame()
-
-
-ggplot(covid19_chile_vacuna_vs_confirmados_num, aes(fecha, conf, color = met)) +
-    stat_summary(geom = 'line') +
+ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, color = met)) +
+    stat_summary(geom = 'line', fun.y = median) +
+    stat_summary(geom = "ribbon", fun.data = mean_cl_quantile, alpha = 0.3, fill="red")+
     geom_vline(xintercept = as.Date("2021-02-14")) +
-    theme_minimal()+
-    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo"), values=c("red","blue"))
+    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo"), values=c("red","blue"))+
+    sjPlot::theme_sjplot2()+
+  labs(caption="Nota. Área roja: intervalos de confianza al 95%;\nLínea vertical: 14 de febrero 2021")
 ```
 
 ```{r cache_delete, include=F}
