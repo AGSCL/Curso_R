@@ -93,6 +93,12 @@ if(!require(ggplot2)){install.packages("ggplot2")}
 if(!require(tidyr)){install.packages("tidyr")}
 if(!require(plotly)){install.packages("plotly")}
 if(!require(sjPlot)){install.packages("sjPlot")}
+if(!require(lmtest)){install.packages("lmtest")}
+if(!require(plm)){install.packages("plm")}
+if(!require(broom)){install.packages("broom")}
+if(!require(kableExtra)){install.packages("kableExtra")}
+if(!require(knitr)){install.packages("knitr")}
+
 ```
 
 ## Contenidos{.future-steps}
@@ -237,13 +243,37 @@ ggplot()+
 - Seleccione las muertes diarias notificadas (`Nuevo Muerte`)
 - Haga un gráfico con la Región Metropolitana, en comparación a la mediana y el rango intercuartil de los conteos diarios del resto de las regiones en conjunto.
 
+```{r ej1, echo=T, warning=F, size = 'tiny', include=F}
+
+covid19_chile_muertes <-
+    readr::read_csv("https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv") %>% 
+    dplyr::select(Fecha, Region, `Nuevo Muerte`) %>%
+    dplyr::mutate(Fecha=as.Date.character(Fecha,tryFormats = "%d-%m-%Y"))
+
+ggplot()+
+      geom_line(data=covid19_chile_muertes %>% 
+                  dplyr::filter(Region %in% c("Metropolitana")),
+                aes(x=as.Date(Fecha), y=`Nuevo Muerte`, color=Region))+
+        geom_ribbon(data= covid19_chile_muertes %>% 
+                  dplyr::filter(!Region %in% c("Metropolitana")) %>% 
+                  dplyr::group_by(Fecha)%>% 
+                  dplyr::summarise(mdn=median(`Nuevo Muerte`,na.rm=T),
+                     q1=quantile(`Nuevo Muerte`,.25,na.rm=T),
+                     q3=quantile(`Nuevo Muerte`,.75,na.rm=T)), 
+                aes(y= mdn, x= Fecha, ymin = q1, ymax = q3), fill = "grey70", color="grey70", alpha=.4)+
+      scale_x_date()+
+      xlab("Fecha")+
+      sjPlot::theme_blank()+
+      theme(legend.position="bottom")+
+      facet_wrap(~Region, ncol = 1)
+```
 
 ## Vacunaciones COVID-19(1) {.future-steps .smaller}
 
-- Existen antecedentes de que gran parte de las parejas en la RM aumentaron su exposición. El resto, recurrió a otros medios de contacto
+- Existen antecedentes de que gran parte de las parejas en Coquimbo aumentaron su exposición. El resto, recurrió a otros medios de contacto
 - Esto no ocurrió en regiones, quienes se encontraban en cuarentena estricta
 - Dado que algunos expertos señalan que la transmisibilidad se reduce con la primera dosis, mayores vacunaciones debiesen confundir las asociaciones 
-- **¿El 14 de febrero en la RM tuvo un efecto en el aumento de casos (controlando por vacunaciones)?**
+- **¿El 14 de febrero en Coquimbo tuvo un efecto en el aumento de casos (controlando por vacunaciones)?**
 - Debemos incorporar las vacunaciones a la base de datos de nuevos casos
 - Otro paquete de la familia Tidyverse es "tidyr"
 - Similar a las funciones utilizadas por `reshape` (cambiar el formato largo y ancho de los datos)
@@ -256,10 +286,13 @@ ggplot()+
 
 ## Vacunaciones COVID-19(2) {.future-steps .smaller}
 - ¿Fue la forma correcta de incorporar las bases de datos? ¿Se perdió información?
-- 
 
 ```{r ejemplo_d, echo=T, warning=F, size = 'tiny'}
 library(tidyr)
+library(lmtest)
+library(plm)
+library(broom)
+library(kableExtra)
 covid19_chile_vacuna_vs_confirmados <-
     readr::read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto76/vacunacion.csv") %>%
     tidyr::pivot_longer(cols=starts_with("20"), names_to="fecha", values_to="recuento") %>% 
@@ -269,14 +302,85 @@ covid19_chile_vacuna_vs_confirmados <-
     dplyr::filter(Region!="Total") %>% 
     dplyr::select(-Segunda) %>% 
     dplyr::filter(!is.na(Primera)) %>% 
-    dplyr::mutate(met=factor(ifelse(Region=="Metropolitana",1,0))) %>% 
-    dplyr::mutate(txtime=factor(ifelse(fecha>="2021-02-01",1,0))) #2021-02-14
+    dplyr::mutate(met=factor(ifelse(Region=="Coquimbo",1,0))) %>% 
+    dplyr::mutate(txtime=factor(ifelse(fecha>="2021-02-14",1,0))) %>% 
+    dplyr::rename("conf"="Nuevo Confirmado")
     
 
-didreg1 = lm(`Nuevo Confirmado` ~ txtime*met + Primera, data = covid19_chile_vacuna_vs_confirmados)
-summary(didreg1)
+# Modelo de efectos fijos
+did.reg <- plm(conf ~ txtime + met + txtime:met + Primera, 
+               data = covid19_chile_vacuna_vs_confirmados,  index=c("Region", "fecha"), model = "within")
+
+coeftest(did.reg, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1")) %>% 
+   broom::tidy() %>% 
+  dplyr::mutate_if(is.numeric, funs(round(.,2))) %>% 
+  knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
+               caption = paste0("Tabla 1. Coeficientes Diferencia en Diferencias"),
+               col.names = c("Variables Independientes","Estimador","Error Estándar","Estadístico t", "Sig"),
+align =c('l',rep('c', 101)))%>%
+    kableExtra::add_footnote(c("Nota. txtime= 14 de Febrero; Primera=Número de primeras vacunas aplicadas; met= Coquimbo"), notation = "none")%>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 11)
 ```
 
+```{r pred_se, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
+se <- function(x) sqrt(var(x)/length(x))
+
+Produc_means <- covid19_chile_vacuna_vs_confirmados %>% 
+  dplyr::group_by(Region) %>% 
+  transmute(y_median = median(conf),
+            y = conf, 
+            fecha = fecha) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(y_pred = predict(did.reg) + y_median) %>% 
+  dplyr::select(-y_median)
+
+Produc_means %>% 
+  gather(type, value, y, y_pred) %>% 
+  dplyr::mutate(coquimbo=ifelse(Region=="Coquimbo",1,0)) %>% 
+  dplyr::group_by(coquimbo,type,fecha) %>% 
+  dplyr::mutate(median=median(value), se=se(value)) %>%
+  dplyr::ungroup() %>% 
+  dplyr::filter(Region %in% c("Arica y Parinacota", "Coquimbo")) %>% 
+  ggplot(aes(x = fecha, y = median, linetype = type))+
+  geom_line() +
+  geom_ribbon(aes(y= median, x= fecha, ymin = median-se, ymax = median+se), fill = "grey70", color="grey70", alpha=.4)+
+  scale_linetype_manual(name="Valores",values=c("solid","dashed"), labels=c("Actual", "Estimado"))+
+  facet_wrap(~coquimbo, labeller=as_labeller(c(`0` = "Otras Regiones", `1` = "Coquimbo")))+
+  geom_vline(xintercept = as.Date("2021-02-14"),linetype="longdash")+
+  theme_blank()+
+  ggtitle("Prediciones y Medianas por fecha de nuevos casos confirmados")+
+  labs(caption="Nota. Área gris representa el error estandar por región;\nLínea vertical= 14 de Febrero")
+```
+
+
+## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
+- Igual no son del todo comparables las series (ausencia soporte común)
+- Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones)
+- Las primeras vacunas siguen un patrón muy distinto
+
+```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
+
+reg_num <-
+cbind.data.frame(region=unique(covid19_chile_vacuna_vs_confirmados$Region),
+                 numreg=1:length(unique(covid19_chile_vacuna_vs_confirmados$Region)))
+
+covid19_chile_vacuna_vs_confirmados_num <-
+  covid19_chile_vacuna_vs_confirmados %>% 
+      dplyr::mutate(numfech=as.numeric(fecha)-min(as.numeric(fecha))) %>% 
+      dplyr::mutate(numfech=numfech+1) %>% 
+      dplyr::left_join(reg_num, by=c("Region"="region")) %>% 
+      dplyr::mutate(numreg=as.numeric(numreg)) %>% 
+      dplyr::mutate(punto=factor(ifelse(txtime==1 & met==1,1,0))) %>% 
+  as.data.frame()
+
+
+ggplot(covid19_chile_vacuna_vs_confirmados_num, aes(fecha, conf, color = met)) +
+    stat_summary(geom = 'line') +
+    geom_vline(xintercept = as.Date("2021-02-14")) +
+    theme_minimal()+
+    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo"), values=c("red","blue"))
+```
 
 ```{r cache_delete, include=F}
 #unlink('*_files', recursive = T, force=T)

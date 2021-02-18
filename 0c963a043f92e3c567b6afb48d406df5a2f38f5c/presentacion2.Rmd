@@ -516,6 +516,6 @@ Favor dirigirse al siguiente [enlace](https://forms.gle/UJG9md15m4NHNkv98) y con
 
 
 ```{r cache_delete, include=F}
-unlink('*_files', recursive = T, force=T)
+#unlink('*_files', recursive = T, force=T)
 unlink("*_cache", recursive = T, force= T)
 ```
