@@ -111,7 +111,7 @@ htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f3
 - Estadística Descriptiva Básica 
 - Configuración de datos
 
-## Conceptos Previos- Funciones {.future-steps .smaller}
+## Conceptos Previos- Funciones{.future-steps .smaller}
 
 <div class="brown">"To understand computations in R, two slogans are helpful: Everything that exists is an object. Everything that happens is a function call."- John Chambers </div>
 
@@ -130,7 +130,7 @@ knitr::include_graphics(
 - Toda función tiene un nombre, un argumento (puede estar definido por defecto) y un cuerpo
 - Los resultados de las operaciones pueden arrojar advertencias (para considerar) o errores (la ejecución para). Gran parte de los errores y advertencias están programadas, pueden ser buscadas en la red.
 
-## Conceptos Previos- Funciones () {.future-steps .smaller}
+## Conceptos Previos- Funciones(2){.future-steps .smaller}
 
 Ejemplo: "head"
 
@@ -139,7 +139,7 @@ Ejemplo: "head"
 - El cuerpo, no lo vemos
 
 
-## Conceptos Previos- Paquetes Estadísticos {.future-steps .smaller}
+## Conceptos Previos- Paquetes Estadísticos{.future-steps .smaller}
 
 - Una de las características que hace la diferencia entre otros programas. 
 - Un paquete estadístico contiene distintas funciones (comandos). 
@@ -209,12 +209,34 @@ print(length(datos)) #el largo de los datos
 - Ubicación de la librería, Repositorio (CRAN, MRAN, Bioconductor,local, etc.), instalar paquetes dependientes, etc.
 - Si no conoce el origen de una función, puede consultarlo anteponiendo "?" o utilizando la función  `help()`
 - A veces, los paquetes estadísticos generan contradicciones entre sí (ej: plyr y dplyr). Para ello, se recomienda desactivar o "despegar" un paquete (`detach(package:[NOMBRE_PAQUETE])`)
-  
+
 ```{r Fig install, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "150x"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/install_package.png")
 knitr::include_graphics(
   gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","install_package.png"))
   )
+```
+
+```{r tipos_paquete, echo=T, size = 'tiny', results="hide", eval=F}
+#OPC 1- una lista de paquetes estadísticos. Por cada fila, verá si existe el paquete.
+#Si no, lo instala sin preguntar desde un repositorio CRAN
+if(!require(paquete1)){install.packages("paquete1")}
+if(!require(paquete2)){install.packages("paquete2")}
+if(!require(paquete3)){install.packages("paquete3")}
+if(!require(paquete4)){install.packages("paquete4")}
+#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
+
+#OPC. 2- Vemos que una lista de paquetes estadísticos se encuentren instalados; 
+#si no lo están, aparece un mensaje
+for (n in c("paquete1", "paquete2", "paquete3", "paquete4", "paquete..."))
+{
+  if(!require(n,character.only=TRUE))
+  {
+   stop(paste0("El paquete '",n,"' no está instalado: por favor instálelo e inténtelo de nuevo!\n"));
+   # install.packages(n) # Si prefiere que lo instale automátiamente.
+  }
+  library(n,character.only=TRUE)
+}
 ```
 
 ## Objetos de Trabajo {.future-steps .smaller}
