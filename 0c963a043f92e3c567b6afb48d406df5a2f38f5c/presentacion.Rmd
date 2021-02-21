@@ -308,6 +308,9 @@ set.seed(4567);head(data.frame(numeros=round(rnorm(1:200)*100,0)),2)
 - Vemos los primeros 2 números y los sumamos
 ```{r sum, echo=TRUE}
 -74-90
+
+#capturamos lo que la consola nos entrega en un objeto
+resta<-capture.output(-74-90) 
 ```
 - Ejecuto en la consola lo siguiente: `sessionInfo` (detalles de la sesión y configuración programa) y `dput` (para que otros puedan trabajar fácilmente sobre los datos que trabajas). Permite control y que los datos sean reproducibles (ej. Github).
 ```{r dput y session, echo=TRUE}
@@ -341,6 +344,8 @@ head(base_datos,3)
 # -0.3142317
 #  2.4033751
 # -0.7182640
+
+head_base_datos<-capture.output(head(base_datos,3)) #capturamos lo que la consola nos entrega en un objeto
 ```
 
 ## Ejercicio: Hágalo usted{#future-steps .smaller}
@@ -391,7 +396,7 @@ https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
 
 ## Prueba {#future-steps}
 
-Favor dirigirse al siguiente [enlace](https://forms.gle/gi7Zrw6ZB4d5q7Ta7) y contestar
+Favor dirigirse al siguiente [enlace](https://forms.gle/gi7Zrw6ZB4d5q7Ta7) y responder la siguiente prueba.
 
 ```{r cache_delete, include=F}
 #unlink('*_files', recursive = T, force=T)
