@@ -519,6 +519,7 @@ paste0("Simón dice", ", \'", objeto,"\'")
 - Cargue la base de datos "starwars"
 - (Podría faltar el paquete magrittr, si el programa se lo pide, ¿sabría cómo instalarlo?)
 - Ejecute este código: `starwars %>% dplyr::group_by(eye_color) %>% dplyr::summarise(promedio_altura_por_color_de_ojos=mean(height, na.rm=T))`
+- Conversemos sobre lo que hizo
 
 ## Fuentes {.future-steps .smaller}
 

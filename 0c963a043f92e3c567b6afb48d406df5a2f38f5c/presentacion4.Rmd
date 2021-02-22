@@ -1,5 +1,5 @@
 ---
-title: "Curso Introductorio al uso de R Studio- Clase 4 (Raspado de la olla)"
+title: "Curso Introductorio al uso de R Studio- Clase 4"
 output:
   ioslides_presentation:
     autosize: true

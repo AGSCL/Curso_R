@@ -201,7 +201,6 @@ Mode <- function(x) {
 gastos_casa_csv_2<-cbind(Gastos_casa_csv, monto_en_miles=round(Gastos_casa_csv$monto/1000,0))
 Mode(gastos_casa_csv_2$monto_en_miles)
 ```
-
 - ¿Qué ocurrió con los resultados? Esta función no tiene la opción de remover valores perdidos, por lo que una opción plausible será ingresar una base de datos sin valores perdidos ("listwise deletion of missing values").
 
 ```{r moda_corr, echo=T, warning=F, size = 'tiny'}
@@ -213,11 +212,98 @@ Mode(gastos_casa_csv_2_naomit$monto_en_miles)
 
 - ¿Qué hizo la función na.omit?. lo mismo que `Mode(gastos_casa_csv_2[-c(231:1226),4])`. **Analicen qué se hizo aquí**
 
+## Variaciones descriptivas {.future-steps .smaller}
+
+- Modo dplyr
+
+```{r dplyr_desc, echo=T, warning=F, size = 'tiny'}
+library(dplyr)
+#usted puede personalizarlo de acuerdo a sus intereses
+gastos_casa_csv_2_naomit %>% 
+  summarise(promedio=mean(monto_en_miles, na.rm=T), #no es necesario na.rm, porque ya estamos utilizando la base de datos sin NA's
+            mediana= median(monto_en_miles, na.rm=T),
+            moda= Mode(monto_en_miles),
+            p25= quantile(monto_en_miles,.25, na.rm=T), #percentil 25
+            p75= quantile(monto_en_miles,.75, na.rm=T), #percentil 75
+            min= min(monto_en_miles, na.rm=T),
+            max= max(monto_en_miles, na.rm=T),
+            valores_unicos= length(unique(monto_en_miles))
+            )
+```
+
+- ¿Y por contribuyente?
+
+```{r dplyr_desc_by, echo=T, warning=F, size = 'tiny'}
+library(dplyr)
+#usted puede personalizarlo de acuerdo a sus intereses
+gastos_casa_csv_2_naomit %>% 
+  dplyr::group_by(ejecutor) %>%  #PRIMERO AGRUPAMOS POR CONTRIBUYENTE
+  summarise(promedio=mean(monto_en_miles, na.rm=T), #no es necesario na.rm, porque ya estamos utilizando la base de datos sin NA's
+            mediana= median(monto_en_miles, na.rm=T),
+            moda= Mode(monto_en_miles), #miren, ocupamos la función que hicimos con anterioridad
+            p25= quantile(monto_en_miles,.25, na.rm=T), #percentil 25
+            p75= quantile(monto_en_miles,.75, na.rm=T), #percentil 75
+            min= min(monto_en_miles, na.rm=T),
+            max= max(monto_en_miles, na.rm=T),
+            valores_unicos= length(unique(monto_en_miles))
+            )
+```
+
+- Otro software
+
+```{r psych_desc, echo=T, warning=F, size = 'tiny'}
+library(psych)
+psych::describe(gastos_casa_csv_2_naomit$monto)
+```
+
+- y agrupar por contribuyente
+
+```{r psych_desc_by, echo=T, warning=F, size = 'tiny'}
+library(psych)
+psych::describeBy(gastos_casa_csv_2_naomit$monto, group=gastos_casa_csv_2_naomit$ejecutor)
+#Para mayor información, consultar https://www.rdocumentation.org/packages/psych/versions/2.0.12/topics/describeBy
+```
+
+```{r hmisc_desc, echo=T, warning=F, size = 'tiny'}
+library(Hmisc)
+#No permite compararlo por grupos, por lo que dividimos la base de datos por persona.
+Hmisc::describe(~ monto, data= gastos_casa_csv_2_naomit[gastos_casa_csv_2_naomit$ejecutor=="Persona1",])
+Hmisc::describe(~ monto, data= gastos_casa_csv_2_naomit[gastos_casa_csv_2_naomit$ejecutor=="Persona2",])
+#Para mayor información, consultar https://www.rdocumentation.org/packages/Hmisc/versions/3.0-0/topics/describe
+```
+
+- Paquetes para explorar más allá de este curso: comparegroups, tableone, codebook, etc.
+
+## Gráficos Básicos {.future-steps .smaller}
+
 ### Histogramas
 ```{r histograma, echo=T, warning=F, size = 'tiny'}
 hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gasto", xlab="Monto", ylab="Frecuencia")
 ```
 
+- A simple vista, distribución leptocúrtica y asimétrica a la derecha
+- ¿Pero quién gasta más? ¿La persona 1 o la 2?
+
+### Diagrama de Cajas
+
+
+```{r boxplot, echo=T, warning=F, size = 'tiny'}
+
+boxplot(monto ~ ejecutor,  #FORMATO FÓRMULA
+        data = Gastos_casa_csv %>% 
+          dplyr::mutate(monto=monto/1000), #Ojo, si se fijan el formato del ingreso de los datos para este gráfico, 
+        # se encuentra la variable dependiente (Y) y la variable independiente (X)
+        # además no es necesario indicar para cada variable el origen de la base
+        #de igual manera, permite modificar la variable dependiente, en este caso, dividirlo por 1000 pesos
+        frame = FALSE,
+        notch = TRUE,
+        xlab= "Persona",
+        ylab="Monto (x 1000 pesos)", #etiquetas
+        col = c("white", "steelblue")) #etiquetas
+```
+
+- Ojo con el papel de la virgulilla (`~`)
+- Boxplot: IQR (cajas),  bigotes (primer cuartil /tercer cuartil/ 1.5 * IQR si hay puntos alejados), puntos alejados (anomalías o _outliers_)
 - Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
 
 ## Configuración de Datos {.future-steps .smaller}
@@ -245,34 +331,107 @@ knitr::include_graphics(
   -Checklist si se considera la primera columna como nombres de columna (si utilizó el argumento skip, este último antecede esta opción)
   -Si quiere abrir un **visor de datos (View()) - ojo con las mayúsculas**
 
-## Configuración de Datos, p2 {.future-steps .smaller}
+## Configuración de Datos(2) {.future-steps .smaller}
 
 ```{r cargar_xlsx, echo=T, warning=F, size = 'tiny'}
+#Gracias al repositorio de CSSE at Johns Hopkins University (https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv)
 library(readxl)
 coronavirus <- read_excel(
   paste0(getwd(),"/","coronavirus.xlsx"),
   #"G:/Mi unidad/Alvacast/Curso/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx", 
-    sheet = "Hoja1")
+    sheet = "Hoja1"
+  )
+# exploramos la base de datos
+dplyr::glimpse(coronavirus)
 
-str(coronavirus)
+# descartamos una columna
+coronavirus$`"Province/State"`<- NULL
+#limpiamos los nombres 
+coronavirus <- janitor::clean_names(coronavirus)
 ```
 
-- Gráfico de Dispersión
-```{r scatter, echo=T, warning=F, size = 'tiny', fig.align="center"}
-plot(coronavirus$infectados,coronavirus$monto_invertido_med, xlab="Infectados",ylab="Monto Invertido Med.")
-```
-
+- El formato es problemático. Cada fila es una columna. Parecen ser las fechas
 
 - Datos de Ancho y largo (`reshape()`)
 
 ```{r reshape, echo=T, warning=F, size = 'tiny'}
-coronavirus$mes<-as.numeric(coronavirus$mes) 
-coronavirus$estado<-as.factor(coronavirus$estado) 
+library(readr)
 
-library(reshape2)
-dcast(coronavirus, estado ~ mes, value.var="infectados")
-dcast(coronavirus, estado ~ mes, value.var="monto_invertido_med")
+resh_covid19<- 
+  stats::reshape(coronavirus, 
+                        varying = 3:length(coronavirus), #los datos que cambian, es decir las columnas concernientes a las fechas
+                        timevar = "date", #nombre de la columna que agrupa a los nombres de los datos que cambiaban
+                        idvar = 1:2, #las variables que no debiesen cambiar a partir de las fechas
+                        direction= "long", # datos de ancho a largo
+                        #v.names = "value",# nombre de la columna que agrupa a los valores contenidos en las columnas originales de los datos que cambiaban
+                        sep = "x") %>% 
+            dplyr::rename("value"="") %>%  #Renombrar el nombre de la columna ausente
+            dplyr::mutate(date=parse_date(date, format="%m_%d_%y")) %>%  #reconocerá el mes en un número de 2 caracteres numéricos, separado por "_", seguido del día en 2 caracteres numéricos y también separados por comas, más el año también escrito en 2 caracteres numéricos. Esto lo transformará automáticamente en formato fecha.
+            dplyr::mutate(measure=factor(measure, labels=c("confirmed","deaths"))) #Hacemos que esta variable se defina con formato factor y adopte 2 valores: "confirmado/confirmed" y "muertes/deaths"
+
+# FUENTE
+#https://www.r-bloggers.com/2013/02/converting-a-dataset-from-wide-to-long/
 ```
+
+- Pero yo quiero separar el recuento por medida (entre muertos y confirmados).
+
+```{r reshape_long_wide, echo=T, warning=F, size = 'tiny'}
+
+resh_covid19_wide_measure <-
+stats::reshape(
+as.data.frame(resh_covid19), #preferimos adaptar la base de datos a formato data.frame y no tibble porque genera errores con stats::reshape
+  timevar="measure", #la medida que estará sujeta a ensanchamiento o división por columnas
+  idvar=c("country_region","date"), #variables que no cambian
+  direction="wide" #de largo a ancho
+)
+
+glimpse(resh_covid19_wide_measure)
+```
+
+## Configuración de Datos(3) {.future-steps .smaller}
+
+- Gráfico de Dispersión
+```{r scatter, echo=T, warning=F, size = 'tiny', fig.align="center"}
+plot(resh_covid19_wide_measure$value.confirmed,resh_covid19_wide_measure$value.deaths, xlab="Confirmados",ylab="Muertes")
+```
+- Esto se ve extraño. ¿Recuerdas que tenemos tanto a Chile como Argentina?
+
+- Dividimos los datos (subset)
+
+```{r scatter_subset, echo=T, warning=F, size = 'tiny', fig.align="center"}
+par(mfrow=c(1,2)) #combinamos 2 gráficos en una fila, pero dividimos la columna en 2
+
+#primer gráfico
+plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Chile"),"value.confirmed"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Chile", y seleccionamos como columna el valor "value.confirmed"
+     resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Chile"),"value.deaths"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Chile", y seleccionamos como columna el valor "value.deaths"
+     xlab="Confirmados",ylab="Muertes", main= "Chile") #etiquetamos las dimensiones y el gráfico
+
+#segundo gráfico
+plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.confirmed"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Argentina", y seleccionamos como columna el valor "value.confirmed"
+     resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.deaths"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Argentina", y seleccionamos como columna el valor "value.deaths"
+     xlab="Confirmados",ylab="Muertes", main="Argentina") #etiquetamos las dimensiones y el gráfico
+
+```
+```{r scatter_subset_color, echo=T, warning=F, size = 'tiny', fig.align="center"}
+plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Chile"),"value.confirmed"]/1000, #para que sea más claro, los dividimos por 1000
+     resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Chile"),"value.deaths"]/1000,
+main="Muertos y Confirmados COVID-19 por países (en colores)",
+ylab="Muertos (en miles)",
+xlab="Confirmados (en miles)",
+type="l",
+col="blue") #color azul
+lines(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.confirmed"]/1000, #Añadimos una segunda línea con argentina, en rojo
+     resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.deaths"]/1000,
+     col="red", #color rojo
+     ylab="Muertos (en miles)",
+     xlab="Confirmados (en miles)")
+legend("topleft", #definimos una leyenda de los datos, ubicado arriba a la izquierda
+c("Chile","Argentina"),
+fill=c("blue","red")
+)
+```
+
+- Limitaciones: en términos analíticos este gráfico no dice mucho. Cuidado con las interpretaciones.
 
 ## Fuentes {.future-steps .smaller}
 
@@ -307,8 +466,8 @@ covid19_chile %>%
 
 ## Instrucciones Prueba Final
 - Favor descargar esta base de datos: <https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx>
-- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal1 en contraste con decimal2. 
-- Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo (busque cómo hacerlo en internet)
+- Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal2 en contraste con /en función del decimal1. 
+- Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo. Esriba una interpretación (busque en internet)
 
 - Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 - Sus resultados debiesen coincidir con los hallazgos CORRECTOS presentados en la siguiente página: https://agscl2.shinyapps.io/shiny_app/
