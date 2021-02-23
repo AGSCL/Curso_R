@@ -206,7 +206,7 @@ print(length(datos)) #el largo de los datos
 - Habiendo hecho esto, usted está instalando el paquete, pero no lo ha activado ni lo ha abierto
 - Para activarlo momentáneamente (`library(dplyr)`).
   - Muchos autores no recomiendan "require", sino "library" (https://stackoverflow.com/q/5595512/9975513)
-  - Una ventaja de require entrega un valor binario si el paquete se cargó o no (VERDADERO/FALSO)
+  - Una ventaja de `require` es que entrega un valor binario si el paquete se cargó o no (VERDADERO/FALSO)
   - La amenaza es que si uno corre líneas de código, se obvia el error
   - Esto puede llevar a resultados erróneos (ej: aplicando funciones de otros paquetes con mismo nombre)
 - Existen otros argumentos de la función install.packages:
@@ -516,12 +516,12 @@ paste0("Simón dice", ", \'", objeto,"\'")
 - OPC1. Obtenga la media de todos los pollos (use recursos en-línea para aprender)
 - ¿Llegó a obtener un peso de `121.8183` kgs.)
 - OPC2. obtenga el resultado usando comas enseparador de decimales (outdec en internet)
-- OPC3. ¿Y qué tal todo esto con la desviación estandar el mismo separador de decimales?
+- OPC3. ¿Y qué tal todo esto con la desviación estandar, aunque utilizando el mismo separador de decimales?
 
 ## Ejercicio 3{.future-steps .smaller}
 
 - Usted ya instaló el paquete "dplyr"
-- El paquete dplyr contiene múltiples funciones y bases de datos (https://cran.r-project.org/web/packages/dplyr/dplyr.pdf)
+- El paquete dplyr contiene múltiples funciones y bases de datos que veremos más adelante (https://cran.r-project.org/web/packages/dplyr/dplyr.pdf)
 - Llame a la librería
 - Cargue la base de datos "starwars"
 - (Podría faltar el paquete magrittr, si el programa se lo pide, ¿sabría cómo instalarlo?)
@@ -531,14 +531,14 @@ paste0("Simón dice", ", \'", objeto,"\'")
 ## Fuentes {.future-steps .smaller}
 
 - Hansen, M., Nolan, D. & Temple, D. (2008). Introduction to the R Language: Functions. Workshop: Integrating Computing into the Statistics Curricula. U.C. Berkeley. [Enlace](https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf)
-- Wickham, H. & Grolemund, G. Proyecto de traducción colaborativa de "R para Ciencia de Datos".https://es.r4ds.hadley.nz/
+- Wickham, H. & Grolemund, G. Proyecto de traducción colaborativa de "R para Ciencia de Datos". [https://es.r4ds.hadley.nz/](https://es.r4ds.hadley.nz/)
 - Ritchey F. (2002). “Estadística para las Ciencias Sociales”. Editorial Mc Graw Hill
-Interamericana editores S.A. de CV. México. www.shorturl.at/pvK37
+Interamericana editores S.A. de CV. México. [www.shorturl.at/pvK37](www.shorturl.at/pvK37)
 - El ícono del engranaje fue elaborado por <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-- Data Flair. R Tutorials. https://data-flair.training/blogs/r-data-types/
-- Leisch F. (2008). Creating R packages: a tutorial. http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf.
-- https://www.statmethods.net/r-tutorial/index.html
-- DataCamp. Introduction to R. https://www.datacamp.com/courses/free-introduction-to-r
+- Data Flair. R Tutorials. [https://data-flair.training/blogs/r-data-types/](https://data-flair.training/blogs/r-data-types/)
+- Leisch F. (2008). Creating R packages: a tutorial. [http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf](http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf)
+- R Tutorial. [https://www.statmethods.net/r-tutorial/index.html](https://www.statmethods.net/r-tutorial/index.html)
+- DataCamp. Introduction to R. [https://www.datacamp.com/courses/free-introduction-to-r](https://www.datacamp.com/courses/free-introduction-to-r)
 
 ## Prueba {#future-steps}
 

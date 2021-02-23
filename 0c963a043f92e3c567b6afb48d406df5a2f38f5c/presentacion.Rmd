@@ -78,7 +78,7 @@ htmltools::img(src = knitr::image_uri(gsub("0c963a043f92e3c567b6afb48d406df5a2f3
 ## Presentación{#future-steps}
 
 - Andrés González Santa Cruz
-- Ustedes: Nombre, nivel de manejo en R, experiencias previas con este software o similares, manejo informático, ¿tuvieron problemas en instalar R?
+- Ustedes: Nombre, nivel de manejo en R, experiencias previas con este software o similares, manejo informático, ¿tuvieron problemas instalando R?
 
 ## Presentación del ~~curso~~ taller {#future-steps}
 
@@ -386,8 +386,8 @@ sd(tail_df2$numeros)
 - R vs Stata: Which one is best for Data Science: https://youtu.be/KqWAmpb4iyc
 - Ozgur, C., Colliau, T.,  Rogers, G., Hughes, Z. & Bennie, E. (2017). MatLab vs. Python vs. R. Journal of data science: JDS. 15. 355-372. 
 - Ozgur, C., Kleckner, M., & Li, Y. (2015). Selection of Statistical Software for Solving Big Data Problems. SAGE Open, 5(2), 215824401558437. doi:10.1177/2158244015584379
-- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803.
-- Elosua, P. (2009). ¿Existe vida más allá del SPSS? Descubre R. Psicothema, 21(4),652-655. ISSN: 0214-9915. Disponible en: https://www.redalyc.org/articulo.oa?id=727/72711895025
+- Boccardo, Giorgio & Ruiz, Felipe. (2018). Uso de RStudio para Estadística Univariada en Ciencias Sociales. Manual de apoyo docente para la asignatura Estadística Descriptiva (1a. Edición). 10.13140/RG.2.2.32783.48803. https://github.com/feliperuizbruzzone/Uso-de-R-para-Estadistica-Social/blob/master/Boccardo%20%26%20Ruiz%20(2018).%20Uso%20de%20RStudio%20para%20Estad%C3%ADstica%20Univariada%20en%20Ciencias%20Sociales%20%5B19%20%20julio%5D.pdf
+- Elosua, P. (2009). ¿Existe vida más allá del SPSS? Descubre R. Psicothema, 21(4),652-655. ISSN: 0214-9915. Disponible en: http://www.psicothema.com/pdf/3686.pdf
 - Cano, E. & Moguerza, J. (2015). “R desde el principio. Curso ceRo de R”. Ediciones del Orto, Madrid. ISBN 84-7923-526-8. http://emilio.lcano.com/pub/cero/R-desde-el-principio-curso-cero-V1.02.pdf
 - R Development Core Team (2000). Introducción a R. Notas sobre R: Un entorno de programación para Análisis de Datos y Gráficos. Versión 1.0.1
 https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf

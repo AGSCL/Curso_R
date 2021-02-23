@@ -469,12 +469,8 @@ covid19_chile %>%
 - Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal2 en contraste con /en función del decimal1. 
 - Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo. Esriba una interpretación (busque en internet)
 
-- Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 - Sus resultados debiesen coincidir con los hallazgos CORRECTOS presentados en la siguiente página: https://agscl2.shinyapps.io/shiny_app/
-
-::: notes
-https://agscl2.shinyapps.io/shiny_app/
-::: 
+- Una vez hecho lo anterior, favor responder esta [encuesta anónima](https://forms.gle/mQH6S2tHd22BKbYb9) (no se solicitará identificarse)
 
 
 ```{r cache_delete, include=F}
