@@ -282,6 +282,7 @@ hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gast
 ```
 
 - A simple vista, distribución leptocúrtica y asimétrica a la derecha
+- Corroborar con curtosis/kurtosis y sesgo/skewness (psych::describe) (umbrales dependen del autor que utilice para argumentarlo y las características/contexto de cada conjunto de datos)
 - ¿Pero quién gasta más? ¿La persona 1 o la 2?
 
 ### Diagrama de Cajas
