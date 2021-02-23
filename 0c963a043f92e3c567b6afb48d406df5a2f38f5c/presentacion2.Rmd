@@ -469,7 +469,7 @@ Existen 5 tipos de variables (modos) básicas o "atómicas" en R (dependiendo de
 
 - Lógico (logical): valores lógicos, verdadero o falso. `{TRUE/FALSE, 0/1}`
 
-Además, es posible tratar las variables ("casting") como factores. En este caso, las variables corresponden a valores enteros que tienen etiquetas para los distintos valores. Por otra parte, existen estructuras más complejas (tipo abstracto), como las fechas `(dttm, POSixct)`, que provienen de estas formas básicas y que van más allá del alcance de este curso
+Además, es posible tratar las variables ("casting") como factores. En este caso, las variables corresponden a valores enteros que tienen etiquetas para los distintos valores. Por otra parte, existen estructuras más complejas (tipo abstracto), como las fechas `(dttm, POSixct)`, que provienen de estas formas básicas y que van más allá del alcance de este taller
 
 ## Otros Valores Especiales {.future-steps .smaller}
 
