@@ -439,6 +439,7 @@ fill=c("blue","red")
 - Codementor Community (2018, Nov 26). Learn R Online. Obtenido desde: https://www.codementor.io/collections/learn-r-online-bwbcv0nx4
 - Illinois Library (2020, Feb 12). Introduction to R: Getting Data from a CSV file. Obtenido desde: http://guides.library.illinois.edu/c.php?g=347944&p=2345554
 - Tutorialspoint. Mean, Median and Mode. https://www.tutorialspoint.com/r/r_mean_median_mode.htm
+- Dugar, D. (2018, Aug. 23). Skew and Kurtosis: 2 Important Statistics terms you need to know in Data Science. Codeburst.io. https://codeburst.io/2-important-statistics-terms-you-need-to-know-in-data-science-skewness-and-kurtosis-388fef94eeaa
 - Introducción a Data Science: Programación Estadística con R. https://www.coursera.org/learn/intro-data-science-programacion-estadistica-r?ranMID=40328&ranEAID=Jsa5%2F1hgYik&ranSiteID=Jsa5_1hgYik-2ohj13Hsri.l561_Ekbdtg&siteID=Jsa5_1hgYik-2ohj13Hsri.l561_Ekbdtg&utm_content=15&utm_medium=partners&utm_source=linkshare&utm_campaign=Jsa5%2F1hgYik
 - Codecademy. Introduction to R. https://www.codecademy.com/courses/learn-r/lessons/introduction-to-r/exercises/why-r.
 - DataCamp. Introducción a R. https://www.datacamp.com/community/open-courses/introduccion-a-r
