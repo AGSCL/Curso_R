@@ -336,29 +336,30 @@ paste0("La fecha mínima pareada fue ",min(covid19_chile_vacuna_vs_confirmados_s
 # Modelo de efectos fijos
 did.reg <- plm(conf_100mil ~ txtime + met + txtime:met + Primera_100mil + PCR_100mil + Hosp_UCI_100mil, 
                data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci,  index=c("Region", "fecha"), model = "within")
-#Obtuvimos los errores de estándar robustos a variaciones por Región
-coeftest(did.reg, vcov = function(x) 
-  vcovHC(x, cluster = "group", type = "HC1")) %>% 
-   broom::tidy() %>% 
+
+parameters::model_parameters(did.reg) %>% 
+  data.frame() %>% 
   #Cambiamos los nombres de las variables
-  dplyr::mutate(term= dplyr::case_when(term=="txtime1"~"14 de Febrero hasta el día de obtención",
-                                       term=="Primera_100mil"~"Primera dosis por cada 100 mil hab.",
-                                       term=="PCR_100mil"~"PCR's por cada 100 mil hab.",
-                                       term=="Hosp_UCI_100mil"~"Hospitalizaciones por cada 100 mil hab.",
-                                       term=="txtime1:met1"~"Coquimbo x 14 de Febrero"
+  dplyr::mutate(Parameter= dplyr::case_when(Parameter=="txtime1"~"14 de Febrero hasta el día de obtención",
+                                       Parameter=="Primera_100mil"~"Primera dosis por cada 100 mil hab.",
+                                       Parameter=="PCR_100mil"~"PCR's por cada 100 mil hab.",
+                                       Parameter=="Hosp_UCI_100mil"~"Hospitalizaciones por cada 100 mil hab.",
+                                       Parameter=="txtime1:met1"~"Coquimbo x 14 de Febrero"
                                        )) %>% 
-  dplyr::mutate_at(vars("estimate","std.error","statistic"), funs(round(.,2))) %>% 
+  dplyr::mutate_at(vars("Coefficient","SE","CI_low", "CI_high","t", "df_error"), funs(round(.,2))) %>% 
   #Aproximamos a 3, de manera que los interesados puedan ver el valor p con 3 decimales
-  dplyr::mutate_at(vars("p.value"), funs(round(.,3))) %>% 
-  dplyr::mutate(p.value=ifelse(p.value<0.001,"<0.001",as.character(p.value))) %>% 
+  dplyr::mutate_at(vars("p"), funs(round(.,3))) %>% 
+  dplyr::mutate(p=ifelse(p<0.001,"<0.001",as.character(p))) %>% 
+  dplyr::mutate(CI_95=paste0(sprintf("%3.2f", CI_low),", ", sprintf("%3.2f", CI_high))) %>% 
+  dplyr::select(-CI_low, -CI_high, -df_error) %>% 
   #generar tabla en formato html, definiendo título y nombre de columnas
   knitr::kable(.,format = "html", format.args = list(decimal.mark = ".", big.mark = ","),
                caption = paste0("Tabla 1. Coeficientes Diferencia en Diferencias"),
-               col.names = c("Variables Independientes","Estimador","Error Estándar","Estadístico t", "Sig"),
+               col.names = c("Variables Independientes","Coeficiente","Error Estándar","Estadístico t", "Sig", "IC 95%"),
 align =c('l',rep('c', 101)))%>%
   #destaca la quinta fila correspondiente a la intervención para el tratado
   kableExtra::row_spec(5,bold=T,hline_after = T) %>% 
-    #kableExtra::add_footnote(c("Nota. txtime= 14 de Febrero; Primera=Número de primeras vacunas aplicadas; met= Coquimbo"), notation = "none")%>%
+    kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%"), notation = "none")%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
 <br>
@@ -374,6 +375,11 @@ Produc_means <- covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>%
   dplyr::ungroup() %>% 
   dplyr::mutate(y_pred = predict(did.reg) + y_median) %>% 
   dplyr::select(-y_median)
+
+#OTRA FORMA DE ESTIMAR LOS PREDICTORES
+#https://stackoverflow.com/questions/28547614/prediction-with-plm-method
+pmodel_fixed <-pmodel.response(did.reg,model='fixed') 
+
 
 Produc_means %>% 
   gather(type, value, y, y_pred) %>% 
@@ -395,12 +401,13 @@ Produc_means %>%
 
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
-- A partir del gráfico no es tan claro si las diferencias se deben al 14 de febrero
-- Adicionalmente, la capacidad de predicción del modelo se ve baja
+- A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
+- Las covariables podrían verse afectadas por la intervención (14 feb)
+- Adicionalmente, la capacidad de predicción del modelo se aprecia baja
 - La diferencia en cada punto de tiempo no es constante en el periodo pre-intervención
 - Sólo un tratado
 - Igual no son del todo comparables las series (ausencia soporte común)
-- Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones)
+- Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos)
 - Las primeras vacunas siguen un patrón muy distinto
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
