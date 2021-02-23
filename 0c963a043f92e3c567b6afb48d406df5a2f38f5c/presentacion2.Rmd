@@ -1,5 +1,5 @@
 ---
-title: "Curso Introductorio al uso de R Studio- Clase 2"
+title: "Taller Introductorio al uso de R Studio- Clase 2"
 output:
   ioslides_presentation:
     autosize: true
@@ -138,6 +138,10 @@ Ejemplo: "head"
 - Esa especificación es un argumento por defecto
 - El cuerpo, no lo vemos
 
+```{r head, echo=T, size = 'tiny'}
+print.function(head)
+getAnywhere(head)[2]
+```
 
 ## Conceptos Previos- Paquetes Estadísticos{.future-steps .smaller}
 
@@ -469,7 +473,7 @@ Además, es posible tratar las variables ("casting") como factores. En este caso
 
 ## Otros Valores Especiales {.future-steps .smaller}
 
-- `NA` (no disponibles), puede entenderse como valores perdidos
+- `NA` (no disponibles), puede entenderse como valores perdidos. Tiende a ser recodificado como "99" o "999" (distinguir de los No Aplica, "88" o "888")
 - La `r 1/0` infinidad se entiende como `Inf`
 - `r 0/0` es un valor indefinido `NaN` (not a number)
 - Sólo hay una propiedad `NULL`, similar a largo 0
@@ -485,6 +489,9 @@ anyNA(c(1,2,3,4,5))
 is.null(c(1,2,3,4,5))
 is.null(c(1,2,NA,4,5))
 is.null(c())
+
+library(car) #cargo librería
+car::recode(c(1,2,NA,4,5), "NA=99") #reemplazo el valor perdido por un número en particular
 ```
 
 ## Ejercicio 1{.future-steps .smaller}

@@ -41,7 +41,7 @@ if(!require(tiktokrmd)){remotes::install_github("gadenbuie/tiktokrmd@main")}
 &nbsp;
 <br>
 
-Este tutorial sólo es uno de muchos que usted podrá encontrar para instalar estos programas. Posiblemente, existan alternativas mucho más personalizadas para instalar R y Rstudio en línea. Ahora bien, creo firmemente en que esta es la opción más rápida y simple de instalarlos, por lo que recomiendo que en una primera instancia no se ajele de las instrucciones, de lo contrario tendrá problemas para instalar el programa y no podrá avanzar en las etapas del curso.
+Este tutorial sólo es uno de muchos que usted podrá encontrar para instalar estos programas. Posiblemente, existan alternativas mucho más personalizadas para instalar R y Rstudio en línea. Ahora bien, creo firmemente en que esta es la opción más rápida y simple de instalarlos, por lo que recomiendo que en una primera instancia no se ajele de las instrucciones, de lo contrario tendrá problemas para instalar el programa y no podrá avanzar en las etapas del taller.
 
 
 ```{r Fig tiktok1, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F}
@@ -127,7 +127,7 @@ A continuación se muestra cómo bajarlo para Windows:
 knitr::include_graphics(paste0(getwd(),"/","instalacion_Rstudio1.gif"))
 ```
 
-Una vez ya bajado de internet, favor abrir y apretar el botón siguiente en todos sus campos. **Observación**: Existen opciones para personalizar las acciones que hicimos aquí. De todas formas este es un curso introductorio, por lo que no se ahondarán en estas alternativas.
+Una vez ya bajado de internet, favor abrir y apretar el botón siguiente en todos sus campos. **Observación**: Existen opciones para personalizar las acciones que hicimos aquí. De todas formas este es un taller introductorio, por lo que no se ahondarán en estas alternativas.
 
 ```{r  Fig Instalacion_RStudio2, warning=FALSE, fig.align = "center", message=F, cache=T, echo =F}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/instalacion_Rstudio2.gif")
