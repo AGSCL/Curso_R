@@ -393,10 +393,21 @@ glimpse(resh_covid19_wide_measure)
 ## Configuración de Datos(3) {.future-steps .smaller}
 
 - Gráfico de Dispersión
-```{r scatter, echo=T, warning=F, size = 'tiny', fig.align="center"}
+```{r puntos, echo=T, warning=F, size = 'tiny', fig.align="center"}
 plot(resh_covid19_wide_measure$value.confirmed,resh_covid19_wide_measure$value.deaths, xlab="Confirmados",ylab="Muertes")
 ```
 - Esto se ve extraño. ¿Recuerdas que tenemos tanto a Chile como Argentina?
+
+```{r puntos_corr, echo=F, warning=F, size = 'tiny', fig.align="center"}
+library(magick)
+img <- image_graph( res = 96)
+p <- plot(resh_covid19_wide_measure$value.confirmed,resh_covid19_wide_measure$value.deaths, xlab="Confirmados",ylab="Muertes")
+print(p)
+dev.off()
+
+img %>% magick::image_annotate("MALÍSIMO", size = 50, color = "red", boxcolor = "pink",
+                       degrees = 30, location = "+100+100") 
+```
 
 - Dividimos los datos (subset)
 

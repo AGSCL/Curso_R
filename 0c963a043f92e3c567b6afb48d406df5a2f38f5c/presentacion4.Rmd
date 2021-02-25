@@ -98,7 +98,6 @@ if(!require(plm)){install.packages("plm")}
 if(!require(broom)){install.packages("broom")}
 if(!require(kableExtra)){install.packages("kableExtra")}
 if(!require(knitr)){install.packages("knitr")}
-
 ```
 
 ## Contenidos{.future-steps}
