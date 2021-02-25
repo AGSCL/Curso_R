@@ -90,6 +90,7 @@ knitr::opts_chunk$set(echo = FALSE)
 if(!require(dplyr)){install.packages("dplyr")}
 if(!require(readxl)){install.packages("readxl")}
 ```
+# Retomemos
 
 ## Contenidos{.future-steps}
 
@@ -288,7 +289,6 @@ hist(Gastos_casa_csv$monto, main= "Histograma de Frecuencias, Monto de Cada Gast
 
 ### Diagrama de Cajas
 
-
 ```{r boxplot, echo=T, warning=F, size = 'tiny'}
 
 boxplot(monto ~ ejecutor,  #FORMATO FÓRMULA
@@ -307,6 +307,69 @@ boxplot(monto ~ ejecutor,  #FORMATO FÓRMULA
 - Ojo con el papel de la virgulilla (`~`)
 - Boxplot: IQR (cajas),  bigotes (primer cuartil /tercer cuartil/ 1.5 * IQR si hay puntos alejados), puntos alejados (anomalías o _outliers_)
 - Existen otro tipo de paquetes estadísticos para gráficos más complejos y amigables
+
+### Gráfico de Barras
+
+- Sirve para variables categóricas. No obstante, para ello, debemos utilizar una matriz de recuentos por categoría
+
+```{r barplot0, echo=T, warning=F, size = 'tiny'}
+asistentes_curso_2020 <- data.frame(condicion=c("Estudiante Doctorado",".","Académico", "Funcionario", "Estudiante Doctorado",".", "Estudiante Doctorado", "Académico", "Funcionario", ".", "Estudiante"),asistencia=c(4, 4, 2, 2, 4, 3, 4, 1, 4, 2, 4))
+str(asistentes_curso_2020)
+
+#Exploramos los valores que puede adoptar esta columna
+unique(asistentes_curso_2020$condicion)
+
+#Obtenemos una tabla
+table(asistentes_curso_2020$condicion)
+```
+- Tenemos una condición ausente (".")
+- Tenemos otra etiqueta que no cabrá en el gráfico de barras y no aparecerá
+
+```{r barplot1, echo=T, warning=F, size = 'tiny'}
+#OPC1. R Base, Tabla
+
+bp<-
+barplot(table(asistentes_curso_2020$condicion),
+        col = "darkred", #color de las barras
+        main= "Asistentes a Taller R y Rstudio 2020", #título
+        xlab= "Recuento", #etiqeuta 
+        names.arg = c("No indica", "Académico", "Estudiante", "Estudiante Doc", "Funcionario"), #definimos etiquetas
+        ylab= "Condición", #si se fijan, las etiquetas están rotadas
+        horiz=T, #El argumento permite rotar la tabla
+        beside=T,
+        xlim=c(0,4) #le damos un poco más de espacio
+        )
+bp #desplegar el objeto
+```
+
+```{r barplot2, echo=T, warning=F, size = 'tiny'}
+#OPC2. dplyr
+library(dplyr)
+asistentes_curso_2020_dplyr<-
+asistentes_curso_2020 %>% 
+  dplyr::group_by(condicion) %>% 
+  dplyr::count(condicion)
+
+bp2<-
+  barplot(n ~ condicion, 
+          data=asistentes_curso_2020_dplyr,
+          col = "darkred",
+          main= "Asistentes a Taller R y Rstudio 2020",
+          ylab= "Recuento",
+          names.arg = c("No indica", "Académico", "Estudiante", "Estudiante Doc", "Funcionario"), 
+          xlab= "Condición",
+          ylim=c(0,4)
+          )
+  #Añadimos una etiqueta
+text(bp2,  #objeto de imagen sobre el cual superponer el texto
+     as.numeric(table(asistentes_curso_2020$condicion))+.13, #ubicación del texto en el eje (.05 más arriba)
+     labels= format(as.numeric(table(asistentes_curso_2020$condicion))), 
+     xpd = TRUE,  #permite que las etiquetas que escapan de los límites de los ejes se mantengan
+     cex = 1.2, #factor de expansión de texto (1 es la base, aumentamos un 20%)
+     col = "black")
+```
+
+
 
 ## Configuración de Datos {.future-steps .smaller}
 - Bajar [BASE DE DATOS](https://raw.githubusercontent.com/AGSCL/Curso_R/master/0c963a043f92e3c567b6afb48d406df5a2f38f5c/coronavirus.xlsx)
@@ -423,7 +486,6 @@ plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="
 plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.confirmed"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Argentina", y seleccionamos como columna el valor "value.confirmed"
      resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Argentina"),"value.deaths"], #seleccionamos aquellas (which) filas del vector país de la base de datos que es igual a "Argentina", y seleccionamos como columna el valor "value.deaths"
      xlab="Confirmados",ylab="Muertes", main="Argentina") #etiquetamos las dimensiones y el gráfico
-
 ```
 ```{r scatter_subset_color, echo=T, warning=F, size = 'tiny', fig.align="center"}
 plot(resh_covid19_wide_measure[which(resh_covid19_wide_measure$country_region=="Chile"),"value.confirmed"]/1000, #para que sea más claro, los dividimos por 1000
@@ -456,6 +518,7 @@ fill=c("blue","red")
 - Codecademy. Introduction to R. https://www.codecademy.com/courses/learn-r/lessons/introduction-to-r/exercises/why-r.
 - DataCamp. Introducción a R. https://www.datacamp.com/community/open-courses/introduccion-a-r
 - DataCamp. R for the Intimidated. https://www.datacamp.com/community/open-courses/r-for-the-intimidated
+- Schmidt, P. (2021, Febrero 24). Doing Row-wise Operations the Column-wise Way With tidyr pivot_longer. R-bloggers. https://www.r-bloggers.com/2021/02/doing-row-wise-operations-the-column-wise-way-with-tidyr-pivot_longer/
 
 ## Ejercicio {#future-steps .smaller}
 

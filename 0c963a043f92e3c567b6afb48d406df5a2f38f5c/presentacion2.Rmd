@@ -341,6 +341,10 @@ print(x)
 ##... mmmm... dimnames...¿qué serán? (se verá después)
 ```
 
+## Tablas
+
+- 
+
 ## Ejemplo aplicado (no replicar){.future-steps .smaller}
 
 - Seleccionar velocidades altas en base a un vector de valores
