@@ -341,9 +341,71 @@ print(x)
 ##... mmmm... dimnames...¿qué serán? (se verá después)
 ```
 
-## Tablas
+## Tablas {.future-steps .smaller}
 
-- 
+- De una vía o de 2
+
+```{r tab1, echo=T, size = 'tiny'}
+asistentes_curso_2020 <- 
+  data.frame(condicion=c("Estudiante Doctorado",".","Académico", "Funcionario", "Estudiante Doctorado",".", "Estudiante Doctorado", "Académico", "Funcionario", ".", "Estudiante"),externo=c("interno", "externo", "interno", "interno", "interno", "externo", "interno", "interno", "interno",  "externo", "interno"),asistencia=c(4, 4, 2, 2, 4, 3, 4, 1, 4, 2, 4))
+
+table(asistentes_curso_2020$condicion)
+```
+
+- Argumento "Exclude"
+
+```{r tab2, echo=T, size = 'tiny'}
+table(asistentes_curso_2020$condicion, exclude=".")
+```
+
+- Proporciones
+
+```{r tab22, echo=T, size = 'tiny', error=T}
+prop.table(table(asistentes_curso_2020$condicion, exclude="."))
+
+prop.table(asistentes_curso_2020$condicion) #requiere una tabla
+```
+
+- De dos vías
+
+```{r tab3, echo=T, size = 'tiny', error=T}
+prop.table(table(asistentes_curso_2020$condicion,
+                 asistentes_curso_2020$externo #se incluye otra variable
+                 ))
+```
+
+- Dirección (eje). 
+
+```{r tab32, echo=T, size = 'tiny', error=T}
+prop.table(table(asistentes_curso_2020$condicion,
+                 asistentes_curso_2020$externo
+                 ),margin= 2) #cambia la manera en que se calculan las proporciones
+# 1 = proporciones por filas, 2= por columnas, NULL =frecuencias globales.
+```
+- Si cambia el eje, pero también el margin, ¿qué ocurre?
+
+- margin.table, Calcula la suma de entradas de una tabla para determinado índice
+
+```{r tab4, echo=T, size = 'tiny', error=T}
+margin.table(table(asistentes_curso_2020$condicion,
+      asistentes_curso_2020$externo
+),1)
+margin.table(table(asistentes_curso_2020$condicion,
+      asistentes_curso_2020$externo
+),2)
+```
+
+- la manera dplyr
+
+```{r tab5, echo=T, size = 'tiny', error=T}
+library(janitor)
+asistentes_curso_2020 %>% 
+janitor::tabyl(condicion, externo) %>% 
+  adorn_totals(c("row", "col")) %>% #añade un total para cada uno
+  adorn_percentages("col") %>% #calcula porcentajes
+  adorn_pct_formatting(2) #añade el símbolo de porcentaje y formatea, por ejemplo, cuántos decimales mostrar
+```
+
 
 ## Ejemplo aplicado (no replicar){.future-steps .smaller}
 
