@@ -272,10 +272,10 @@ ggplot()+
 
 ## Vacunaciones COVID-19(1) {.future-steps .smaller}
 
-- Existen antecedentes de que gran parte de las parejas en Coquimbo aumentaron su exposición. El resto, recurrió a otros medios de contacto
+- Existen antecedentes de que gran parte de las parejas en Coquimbo y Valparaíso asistió a pubs y restaurantes dado que estaban en mayor proporción abiertos. El resto, recurrió a otros medios de contacto
 - Esto no ocurrió en regiones, quienes se encontraban en cuarentena estricta
 - Dado que algunos expertos señalan que la transmisibilidad se reduce con la primera dosis, mayores vacunaciones debiesen confundir las asociaciones 
-- **¿El 14 de febrero en Coquimbo tuvo un efecto en el aumento de casos (controlando por vacunaciones)?**
+- **¿El 14 de febrero en Coquimbo y Valparaíso tuvo un efecto en el aumento de casos (controlando por vacunaciones)?**
 - Debemos incorporar las vacunaciones a la base de datos de nuevos casos
 - Otro paquete de la familia Tidyverse es "tidyr"
 - Similar a las funciones utilizadas por `reshape` (cambiar el formato largo y ancho de los datos)
@@ -309,7 +309,7 @@ covid19_chile_vacuna_vs_confirmados <-
     dplyr::filter(Region!="Total") %>% 
     dplyr::select(-Segunda) %>% 
     dplyr::filter(!is.na(Primera)) %>% 
-    dplyr::mutate(met=factor(ifelse(Region=="Coquimbo",1,0))) %>% 
+    dplyr::mutate(met=factor(ifelse(Region %in% c("Coquimbo", "Valparaíso"),1,0))) %>% 
     dplyr::mutate(txtime=factor(ifelse(fecha>="2021-02-14",1,0))) %>% 
     dplyr::rename("conf"="Nuevo Confirmado")
 
@@ -343,7 +343,7 @@ parameters::model_parameters(did.reg) %>%
                                        Parameter=="Primera_100mil"~"Primera dosis por cada 100 mil hab.",
                                        Parameter=="PCR_100mil"~"PCR's por cada 100 mil hab.",
                                        Parameter=="Hosp_UCI_100mil"~"Hospitalizaciones por cada 100 mil hab.",
-                                       Parameter=="txtime1:met1"~"Coquimbo x 14 de Febrero"
+                                       Parameter=="txtime1:met1"~"Coquimbo y Valparaíso x 14 de Febrero"
                                        )) %>% 
   dplyr::mutate_at(vars("Coefficient","SE","CI_low", "CI_high","t", "df_error"), funs(round(.,2))) %>% 
   #Aproximamos a 3, de manera que los interesados puedan ver el valor p con 3 decimales
@@ -361,7 +361,13 @@ align =c('l',rep('c', 101)))%>%
     kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%"), notation = "none")%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
+
 <br>
+
+- Estamos viendo si las diferencias en casos confirmados entre el periodo post-intervención con el periodo anterior a la intervención (14 feb), es distinto en  estas mismas regiones tratadas, respecto las diferencias pre-post de las regiones anteriores.
+
+<br>
+
 
 ```{r pred_se, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
 se <- function(x) sqrt(var(x)/length(x))
@@ -382,48 +388,55 @@ pmodel_fixed <-pmodel.response(did.reg,model='fixed')
 
 Produc_means %>% 
   gather(type, value, y, y_pred) %>% 
-  dplyr::mutate(coquimbo=ifelse(Region=="Coquimbo",1,0)) %>% 
-  dplyr::group_by(coquimbo,type,fecha) %>% 
+  dplyr::mutate(tx=factor(ifelse(Region %in% c("Coquimbo", "Valparaíso"),1,0))) %>% 
+  dplyr::group_by(tx,type,fecha) %>% 
   dplyr::mutate(median=median(value), se=se(value)) %>%
   dplyr::ungroup() %>% 
-  dplyr::filter(Region %in% c("Arica y Parinacota", "Coquimbo")) %>% 
   ggplot(aes(x = fecha, y = median, linetype = type))+
   geom_line() +
   geom_ribbon(aes(y= median, x= fecha, ymin = median-se, ymax = median+se), fill = "grey70", color="grey70", alpha=.4)+
   scale_linetype_manual(name="Valores",values=c("solid","dashed"), labels=c("Actual", "Estimado"))+
-  facet_wrap(~coquimbo, labeller=as_labeller(c(`0` = "Otras Regiones", `1` = "Coquimbo")))+
+  facet_wrap(~tx, labeller=as_labeller(c(`0` = "Otras Regiones", `1` = "Coquimbo y\nValparaíso")))+
   geom_vline(xintercept = as.Date("2021-02-14"),linetype="longdash")+
   theme_blank()+
   ggtitle("Prediciones y Medianas por fecha de nuevos casos confirmados")+
-  labs(caption="Nota. Área gris representa el error estandar por región;\nLínea vertical= 14 de Febrero")
+  labs(caption="Nota. Área gris representa el error estandar por región;\nLínea vertical= 14 de Febrero",
+       x="Fecha",
+       y="Mediana Casos Confirmados")
 ```
 
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
 - A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
-- Las covariables podrían verse afectadas por la intervención (14 feb)
+- Sí es claro que las variables de control jugaron un efecto que potenció las diferencias pre-post en  las comunas tratadas, en comparación al resto de regiones.
+- Las covariables podrían verse afectadas por la intervención (14 feb), en particular en las regiones tratadas
 - Adicionalmente, la capacidad de predicción del modelo se aprecia baja
 - La diferencia en cada punto de tiempo no es constante en el periodo pre-intervención
-- Sólo un tratado
+- Sólo dos tratados
+- ¿Y la heterogeneidad intraregional? (Comunas distintas)
+- Spillover, elementos geográficos no capturados
 - Igual no son del todo comparables las series (ausencia soporte común)
 - Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos)
 - Las primeras vacunas siguen un patrón muy distinto
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
-mean_cl_quantile <- function(x, q = c(0.025, 0.975), na.rm = TRUE){
-  dat <- data.frame(y = mean(x, na.rm = na.rm),
-                    ymin = quantile(x, probs = q[1], na.rm = na.rm),
+#Creamos una función para capturar los intervalos de confianza 
+cl_quantile <- function(x, q = c(0.025, 0.975), na.rm = TRUE){
+  dat <- data.frame(ymin = quantile(x, probs = q[1], na.rm = na.rm),
                     ymax = quantile(x, probs = q[2], na.rm = na.rm))
   return(dat)
 }
 
 ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, color = met)) +
-    stat_summary(geom = 'line', fun.y = median) +
-    stat_summary(geom = "ribbon", fun.data = mean_cl_quantile, alpha = 0.3, fill="red")+
-    geom_vline(xintercept = as.Date("2021-02-14")) +
-    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo"), values=c("red","blue"))+
+    stat_summary(geom = 'line', fun.y = median) + #como línea, la mediana
+    stat_summary(geom = "ribbon", fun.data = cl_quantile, alpha = 0.3, aes(fill=met))+ #ribbon, el área es la función que definimos: 95% IC. ## todo lo que no sea fijo, debe ir en "aes" 
+    geom_vline(xintercept = as.Date("2021-02-14")) + #Tiempo de intervención
+    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ #Coquimbo y Valparaíso versus el resto
+      scale_fill_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ #Si asignan los mismos valores, se mezclarán ambas especificaciones: color y relleno del área
     sjPlot::theme_sjplot2()+
-  labs(caption="Nota. Área roja: intervalos de confianza al 95%;\nLínea vertical: 14 de febrero 2021")
+  labs(caption="Nota. Área roja: intervalos de confianza al 95%;\nLínea vertical: 14 de febrero 2021",
+       y="Casos confirmados (x 100.000 hab.)",
+       x="Fecha")
 ```
 
 ```{r cache_delete, include=F}
