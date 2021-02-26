@@ -98,6 +98,7 @@ if(!require(plm)){install.packages("plm")}
 if(!require(broom)){install.packages("broom")}
 if(!require(kableExtra)){install.packages("kableExtra")}
 if(!require(knitr)){install.packages("knitr")}
+if(!require(gplots)){install.packages("gplots")}
 ```
 
 ## Contenidos{.future-steps}
@@ -405,6 +406,13 @@ Produc_means %>%
        y="Mediana Casos Confirmados")
 ```
 
+```{r means_het, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
+library(gplots)
+par(mfrow=c(1,2))
+plotmeans(conf_100mil ~ Region, main = "Heterogeneidad entre Regiones", ylab="Casos Confirmados (x 100,000)", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F)
+plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F)
+```
+
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
 - A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
@@ -416,7 +424,7 @@ Produc_means %>%
 - ¿Y la heterogeneidad intraregional? (Comunas distintas)
 - Spillover, elementos geográficos no capturados
 - Igual no son del todo comparables las series (ausencia soporte común)
-- Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos)
+- Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos) (`pbgtest()`)
 - Las primeras vacunas siguen un patrón muy distinto
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
