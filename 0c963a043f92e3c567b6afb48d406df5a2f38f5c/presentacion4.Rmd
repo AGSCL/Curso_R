@@ -99,6 +99,9 @@ if(!require(broom)){install.packages("broom")}
 if(!require(kableExtra)){install.packages("kableExtra")}
 if(!require(knitr)){install.packages("knitr")}
 if(!require(gplots)){install.packages("gplots")}
+if(!require(DiagrammeR)){install.packages("DiagrammeR")}
+if(!require(tableone)){install.packages("tableone")}
+
 ```
 
 ## Contenidos{.future-steps}
@@ -139,14 +142,14 @@ https://cursor2020.shinyapps.io/Curso/
 
 ## Ejemplo integración {.future-steps .smaller}
 
-Procesos: bajar base de datos (1), seleccionar columnas (`dplyr::select`) (2), formatear fecha (desde formato de texto día-mes-año a "Ymd") (3), filtrar regiones (sólo Tarapacá, Antofagasta y Atacama) (4), generar figura de serie de datos (Fecha como eje X y Nuevo Caso Confirmado como eje Y), discriminando por Región por colores (5), generamos un área gris del rango intercuartil del resto de regiones, excluyendo a la región metropolitana (al 80% o `fill=grey70`) con transparencia para que no se superponga (`alpha=.4`) (6), definimos los colores de las líneas: rojo para Antofagasta, verde para Atacama, azul para Tarapacá y negro para la mediana del resto de regiones (`scale_color_manual`) (7).
+Procesos: bajar base de datos (1), seleccionar columnas (`dplyr::select`) (2), formatear fecha (desde formato de texto día-mes-año a "Ymd") (3), filtrar regiones (sólo Coquimbo y Valparaíso) (4), generar figura de serie de datos (Fecha como eje X y Nuevo Caso Confirmado como eje Y), discriminando por Región por colores (5), generamos un área gris del rango intercuartil del resto de regiones, excluyendo a la región metropolitana (al 80% o `fill=grey70`) con transparencia para que no se superponga (`alpha=.4`) (6), definimos los colores de las líneas: rojo para Antofagasta, verde para Atacama, azul para Tarapacá y negro para la mediana del resto de regiones (`scale_color_manual`) (7).
 
 ```{r ejemplo_a, echo=T, warning=F, size = 'tiny'}
-covid19_chile_ant_ata_tar <- 
+covid19_chile_coq_val <- 
     readr::read_csv("https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv") %>% 
     dplyr::select(Fecha, Region, `Nuevo Confirmado`) %>%
     dplyr::mutate(Fecha=as.Date.character(Fecha,tryFormats = "%d-%m-%Y")) %>% 
-    dplyr::filter(Region %in% c("Tarapacá","Antofagasta","Atacama")) %>% 
+    dplyr::filter(Region %in% c("Valparaíso","Coquimbo")) %>% 
     ggplot()+
       geom_line(aes(x=as.Date(Fecha), y=`Nuevo Confirmado`, color=Region))+
       scale_x_date()+
@@ -158,18 +161,20 @@ covid19_chile_resto <-
     readr::read_csv("https://raw.githubusercontent.com/ivanMSC/COVID19_Chile/master/covid19_chile.csv") %>% 
     dplyr::select(Fecha, Region, `Nuevo Confirmado`) %>%
     dplyr::mutate(Fecha=as.Date.character(Fecha,tryFormats = "%d-%m-%Y")) %>% 
-    dplyr::filter(!Region %in% c("Tarapacá","Antofagasta","Atacama")) %>% 
+    dplyr::filter(!Region %in% c("Valparaíso","Coquimbo")) %>% 
     dplyr::filter(!Region %in% c("Metropolitana")) %>% 
     dplyr::group_by(Fecha)%>% 
     dplyr::summarise(mdn=median(`Nuevo Confirmado`,na.rm=T),
                      q1=quantile(`Nuevo Confirmado`,.25,na.rm=T),
                      q3=quantile(`Nuevo Confirmado`,.75,na.rm=T))
 
-covid19_chile_ant_ata_tar+ 
+covid19_chile_coq_val+ 
     geom_ribbon(data= covid19_chile_resto, aes(y= mdn, x= Fecha, ymin = q1, ymax = q3), fill = "grey70", color="grey70", alpha=.4)+
     geom_line(data= covid19_chile_resto, aes(x= Fecha, y= mdn, color="black"))+
-    scale_color_manual(name= "Región", values = c("red","green","blue","black"), 
-                       label=c("Antofagasta","Atacama","Tarapacá","Mediana (resto regiones\nexcluyendo Metropolitana)"))
+    scale_color_manual(name= "Región", values = c("black","red","blue"), 
+                       label=c("Mediana (resto regiones\nexcluyendo Metropolitana)",
+                               "Coquimbo",
+                               "Valparaíso"))
 ```
 
 - ¿No se ve más ordenado?, lo valorarán cuando trabajen con condiciones anidadas (IFs concatenados)
@@ -195,22 +200,24 @@ covid19_chile <-
 
 ggplot()+
       geom_line(data=covid19_chile %>% 
-                  dplyr::filter(Region %in% c("Tarapacá","Antofagasta","Atacama")),
+                  dplyr::filter(Region %in% c("Coquimbo","Valparaíso")),
                 aes(x=as.Date(Fecha), y=`Nuevo Confirmado`, color=Region))+
       scale_x_date()+
       xlab("Fecha")+
       sjPlot::theme_blank()+
       theme(legend.position="bottom")+
       geom_ribbon(data= covid19_chile %>% 
-                  dplyr::filter(!Region %in% c("Tarapacá","Antofagasta","Atacama","Metropolitana")) %>% 
+                  dplyr::filter(!Region %in% c("Coquimbo","Valparaíso","Metropolitana")) %>% 
                   dplyr::group_by(Fecha)%>% 
                   dplyr::summarise(mdn=median(`Nuevo Confirmado`,na.rm=T),
                      q1=quantile(`Nuevo Confirmado`,.25,na.rm=T),
                      q3=quantile(`Nuevo Confirmado`,.75,na.rm=T)), 
                 aes(y= mdn, x= Fecha, ymin = q1, ymax = q3), fill = "grey70", color="grey70", alpha=.4)+
     geom_line(data= covid19_chile_resto, aes(x= Fecha, y= mdn,color="black"))+
-    scale_color_manual(name= "Región", values = c("red","green","blue","black"), 
-                       label=c("Antofagasta","Atacama","Tarapacá","Mediana (resto regiones\nexcluyendo Metropolitana)"))
+    scale_color_manual(name= "Región", values = c("black","red","blue"), 
+                       label=c("Mediana (resto regiones\nexcluyendo Metropolitana)",
+                               "Coquimbo",
+                               "Valparaíso"))
 ```
 
 ## Facet Wrap por Región {.future-steps .smaller}
@@ -220,10 +227,10 @@ Muy complejo y todo, pero no entendí nada los gráficos anteriores. Si queremos
 ```{r ejemplo_c, echo=T, warning=F, size = 'tiny'}
 ggplot()+
       geom_line(data=covid19_chile %>% 
-                  dplyr::filter(Region %in% c("Tarapacá","Antofagasta","Atacama")),
+                  dplyr::filter(Region %in% c("Coquimbo","Valparaíso")),
                 aes(x=as.Date(Fecha), y=`Nuevo Confirmado`, color=Region))+
         geom_ribbon(data= covid19_chile %>% 
-                  dplyr::filter(!Region %in% c("Tarapacá","Antofagasta","Atacama","Metropolitana")) %>% 
+                  dplyr::filter(!Region %in% c("Coquimbo","Valparaíso","Metropolitana")) %>% 
                   dplyr::group_by(Fecha)%>% 
                   dplyr::summarise(mdn=median(`Nuevo Confirmado`,na.rm=T),
                      q1=quantile(`Nuevo Confirmado`,.25,na.rm=T),
@@ -271,6 +278,7 @@ ggplot()+
 
 - Nótese la calidad de los datos provistos (ej., 2020-06-08, ¿el 50% obtuvo menos 1,5 muertes?)
 
+
 ## Vacunaciones COVID-19(1) {.future-steps .smaller}
 
 - Existen antecedentes de que gran parte de las parejas en Coquimbo y Valparaíso asistió a pubs y restaurantes dado que estaban en mayor proporción abiertos. El resto, recurrió a otros medios de contacto
@@ -286,6 +294,56 @@ ggplot()+
   - Inner
   - Right
   - Otros (ej., probabilístico)
+  
+  
+## Inferencia Causal {.future-steps .smaller}
+
+- “scientific generalization is a broader question than mathematical description.” 
+- No importa tanto el estimador puntual, si no su varianza (intervalos de confianza, márgenes de error, poder estadístico, sesgo o error sistemático)
+- Hay muchas fuentes de sesgo que hay que atender, e incluso en distintas etapas del proceso de investigación.
+
+```{r model,eval=T, echo=T, paged.print=TRUE, fig.align='center', fig.cap="Gráfico Acíclico Dirigido, DiD (Diferencia-en-Diferencias)"}                                 
+library(DiagrammeR) 
+# Nodes
+ #node [shape = box]
+ # S [label = 'Matched\n(S=1)',fontsize=7]
+ # C [label = 'Not censored\n(C=0)',fontsize=7]
+gr1<-
+DiagrammeR::grViz("
+digraph a_nice_graph  {
+
+# Nodes
+  node [shape = plaintext]
+  a [label = 'Confirmados \nPre 14 Feb\nZ(0)',fontsize=10]
+  b [label = 'Coquimbo y\nValparaíso\n(A)',fontsize=10]
+  c [label = 'Confirmados \nPost 14 Feb\nZ(1)',fontsize=10]
+  d [label = 'Confusores no-observados\n(U)',fontsize=10]
+  e [label = 'Confusores medidos\nPre 14 Feb\n(C)',fontsize=10]
+  blank [label = '', width = 0.01, height = 0.01]
+  g [label = '', fontsize=10, width = 0.001, height = 0.001, color=White]
+
+# Edges
+  edge [color = black]
+
+  b -> c 
+  b -> blank [rankdir = TD; arrowhead = none; color = white]
+  blank -> d [arrowhead = none; color = white]
+  a -> c [dir= both; style = dashed]
+  d -> { b a c }
+  e -> { b a c }
+#  d -> g [ dir = none,  color = 'white',fontcolor = white,shape=none, width=0, height=0];
+
+  { rank = same; rankdir = LR; b; a; c }
+  { rankdir = TD; a; d; e }
+
+# Graph
+  graph [overlap = true]
+}")
+gr1
+#a-A=Trat, b-Z0, c-Z1, d-U, e-C
+
+#Fig. 2. Directed acyclic graph depicting the causal association between the treatment A, pre-exposure outcome Z(0), post-exposure outcome Z(1), measured pre-exposure confounders C, and unmeasured confounders U.
+```
 
 ## Vacunaciones COVID-19(2) {.future-steps .smaller}
 - Se estandarizaron las variables de acuerdo a la población de la región, por cada 100,000 hab.
@@ -332,6 +390,8 @@ covid19_chile_vacuna_vs_confirmados %>%
   dplyr::mutate(Primera_100mil= (Primera/Poblacion)*100000) %>% 
   dplyr::mutate(PCR_100mil= (numero.x/Poblacion)*100000) %>% 
   dplyr::mutate(Hosp_UCI_100mil= (numero.y/Poblacion)*100000) %>% 
+  dplyr::mutate(did=factor(as.numeric(met)*as.numeric(txtime)),
+                did=factor(ifelse(did==4,1,0))) %>% 
   as.data.frame() %>% 
   #Para definir la base de datos
   assign("covid19_chile_vacuna_vs_confirmados_std_pcr_uci",., envir=.GlobalEnv)
@@ -346,10 +406,6 @@ did.reg_basico <- plm(conf_100mil ~ txtime + met + txtime:met,
                data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci,  index=c("Region", "fecha"), model = "within")
 did.reg <- plm(conf_100mil ~ txtime + met + txtime:met + Primera_100mil + PCR_100mil + Hosp_UCI_100mil, 
                data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci,  index=c("Region", "fecha"), model = "within")
-
-#Modo de calcularlo mostrado en el ejemplo de Jonathan Mummolo, aunque no usamos un modelo robusto: https://scholar.princeton.edu/sites/default/files/jmummolo/files/did_jm.pdf
-# Bilach, T. (https://stats.stackexchange.com/users/246835/thomas-bilach), The difference between DID and fixed effect model, URL (version: 2020-05-29): https://stats.stackexchange.com/q/454261
-
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
 
@@ -407,7 +463,7 @@ align =c('l',rep('c', 101)))%>%
   kableExtra::add_header_above(c("","Modelo simple"=3, "Modelo con covariables"=3)) %>% 
   #destaca la quinta fila correspondiente a la intervención para el tratado
   kableExtra::row_spec(2,bold=T,hline_after = T) %>% 
-    kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%"), notation = "none")%>%
+  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%"), notation = "none")%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
 
@@ -494,6 +550,49 @@ ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, 
        y="Casos confirmados (x 100.000 hab.)",
        x="Fecha")
 ```
+
+- ¿Soporte común?
+
+```{r sop_comun, echo=T, warning=F, size = 'tiny'}
+library(tableone)
+kableone <- function(x, ...) {
+  capture.output(x <- print(x,...))
+  knitr::kable(x,
+               format= "html", 
+               caption = 'Tabla 2. Descriptivos Variables de Interés, antes de 14 de Febrero',
+               col.names=c("Resto de\nlas Regiones", "Coquimbo y\nValparaíso","Sig", "Prueba","SMD"), 
+               format.args= list(decimal.mark= ".", big.mark= ","))
+}
+
+
+#attr(BD_2020_input3$latdec_dic, "label") <- 'Low Decisional Latitude (Dichotomized)(JCQ)'
+#attr(BD_2020_input3$democ_dic, "label") <- 'High Job Demands (Dichotomized)(JCQ)'
+
+tab<-
+   CreateTableOne(vars = c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI_100mil"), 
+                     data= covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>% dplyr::filter(txtime==0), 
+                     strata = "met", 
+                     includeNA =F,
+                      smd=T)
+
+kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI_100mil"),
+                       test=T, varLabels=T,noSpaces=T, printToggle=T, dropEqual=F,smd=T) %>% 
+   kableExtra::kable_styling(bootstrap_options = c("striped", "hover","condensed"),font_size= 12) %>%
+    kableExtra::row_spec(1, bold = T) %>%
+    kableExtra::add_footnote(c("Nota. SMD= Diferencia de Medias Estandarizada"), notation = "none")%>%
+    kableExtra::scroll_box(width = "100%", height = "200px")
+
+```
+
+## Fuentes
+
+- Amrhein, V., Trafimow, D., & Greenland, S. (2019). Inferential Statistics as Descriptive Statistics: There Is No Replication Crisis if We Don’t Expect Replication, The American Statistician, 73:sup1, 262-270, DOI: 10.1080/00031305.2018.1543137
+- Cunningham, S. (2020). Online version of Causal Inference: The Mixtape. https://mixtape.scunning.com/index.html
+- Mummolo, J. 150C Causal Inference. Difference in Differences. Lectures [presentation]. https://scholar.princeton.edu/sites/default/files/jmummolo/files/did_jm.pdf
+- Bilach, T. (2020, Mayo 29). The difference between DID and fixed effect model. https://stats.stackexchange.com/q/454261
+- Singh, S. (2018, Mayo 21). Understanding the Bias-Variance Tradeoff. Towards data science. https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229
+- Sofer, T., Richardson, D., Colincino, E., Schwartz, J. & Tchetgen, E. (2015). On Simple Relations Between Difference-in-differences and Negative Outcome Control of Unobserved Confounding. Harvard University Biostatistics Working Paper Series, 194,1-29.doi:awesomedoi/20150801˙TSofer˙DID
+
 
 ```{r cache_delete, include=F}
 #unlink('*_files', recursive = T, force=T)
