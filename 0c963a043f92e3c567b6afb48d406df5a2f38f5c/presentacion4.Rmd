@@ -299,8 +299,21 @@ ggplot()+
 ## Inferencia Causal {.future-steps .smaller}
 
 - “scientific generalization is a broader question than mathematical description.” 
-- No importa tanto el estimador puntual, si no su varianza (intervalos de confianza, márgenes de error, poder estadístico, sesgo o error sistemático)
+- No importa tanto el estimador puntual, si no su varianza (intervalos de confianza, márgenes de error, poder estadístico, sesgo o error sistemático).
 - Hay muchas fuentes de sesgo que hay que atender, e incluso en distintas etapas del proceso de investigación.
+- Aproximación cuasi-experimental: Distinguir efecto causal y resultado bajo observación pasiva. No puedo aislar ni manipular variables.
+- En algunos casos se utiliza para predecir, pero es distinto poner énfasis en el predictor (B o beta, inferencia causal) que en el valor predicho (Y) (Ver diferencias entre asociación predivtiva y una relación causal).
+
+```{r bias_variance_png, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x", fig.cap= "Figura. Varianza vs. Sesgo (Fuente: Singh, 2018, Mayo 21)"}
+#knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
+knitr::include_graphics(
+  gsub("0c963a043f92e3c567b6afb48d406df5a2f38f5c/","",paste0(getwd(),"/","bias_variance.png"))
+  )
+```
+### Panel
+- Datos de panel: unidad de observación repetida en el tiempo
+- Balanceados vs. Desbalanceados
+- Las unidades tienen patrones de comportamiento individuales
 
 ```{r model,eval=T, echo=T, paged.print=TRUE, fig.align='center', fig.cap="Gráfico Acíclico Dirigido, DiD (Diferencia-en-Diferencias)"}                                 
 library(DiagrammeR) 
@@ -594,6 +607,9 @@ kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI
 - Bilach, T. (2020, Mayo 29). The difference between DID and fixed effect model. https://stats.stackexchange.com/q/454261
 - Singh, S. (2018, Mayo 21). Understanding the Bias-Variance Tradeoff. Towards data science. https://towardsdatascience.com/understanding-the-bias-variance-tradeoff-165e6942b229
 - Sofer, T., Richardson, D., Colincino, E., Schwartz, J. & Tchetgen, E. (2015). On Simple Relations Between Difference-in-differences and Negative Outcome Control of Unobserved Confounding. Harvard University Biostatistics Working Paper Series, 194,1-29.doi:awesomedoi/20150801˙TSofer˙DID
+- Jepsen, P., Vilstrup, H. and Andersen, P.K. (2015), The clinical course of cirrhosis: The importance of multistate models and competing risks analysis. Hepatology, 62: 292-302. https://doi.org/10.1002/hep.27598
+- Illari, P., & Russo, F. (2014). Causality: Philosophical theory meets scientific practice. Oxford, UK: Oxford University Press.
+
 
 
 ```{r cache_delete, include=F}
