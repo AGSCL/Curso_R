@@ -142,7 +142,7 @@ https://cursor2020.shinyapps.io/Curso/
 
 ## Ejemplo integración {.future-steps .smaller}
 
-Procesos: bajar base de datos (1), seleccionar columnas (`dplyr::select`) (2), formatear fecha (desde formato de texto día-mes-año a "Ymd") (3), filtrar regiones (sólo Coquimbo y Valparaíso) (4), generar figura de serie de datos (Fecha como eje X y Nuevo Caso Confirmado como eje Y), discriminando por Región por colores (5), generamos un área gris del rango intercuartil del resto de regiones, excluyendo a la región metropolitana (al 80% o `fill=grey70`) con transparencia para que no se superponga (`alpha=.4`) (6), definimos los colores de las líneas: rojo para Antofagasta, verde para Atacama, azul para Tarapacá y negro para la mediana del resto de regiones (`scale_color_manual`) (7).
+Procesos: bajar base de datos (1), seleccionar columnas (`dplyr::select`) (2), formatear fecha (desde formato de texto día-mes-año a "Ymd") (3), filtrar regiones (sólo Coquimbo y Valparaíso) (4), generar figura de serie de datos (Fecha como eje X y Nuevo Caso Confirmado como eje Y), discriminando por Región por colores (5), generamos un área gris del rango intercuartil del resto de regiones, excluyendo a la región metropolitana (al 80% o `fill=grey70`) con transparencia para que no se superponga (`alpha=.4`) (6), definimos los colores de las líneas: rojo para Coquimbo, azul para Valparaíso y negro para la mediana del resto de regiones (`scale_color_manual`) (7).
 
 ```{r ejemplo_a, echo=T, warning=F, size = 'tiny'}
 covid19_chile_coq_val <- 
@@ -477,7 +477,7 @@ align =c('l',rep('c', 101)))%>%
   kableExtra::add_header_above(c("","Modelo simple"=3, "Modelo con covariables"=3)) %>% 
   #destaca la quinta fila correspondiente a la intervención para el tratado
   kableExtra::row_spec(2,bold=T,hline_after = T) %>% 
-  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%",paste0("Datos obtenidos al ", format(Sys.time(), '%d %B, %Y'))), notation = "none")%>%
+  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%; Datos obtenidos al ", format(Sys.time(), '%d %B, %Y')), notation = "none")%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
 
@@ -534,15 +534,14 @@ plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", da
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
 - A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
-- Sí es claro que las variables de control jugaron un efecto que potenció las diferencias pre-post en  las comunas tratadas, en comparación al resto de regiones.
-- ¿Cuál es la distribución de los datos?
+- Es claro que las variables de control jugaron un rol confusor aunque falten otros (ej., pasos)
+- ¿Cuál es la distribución de los datos?, no lo revisamos
 - Las covariables podrían verse afectadas por la intervención (14 feb), en particular en las regiones tratadas
-- Adicionalmente, la capacidad de predicción del modelo se aprecia baja
+- Adicionalmente, la capacidad de predicción del modelo se estima baja
 - La diferencia en cada punto de tiempo no es constante en el periodo pre-intervención
 - Sólo dos tratados
 - ¿Y la heterogeneidad intraregional? (Comunas distintas)
 - Spillover, elementos geográficos no capturados
-- Igual no son del todo comparables las series (ausencia soporte común)
 - Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos) (`pbgtest()`)
 - Las primeras vacunas siguen un patrón muy distinto
 
@@ -566,7 +565,7 @@ ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, 
        x="Fecha")
 ```
 
-- ¿Soporte común?
+- No son del todo comparables las series (ausencia soporte común)
 
 ```{r sop_comun, echo=T, warning=F, size = 'tiny'}
 library(tableone)
