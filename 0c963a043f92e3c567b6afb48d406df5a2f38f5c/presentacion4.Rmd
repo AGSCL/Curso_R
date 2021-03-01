@@ -522,6 +522,7 @@ plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", da
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
 - A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
 - Sí es claro que las variables de control jugaron un efecto que potenció las diferencias pre-post en  las comunas tratadas, en comparación al resto de regiones.
+- ¿Cuál es la distribución de los datos?
 - Las covariables podrían verse afectadas por la intervención (14 feb), en particular en las regiones tratadas
 - Adicionalmente, la capacidad de predicción del modelo se aprecia baja
 - La diferencia en cada punto de tiempo no es constante en el periodo pre-intervención
