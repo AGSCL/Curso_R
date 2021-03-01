@@ -452,6 +452,7 @@ modelo_simple %>%
 
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
+options(knitr.kable.NA = '')
 
 modelos_combinados %>% 
   #generar tabla en formato html, definiendo título y nombre de columnas
@@ -463,7 +464,7 @@ align =c('l',rep('c', 101)))%>%
   kableExtra::add_header_above(c("","Modelo simple"=3, "Modelo con covariables"=3)) %>% 
   #destaca la quinta fila correspondiente a la intervención para el tratado
   kableExtra::row_spec(2,bold=T,hline_after = T) %>% 
-  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%"), notation = "none")%>%
+  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%",paste0("Datos obtenidos al ", format(Sys.time(), '%d %B, %Y'))), notation = "none")%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
 
