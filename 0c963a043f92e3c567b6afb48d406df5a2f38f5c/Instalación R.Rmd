@@ -156,6 +156,7 @@ knitr::include_graphics(paste0(getwd(),"/","Instalacion_final.png"))
 
 ## Comentarios y Dificultades del Proceso de Instalación
 
-Si presenta problemas, favor dirigirse al siguiente enlace y reportarlo:
-<https://docs.google.com/forms/d/e/1FAIpQLSffbAWD8MoStqdFyRWagbxYQihxO7FqJndyiQpWZzI6QyfkBA/viewform?usp=sf_link>
-
+Si presenta problemas, favor dirigirse al siguiente enlace y reportarlo en el siguiente
+<span style="background-color: #FFFF00">
+[**ENLACE**](https://docs.google.com/forms/d/e/1FAIpQLSffbAWD8MoStqdFyRWagbxYQihxO7FqJndyiQpWZzI6QyfkBA/viewform?usp=sf_link)
+</span>
