@@ -299,10 +299,15 @@ ggplot()+
 ## Inferencia Causal {.future-steps .smaller}
 
 - “scientific generalization is a broader question than mathematical description.” 
-- No importa tanto el estimador puntual, si no su varianza (intervalos de confianza, márgenes de error, poder estadístico, sesgo o error sistemático).
-- Hay muchas fuentes de sesgo que hay que atender, e incluso en distintas etapas del proceso de investigación.
-- Aproximación cuasi-experimental: Distinguir efecto causal y resultado bajo observación pasiva. No puedo aislar ni manipular variables.
+- No importa tanto el estimador puntual, si no su varianza (intervalos de confianza, márgenes de error MEDIBLES, poder estadístico).
+- Hay muchas fuentes de sesgo o error sistemático que hay que atender, e incluso en distintas etapas del proceso de investigación. 
+- Aproximación cuasi-experimental: Distinguir efecto causal y resultado bajo observación pasiva. No puedo aislar ni manipular variables (entre ellas, la aleatorización de unidades)
 - En algunos casos se utiliza para predecir, pero es distinto poner énfasis en el predictor (B o beta, inferencia causal) que en el valor predicho (Y) (Ver diferencias entre asociación predivtiva y una relación causal).
+
+::: notes
+Comentarios:
+- Fuentes de sesgo: Selección/Representación (Cobertura, Muestreo - estatus de elegibilidad, reemplazo, etc.-, No-respuesta, ajuste post-encuesta - ej., ponderadores-), datos perdidos, error de medición (validez, medición -ej., si una mujer pregunta a hombres si es sexista-, procesamiento - ej., tipeo-), selección del modelo, seguimiento (follow-up), confusores, comparaciones múltiples (mientras queramos comparar en más atributos, es más fácil encontrar falsos positivos: mientras más test e hacen en una muestra, más probable es encontrar un hallazgo), 
+:::
 
 ```{r bias_variance_png, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x", fig.cap= "Figura. Varianza vs. Sesgo (Fuente: Singh, 2018, Mayo 21)"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/Ejercicio16.png")
@@ -601,6 +606,7 @@ kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI
 ## Fuentes
 
 - Amrhein, V., Trafimow, D., & Greenland, S. (2019). Inferential Statistics as Descriptive Statistics: There Is No Replication Crisis if We Don’t Expect Replication, The American Statistician, 73:sup1, 262-270, DOI: 10.1080/00031305.2018.1543137
+- Bind, M.-A. (2019). Causal Modeling in Environmental Health. Annual Review of Public Health, 40(1). doi:10.1146/annurev-publhealth-040218-044048 
 - Cunningham, S. (2020). Online version of Causal Inference: The Mixtape. https://mixtape.scunning.com/index.html
 - Mummolo, J. 150C Causal Inference. Difference in Differences. Lectures [presentation]. https://scholar.princeton.edu/sites/default/files/jmummolo/files/did_jm.pdf
 - Bilach, T. (2020, Mayo 29). The difference between DID and fixed effect model. https://stats.stackexchange.com/q/454261
