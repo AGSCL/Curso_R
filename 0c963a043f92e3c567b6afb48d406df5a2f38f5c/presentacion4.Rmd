@@ -101,7 +101,6 @@ if(!require(knitr)){install.packages("knitr")}
 if(!require(gplots)){install.packages("gplots")}
 if(!require(DiagrammeR)){install.packages("DiagrammeR")}
 if(!require(tableone)){install.packages("tableone")}
-
 ```
 
 ## Contenidos{.future-steps}
@@ -226,23 +225,31 @@ Muy complejo y todo, pero no entendí nada los gráficos anteriores. Si queremos
 
 ```{r ejemplo_c, echo=T, warning=F, size = 'tiny'}
 ggplot()+
+  # Defino la línea a aprtir de datos con información de los casos, dejando sólo 2 regiones
       geom_line(data=covid19_chile %>% 
                   dplyr::filter(Region %in% c("Coquimbo","Valparaíso")),
+  # Defino cómo serán interpretados los datos, eje x es la fecha e y es el número de confirmados
                 aes(x=as.Date(Fecha), y=`Nuevo Confirmado`, color=Region))+
+  # Como comparación, dejé una cita/área gris con información, excluyendo a Coquimbo y Valparaíso, además de una región muy influyente: Metropolitana (por su población). Dejamos como fuente de datos por la mediana de esas Regiones por cada día
         geom_ribbon(data= covid19_chile %>% 
                   dplyr::filter(!Region %in% c("Coquimbo","Valparaíso","Metropolitana")) %>% 
-                  dplyr::group_by(Fecha)%>% 
+                  dplyr::group_by(Fecha)%>%
                   dplyr::summarise(mdn=median(`Nuevo Confirmado`,na.rm=T),
                      q1=quantile(`Nuevo Confirmado`,.25,na.rm=T),
                      q3=quantile(`Nuevo Confirmado`,.75,na.rm=T)), 
+    # Definimos los elementos estéticos del gráfico, en el que dejamos el límite inferior en el percentil 25 y el límite superior en el percentil 75, coloreando el área 70% gris, aunque con una transparencia del 40%.
                 aes(y= mdn, x= Fecha, ymin = q1, ymax = q3), fill = "grey70", color="grey70", alpha=.4)+
+  # El eje x estaba en formato de fecha
       scale_x_date()+
+  # Se añade una etiqueta "Fecha"
       xlab("Fecha")+
+  # Se define un tema estético para todo el gráfico
       sjPlot::theme_blank()+
+  # Definimos dónde dejar la etiqueta
       theme(legend.position="bottom")+
+  # Dividir el gráfico por región de interés (en este caso, toma como referencia la primera capa [línea])
       facet_wrap(~Region, ncol = 1)
 ```
-
 
 ## Ejercicio
 
@@ -322,13 +329,9 @@ knitr::include_graphics(
 
 ```{r model,eval=T, echo=T, paged.print=TRUE, fig.align='center', fig.cap="Gráfico Acíclico Dirigido, DiD (Diferencia-en-Diferencias)"}                                 
 library(DiagrammeR) 
-# Nodes
- #node [shape = box]
- # S [label = 'Matched\n(S=1)',fontsize=7]
- # C [label = 'Not censored\n(C=0)',fontsize=7]
 gr1<-
 DiagrammeR::grViz("
-digraph a_nice_graph  {
+digraph grafiquito  {
 
 # Nodes
   node [shape = plaintext]
@@ -358,12 +361,11 @@ digraph a_nice_graph  {
   graph [overlap = true]
 }")
 gr1
-#a-A=Trat, b-Z0, c-Z1, d-U, e-C
 
 #Fig. 2. Directed acyclic graph depicting the causal association between the treatment A, pre-exposure outcome Z(0), post-exposure outcome Z(1), measured pre-exposure confounders C, and unmeasured confounders U.
 ```
 
-- No podremos ver (U)
+- No podremos ver (U). Para ello debemos hacer pruebas de sensibilidad a confusores no-medidos
 
 ## Vacunaciones COVID-19(2) {.future-steps .smaller}
 - Se estandarizaron las variables de acuerdo a la población de la región, por cada 100,000 hab.
@@ -416,7 +418,8 @@ covid19_chile_vacuna_vs_confirmados %>%
   #Para definir la base de datos
   assign("covid19_chile_vacuna_vs_confirmados_std_pcr_uci",., envir=.GlobalEnv)
 
-paste0("La fecha mínima pareada fue ",min(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha),";\n", "La máxima fecha disponible fue ",max(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha))    
+paste0("La fecha mínima pareada fue ",min(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha))
+paste0("La máxima fecha disponible fue ",max(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$fecha))    
 
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
 # Modelo de efectos fijos
@@ -428,7 +431,6 @@ did.reg <- plm(conf_100mil ~ txtime + met + txtime:met + Primera_100mil + PCR_10
                data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci,  index=c("Region", "fecha"), model = "within")
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
 #:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:#:
-
 
 modelo_simple<-
 parameters::model_parameters(did.reg_basico) %>% 
@@ -484,7 +486,7 @@ align =c('l',rep('c', 101)))%>%
   kableExtra::add_header_above(c("","Modelo simple"=3, "Modelo con covariables"=3)) %>% 
   #destaca la quinta fila correspondiente a la intervención para el tratado
   kableExtra::row_spec(2,bold=T,hline_after = T) %>% 
-  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%; Datos obtenidos al ", format(Sys.time(), '%d %B, %Y')), notation = "none")%>%
+  kableExtra::add_footnote(c("Nota. IC 95%= Intervalos de Confianza al 95%; Datos obtenidos al ", format(Sys.time(), '%d %B, %Y')), notation = "none",threeparttable =T)%>%
   kableExtra::kable_styling(bootstrap_options = c("striped", "hover"),font_size = 13)
 ```
 
@@ -493,7 +495,6 @@ align =c('l',rep('c', 101)))%>%
 - Estamos viendo si las diferencias en casos confirmados entre el periodo post-intervención con el periodo anterior a la intervención (14 feb), es distinto en  estas mismas regiones tratadas, respecto las diferencias pre-post de las regiones anteriores.
 
 <br>
-
 
 ```{r pred_se, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
 se <- function(x) sqrt(var(x)/length(x))
@@ -510,7 +511,6 @@ Produc_means <- covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>%
 #OTRA FORMA DE ESTIMAR LOS PREDICTORES
 #https://stackoverflow.com/questions/28547614/prediction-with-plm-method
 pmodel_fixed <-pmodel.response(did.reg,model='fixed') 
-
 
 Produc_means %>% 
   gather(type, value, y, y_pred) %>% 
@@ -533,11 +533,13 @@ Produc_means %>%
 
 ```{r means_het, echo=T, cache= T, paged.print=TRUE, warning=F, eval=T, fig.align='center'}
 library(gplots)
+#defino que se presente un gráfico en una fila, y en 2 columnas #|_|_|
 par(mfrow=c(1,2))
-plotmeans(conf_100mil ~ Region, main = "Heterogeneidad entre Regiones", ylab="Casos Confirmados (x 100,000)", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F)
-plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F)
+# formato función, obtiene una figura con medias de confirmados por 100 mil hab por Región
+gplots::plotmeans(conf_100mil ~ Region, main = "Heterogeneidad entre Regiones", ylab="Casos Confirmados (x 100,000)", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F)
+# obtiene una figura con medias de confirmados por 100 mil hab por fechas
+gplots::plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", data = covid19_chile_vacuna_vs_confirmados_std_pcr_uci, n.label=F) # no incluyo la etiqueta del eje Y porque ya lo definí en la primera figura.
 ```
-
 
 ## Vacunaciones COVID-19(3)-Limitaciones {.future-steps .smaller}
 - A partir del gráfico no es tan claro distinguir si las diferencias se deben al 14 de febrero
@@ -551,24 +553,33 @@ plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", da
 - Spillover, elementos geográficos no capturados
 - Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos) (`pbgtest()`)
 - Las primeras vacunas siguen un patrón muy distinto
-- Volvamos al gráfico anterior (efecto "Valparaíso")
+- Volvamos al gráfico anterior (efecto "Valparaíso", aunque no estuvo contabilizado por 100,000 hab)
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
 #Creamos una función para capturar los intervalos de confianza 
-cl_quantile <- function(x, q = c(0.025, 0.975), na.rm = TRUE){
+cl_quantile <- function(x, q = c(0.25, 0.75), na.rm = TRUE){
   dat <- data.frame(ymin = quantile(x, probs = q[1], na.rm = na.rm),
                     ymax = quantile(x, probs = q[2], na.rm = na.rm))
   return(dat)
 }
-
-ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, color = met)) +
+  # Defino los parámetros del gráfico en general: no para una capa, sino para todas
+ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, color = met)) + 
+# Defino las líneas en gris se definieron a partir de datos que excluyen (filtran) aquellas regiones que no son Coquimbo y Valparaíso (met==0), define en la estétitca la fecha en eje x, casos confirmados en el eje y, y define región como grupo (por que si no habrían más datos para cada punto cartográfico igual a N Regiones - Coquimbo y Valpo)
+    geom_line(data=covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>% dplyr::filter(met==0), 
+              aes(fecha, conf_100mil,group=Region), color="grey80")+
+# Hago un resumen de los datos, definiendo que estarán en formato línea y resumirán los datos en la mediana. Fíjese que no tuve que definir el eje x e y ni los datos ni el color de agrupación, ya que los predefiní en la primera línea
     stat_summary(geom = 'line', fun.y = median) + #como línea, la mediana
-    stat_summary(geom = "ribbon", fun.data = cl_quantile, alpha = 0.3, aes(fill=met))+ #ribbon, el área es la función que definimos: 95% IC. ## todo lo que no sea fijo, debe ir en "aes" 
-    geom_vline(xintercept = as.Date("2021-02-14")) + #Tiempo de intervención
-    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ #Coquimbo y Valparaíso versus el resto
-      scale_fill_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ #Si asignan los mismos valores, se mezclarán ambas especificaciones: color y relleno del área
+# Hago otro resumen de los datos, definiendo que estarán en formato de cinta/área y resumirán los datos a partir de la función predefinida al principios. Fíjese que se agregó otro criterio estético: fill (relleno del área), con un valor fijo alpha (transparencia), que tiene un 30% de transparencia ## todo lo que no sea fijo, debe ir en "aes"
+    stat_summary(geom = "ribbon", fun.data = cl_quantile, alpha = 0.3, aes(fill=met))+ 
+# Agrego una línea vertical en el eje x al 14 de febrero de 2021 #Tiempo de intervención
+    geom_vline(xintercept = as.Date("2021-02-14")) + 
+  # Defino las etiquetas del color y relleno para la leyenda. #Si asignan los mismos valores, se mezclarán ambas especificaciones: color y relleno del área #Coquimbo y Valparaíso versus el resto
+    scale_color_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ 
+      scale_fill_manual(name="Grupo",labels = c("Otras\nRegiones", "Coquimbo y\n Valparaíso"), values=c("red","blue"))+ 
+  # Agrego un tema etilístico para el gráfico
     sjPlot::theme_sjplot2()+
-  labs(caption="Nota. Área roja: intervalos de confianza al 95%;\nLínea vertical: 14 de febrero 2021",
+  # Generar etiquetas para el eje x, el eje y y la nota.
+  labs(caption="Nota. Área coloreada: rango intecuartil;\nLínea vertical: 14 de febrero 2021;\nLínea intermedia: mediana;\nLíneas en gris: Regiones excluyendo a Coquimbo y Valparaíso",
        y="Casos confirmados (x 100.000 hab.)",
        x="Fecha")
 ```
@@ -577,6 +588,8 @@ ggplot(covid19_chile_vacuna_vs_confirmados_std_pcr_uci, aes(fecha, conf_100mil, 
 
 ```{r sop_comun, echo=T, warning=F, size = 'tiny'}
 library(tableone)
+
+#una función que nos permite exportar la tabla en formato kable (html, interactiva)
 kableone <- function(x, ...) {
   capture.output(x <- print(x,...))
   knitr::kable(x,
@@ -586,10 +599,15 @@ kableone <- function(x, ...) {
                format.args= list(decimal.mark= ".", big.mark= ","))
 }
 
+#defino las etiquetas de la base de datos
+attr(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$conf_100mil, "label") <- 'Casos confirmados por cada 100 mil hab.'
+attr(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$Primera_100mil, "label") <- "Primera dosis por cada 100 mil hab."
+attr(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$PCR_100mil, "label") <- "PCR's por cada 100 mil hab."
+attr(covid19_chile_vacuna_vs_confirmados_std_pcr_uci$Hosp_UCI_100mil, "label") <- "Hospitalizaciones por cada 100 mil hab."
 
-#attr(BD_2020_input3$latdec_dic, "label") <- 'Low Decisional Latitude (Dichotomized)(JCQ)'
-#attr(BD_2020_input3$democ_dic, "label") <- 'High Job Demands (Dichotomized)(JCQ)'
 
+#tabla comparativa por esrtrato entre tratados (met), se descartan los perdidos (includeNA) (no existen en este caso),
+#incorporamos SMD (diferencia de medias estandarizadas)
 tab<-
    CreateTableOne(vars = c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI_100mil"), 
                      data= covid19_chile_vacuna_vs_confirmados_std_pcr_uci %>% dplyr::filter(txtime==0), 
@@ -597,13 +615,17 @@ tab<-
                      includeNA =F,
                       smd=T)
 
+#utilizamos la función predefinida, definiendo que las variables no siguen una distribución normal
 kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI_100mil"),
                        test=T, varLabels=T,noSpaces=T, printToggle=T, dropEqual=F,smd=T) %>% 
+  #agrego un formato de las tablas de manera que quede presentable
    kableExtra::kable_styling(bootstrap_options = c("striped", "hover","condensed"),font_size= 12) %>%
+  #la primera fila la destacaré con letra negrita porque contiene información relevante
     kableExtra::row_spec(1, bold = T) %>%
+  #Agrego una nota
     kableExtra::add_footnote(c("Nota. SMD= Diferencia de Medias Estandarizada"), notation = "none")%>%
+  #Si es una tabla muy larga, puedo hacer que sólo abarque un área y lo dejo en formato de tabla deslizable
     kableExtra::scroll_box(width = "100%", height = "200px")
-
 ```
 
 ## Fuentes
@@ -618,6 +640,7 @@ kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI
 - Jepsen, P., Vilstrup, H. and Andersen, P.K. (2015), The clinical course of cirrhosis: The importance of multistate models and competing risks analysis. Hepatology, 62: 292-302. https://doi.org/10.1002/hep.27598
 - Illari, P., & Russo, F. (2014). Causality: Philosophical theory meets scientific practice. Oxford, UK: Oxford University Press.
 - Yıldırım, S. (2021, Marzo 02) The Flawless Pipes of Tidyverse. Exploratory data analysis made easy. https://towardsdatascience.com/the-flawless-pipes-of-tidyverse-bb2ab3c5399f
+
 
 ```{r cache_delete, include=F}
 #unlink('*_files', recursive = T, force=T)
