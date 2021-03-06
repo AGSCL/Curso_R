@@ -306,7 +306,7 @@ ggplot()+
 
 ::: notes
 Comentarios:
-- Fuentes de sesgo: Selección/Representación (Cobertura, Muestreo - estatus de elegibilidad, reemplazo, etc.-, No-respuesta, ajuste post-encuesta - ej., ponderadores-), datos perdidos, error de medición (validez, medición -ej., si una mujer pregunta a hombres si es sexista-, procesamiento - ej., tipeo-), selección del modelo, seguimiento (follow-up), confusores, comparaciones múltiples (mientras queramos comparar en más atributos, es más fácil encontrar falsos positivos: mientras más test e hacen en una muestra, más probable es encontrar un hallazgo), 
+- Fuentes de sesgo: Selección/Representación (Cobertura, Muestreo - estatus de elegibilidad, reemplazo, etc.-, No-respuesta, ajuste post-encuesta - ej., ponderadores-), datos perdidos, error de medición (validez, medición -ej., si una mujer pregunta a hombres si es sexista-, procesamiento - ej., tipeo-), selección del modelo, seguimiento (follow-up), faltan var. de resultados (inmortal time bias), confusores, comparaciones múltiples (mientras queramos comparar en más atributos, es más fácil encontrar falsos positivos: mientras más test e hacen en una muestra, más probable es encontrar un hallazgo), 
 :::
 
 ```{r bias_variance_png, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "300x", fig.cap= "Figura. Varianza vs. Sesgo (Fuente: Singh, 2018, Mayo 21)"}
@@ -335,7 +335,7 @@ digraph a_nice_graph  {
   a [label = 'Confirmados \nPre 14 Feb\nZ(0)',fontsize=10]
   b [label = 'Coquimbo y\nValparaíso\n(A)',fontsize=10]
   c [label = 'Confirmados \nPost 14 Feb\nZ(1)',fontsize=10]
-  d [label = 'Confusores no-observados\n(U)',fontsize=10]
+  d [label = 'Confusores no-medidos\n(U)',fontsize=10]
   e [label = 'Confusores medidos\nPre 14 Feb\n(C)',fontsize=10]
   blank [label = '', width = 0.01, height = 0.01]
   g [label = '', fontsize=10, width = 0.001, height = 0.001, color=White]
@@ -362,6 +362,8 @@ gr1
 
 #Fig. 2. Directed acyclic graph depicting the causal association between the treatment A, pre-exposure outcome Z(0), post-exposure outcome Z(1), measured pre-exposure confounders C, and unmeasured confounders U.
 ```
+
+- No podremos ver (U)
 
 ## Vacunaciones COVID-19(2) {.future-steps .smaller}
 - Se estandarizaron las variables de acuerdo a la población de la región, por cada 100,000 hab.
@@ -549,6 +551,7 @@ plotmeans(conf_100mil ~ fecha, main = "Heterogeneidad entre Fechas", ylab="", da
 - Spillover, elementos geográficos no capturados
 - Hay patrones temporales que no son capturados (ciclos, tendencias, estaciones, retrasos) (`pbgtest()`)
 - Las primeras vacunas siguen un patrón muy distinto
+- Volvamos al gráfico anterior (efecto "Valparaíso")
 
 ```{r ejemplo_d2, echo=T, warning=F, size = 'tiny'}
 #Creamos una función para capturar los intervalos de confianza 
@@ -614,8 +617,7 @@ kableone(tab, nonnormal= c("conf_100mil","Primera_100mil","PCR_100mil","Hosp_UCI
 - Sofer, T., Richardson, D., Colincino, E., Schwartz, J. & Tchetgen, E. (2015). On Simple Relations Between Difference-in-differences and Negative Outcome Control of Unobserved Confounding. Harvard University Biostatistics Working Paper Series, 194,1-29.doi:awesomedoi/20150801˙TSofer˙DID
 - Jepsen, P., Vilstrup, H. and Andersen, P.K. (2015), The clinical course of cirrhosis: The importance of multistate models and competing risks analysis. Hepatology, 62: 292-302. https://doi.org/10.1002/hep.27598
 - Illari, P., & Russo, F. (2014). Causality: Philosophical theory meets scientific practice. Oxford, UK: Oxford University Press.
-
-
+- Yıldırım, S. (2021, Marzo 02) The Flawless Pipes of Tidyverse. Exploratory data analysis made easy. https://towardsdatascience.com/the-flawless-pipes-of-tidyverse-bb2ab3c5399f
 
 ```{r cache_delete, include=F}
 #unlink('*_files', recursive = T, force=T)
