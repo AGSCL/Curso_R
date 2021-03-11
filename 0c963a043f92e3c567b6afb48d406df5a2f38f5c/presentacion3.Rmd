@@ -541,7 +541,7 @@ covid19_chile %>%
 
 # Prueba Final {#future-steps .smaller}
 
-## Instrucciones Prueba Final
+## Instrucciones Prueba Final (A entregar el próximo Lunes)
 - Favor descargar esta base de datos: <https://github.com/AGSCL/Install-R/raw/master/personal_curso.xlsx>
 - Cargarla en RStudio, y enviar a gonzalez.santacruz.andres@gmail.com, un gráfico de dispersión de decimal2 en contraste con /en función del decimal1. 
 - Adjunte también un diagrama de cajas (boxplot), de entero1 por sexo. Esriba una interpretación (busque en internet)
