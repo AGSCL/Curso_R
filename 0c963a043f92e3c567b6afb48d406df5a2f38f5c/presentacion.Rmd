@@ -8,13 +8,13 @@ output:
 ---
 
 <style>
-#future-steps {
+future-steps {
   color: MidnightBlue;
 }
-#otro {
+otro {
   color: Teal;
 }
-#Advertencia {
+Advertencia {
   color: Crimson;
 }
 .gdbar img {
@@ -198,7 +198,7 @@ Comentarios:
 
 ## Entorno de Trabajo, parte 2{#future-steps .smaller}
 
-- Rstudio permite crear un **Proyecto** (.Rpoj), agrupa a todos los elementos. Puede gestionar los proyectos aquí:
+- Rstudio permite crear un **Proyecto** (.Rproj), agrupa a todos los elementos. Puede gestionar los proyectos aquí:
 ```{r Fig rproj, fig.align="center", message=FALSE, warning=FALSE, cache=T, echo =F, out.width = "250px"}
 #knitr::include_graphics("G:/Mi unidad/Alvacast/Curso/rproj.png")
 knitr::include_graphics(
